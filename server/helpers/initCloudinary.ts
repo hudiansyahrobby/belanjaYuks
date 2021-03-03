@@ -8,7 +8,7 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-exports.uploadToCloudinary = (file: any) => {
+export const uploadToCloudinary = (file: any) => {
     return new Promise((resolve) => {
         cloudinary.uploader.upload(file, (err: any, res: any) => {
             if (err) return res.status(400).json({ message: err });
@@ -17,7 +17,7 @@ exports.uploadToCloudinary = (file: any) => {
     });
 };
 
-exports.deleteImageOnCloudinary = (cloudinary_id: string) => {
+export const deleteImageOnCloudinary = (cloudinary_id: string) => {
     return new Promise((resolve) => {
         cloudinary.uploader.destroy(cloudinary_id, (err: any, res: any) => {
             if (err) return res.status(400).json({ message: err });

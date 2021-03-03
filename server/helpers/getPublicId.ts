@@ -1,4 +1,4 @@
-exports.getPublicId = (imageUrls: Array<string>) => {
+export const getPublicId = (imageUrls: Array<string>) => {
     const public_ids = [];
     for (const imageUrl of imageUrls) {
         const extractURL = imageUrl.match(/upload\/(?:v\d+\/)?([^\.]+)/);

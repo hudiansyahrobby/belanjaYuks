@@ -1,17 +1,13 @@
-enum Sort {
-    latest,
-    oldest,
-}
-
-exports.getSort = (sort: Sort) => {
+export const getSort = (sort: string) => {
     let sortBy;
     switch (sort) {
-        case Sort.latest:
+        case 'latest':
             sortBy = ['createdAt', 'DESC'];
             break;
-        case Sort.oldest:
+        case 'oldest':
             sortBy = ['createdAt', 'ASC'];
         default:
+            sortBy = ['createdAt', 'DESC'];
             break;
     }
     return sortBy;

@@ -4,4 +4,5 @@ export default interface Product {
     price: number;
     description: string;
     isSecond: boolean;
+    images: Array<string>;
 }
