@@ -107,7 +107,7 @@ export const update = async (req: Request, res: Response) => {
 
         const _product = await updateProductById(updatedProduct, id as string);
 
-        return res.status(200).json({ message: 'Product updated successfully', product: _product });
+        return res.status(200).json({ message: 'Product successfully updated', product: _product });
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
@@ -131,7 +131,7 @@ export const remove = async (req: Request, res: Response) => {
 
         await deleteProductById(id as string);
 
-        return res.status(200).json({ message: 'Productt deleted successfully', product });
+        return res.status(200).json({ message: 'Product deleted successfully', product });
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }

@@ -35,6 +35,18 @@ export const verifyUser = async function (req: any, res: Response, next: NextFun
     }
 };
 
+export const verifySeller = (req: any, res: Response, next: NextFunction) => {
+    const isSeller = req?.user?.role === 'seller';
+    try {
+        if (isSeller) {
+            return next();
+        }
+        return res.status(400).json({ message: "You're not seller, access denied" });
+    } catch (error) {
+        return res.status(500).json({ error });
+    }
+};
+
 export const verifyAdmin = (req: any, res: Response, next: NextFunction) => {
     const isAdmin = req?.user?.role === 'admin';
     try {
