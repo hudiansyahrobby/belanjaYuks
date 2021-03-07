@@ -1,5 +1,6 @@
 import { Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import Shop from '../models/shop.model';
 import User from '../models/user.model';
 
 export const verifyUser = async function (req: any, res: Response, next: NextFunction) {
@@ -15,8 +16,13 @@ export const verifyUser = async function (req: any, res: Response, next: NextFun
             const user = await User.findOne({
                 where: { id: decodedToken.id },
                 attributes: {
-                    exclude: ['password', 'refreshToken', 'resetPasswordToken', 'resetTokenExpired'],
+                    exclude: ['password', 'refreshToken', 'resetPasswordToken', 'resetTokenExpired', 'resetToken'],
                 },
+                include: [
+                    {
+                        model: Shop,
+                    },
+                ],
             });
             req.user = user;
             next();

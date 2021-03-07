@@ -66,7 +66,7 @@ describe('Product Endpoints', () => {
             expect(res.body.message).toBe('quantity is a required field');
         });
 
-        it('When quantity is not greater than 0, then send error ', async () => {
+        it('When quantity is less than 1, then send error ', async () => {
             const filePath = path.join(__dirname, '..', 'testFiles', 'test.jpeg');
             const isFileExist = await fs.exists(filePath);
             if (!isFileExist) throw new Error('file does not exist');
@@ -83,7 +83,7 @@ describe('Product Endpoints', () => {
                 .field('isSecond', false)
                 .set('Authorization', `Bearer ${token}`)
                 .expect(422);
-            expect(res.body.message).toBe('quantity must be greater than 0');
+            expect(res.body.message).toBe('quantity must not be less than 1');
         });
 
         it('When images is not specified, send error', async () => {
@@ -289,7 +289,7 @@ describe('Product Endpoints', () => {
             expect(res.body.message).toBe('quantity is a required field');
         });
 
-        it('When quantity is not greater than 0, then send error ', async () => {
+        it('When quantity is less than 1, then send error ', async () => {
             const filePath = path.join(__dirname, '..', 'testFiles', 'test.jpeg');
             const isFileExist = await fs.exists(filePath);
             if (!isFileExist) throw new Error('file does not exist');
@@ -306,7 +306,7 @@ describe('Product Endpoints', () => {
                 .field('isSecond', false)
                 .set('Authorization', `Bearer ${token}`)
                 .expect(422);
-            expect(res.body.message).toBe('quantity must be greater than 0');
+            expect(res.body.message).toBe('quantity must not be less than 1');
         });
 
         it('When images is not specified, send error', async () => {

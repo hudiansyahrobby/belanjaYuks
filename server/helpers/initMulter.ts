@@ -22,4 +22,4 @@ const maxFileTotal = 5;
 
 const uploadFiles = upload.array('images', maxFileTotal);
 
-module.exports = uploadFiles;
+export default uploadFiles;

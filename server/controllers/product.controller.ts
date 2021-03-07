@@ -9,36 +9,40 @@ import {
     getProductbyId,
     updateProductById,
     deleteProductById,
-} from '../repositories/product.repository';
+    addCategories,
+    deleteCategories,
+    getProductByCategory,
+} from '../services/product.services';
 import { deleteImageOnCloudinary, uploadToCloudinary } from '../helpers/initCloudinary';
 import { getPublicId } from '../helpers/getPublicId';
 import ProductType from '../interfaces/Product';
+import { deleteImages, uploadImages } from '../helpers/images';
 
-export const create = async (req: Request, res: Response) => {
+export const create = async (req: any, res: Response) => {
+    const { myShop } = req.user;
+    const { categories, images, ...data } = req.body;
+
     try {
-        // Upload and Delete Images
-        const imageURL = [];
-        const files = req.body.images;
-        for (const file of files) {
-            const path = `public/${file}`;
-            const newPath = await uploadToCloudinary(path);
-            imageURL.push(newPath);
-            fs.unlinkSync(path);
-        }
+        const imageURL = await uploadImages(images);
 
-        const newProduct = {
-            ...req.body,
+        const newProduct: ProductType = {
+            ...data,
             images: imageURL,
+            shopId: myShop.id,
         };
 
-        const _newProduct = await createProduct(newProduct);
+        const createdProduct = await createProduct(newProduct);
+        await addCategories(createdProduct, categories);
+
+        const _newProduct = await getProductbyId(createdProduct.id);
+
         return res.status(201).json({ message: 'Product successfully created', product: _newProduct });
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
 };
 
-export const get = async (req: Request, res: Response) => {
+export const getProducts = async (req: Request, res: Response) => {
     const { page, size, search, sort } = req.query;
 
     const _page = parseInt(page as string);
@@ -60,11 +64,28 @@ export const get = async (req: Request, res: Response) => {
     }
 };
 
+export const getProductsByCategory = async (req: Request, res: Response) => {
+    const { page, size, sort } = req.query;
+    const { categoryId } = req.params;
+    const _page = parseInt(page as string);
+    const _size = parseInt(size as string);
+    const { limit, offset } = getPagination(_page, _size);
+
+    const orderBy = !!sort ? getSort(sort as string) : ['createdAt', 'DESC'];
+    try {
+        const response = await getProductByCategory(categoryId, limit, offset, orderBy);
+        const products = getPaginationData(response, _page, limit);
+        return res.status(200).json({ products });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
+
 export const getDetail = async (req: Request, res: Response) => {
-    const { id } = req.query;
+    const { productId } = req.params;
 
     try {
-        const product = await getProductbyId(id as string);
+        const product = await getProductbyId(productId);
 
         if (!product) {
             return res.status(404).json({ message: 'Product not found', product });
@@ -75,49 +96,43 @@ export const getDetail = async (req: Request, res: Response) => {
         return res.status(500).json({ message: error.message });
     }
 };
-export const update = async (req: Request, res: Response) => {
-    const { id } = req.query;
+export const update = async (req: any, res: Response) => {
+    const { productId } = req.params;
+    const { categories, images, ...data } = req.body;
+    const { myShop } = req.user;
 
     try {
-        const product = await getProductbyId(id as string);
+        const product = await getProductbyId(productId);
 
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
         }
 
-        // Delete images on Cloudinary
-        const public_ids = getPublicId(product.images);
+        await deleteImages(product.images);
+        const imageURL = await uploadImages(images);
 
-        for (const public_id of public_ids) {
-            await deleteImageOnCloudinary(public_id);
-        }
+        const productData: ProductType = {
+            ...data,
+            images: imageURL,
+            shopId: myShop.id,
+        };
 
-        // Reupload images on cloudinary
+        await deleteCategories(product, product.categories);
+        await addCategories(product, categories);
+        await updateProductById(productData, productId);
 
-        const imageURL = [];
-        const files = req.body.images;
-        for (const file of files) {
-            const path = `public/${file}`;
-            const newPath = await uploadToCloudinary(path);
-            imageURL.push(newPath);
-            fs.unlinkSync(path);
-        }
-
-        const updatedProduct: ProductType = req.body;
-
-        const _product = await updateProductById(updatedProduct, id as string);
-
-        return res.status(200).json({ message: 'Product successfully updated', product: _product });
+        const updatedProduct = await getProductbyId(productId);
+        return res.status(200).json({ message: 'Product successfully updated', product: updatedProduct });
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
 };
 
 export const remove = async (req: Request, res: Response) => {
-    const { id } = req.query;
+    const { productId } = req.params;
 
     try {
-        const product = await getProductbyId(id as string);
+        const product = await getProductbyId(productId);
 
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
@@ -129,7 +144,7 @@ export const remove = async (req: Request, res: Response) => {
             await deleteImageOnCloudinary(public_id);
         }
 
-        await deleteProductById(id as string);
+        await deleteProductById(productId);
 
         return res.status(200).json({ message: 'Product deleted successfully', product });
     } catch (error) {

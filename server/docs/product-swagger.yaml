@@ -9,7 +9,7 @@ servers:
 paths: 
   /products:
     post:
-      description: "Create new product (ONLY ADMIN)"
+      description: "Create new product (ONLY Shop Owner)"
       tags:
         - "Products"
       security:
@@ -19,8 +19,7 @@ paths:
         content:
           multipart/form-data:
             schema:
-              allOf: 
-                - $ref: '#/components/schemas/Product'
+              $ref: '#/components/schemas/Product'
       responses:
         201:
           description: "Created"
@@ -61,15 +60,15 @@ paths:
           description: "OK"
         500:
           description: "Server Error"
-  /products/{id}:
+  /products/{productId}:
     get:
       description: "Get products detail"
       parameters:
         - in: path
           required: true
-          name: id
+          name: productId
           schema:
-            type: integer
+            type: string
           description: Get product detail by id  
       tags:
         - "Products"
@@ -81,15 +80,15 @@ paths:
         500:
           description: "Server Error"
     put:
-      description: "update product by id (ONLY ADMIN)"
+      description: "update product by id (ONLY Shop Owner)"
       tags:
         - "Products"
       parameters:
       - in: path
         required: true
-        name: id
+        name: productId
         schema:
-          type: integer
+          type: string
         description: update product detail by id  
       security:
         - bearerAuth: []
@@ -112,13 +111,13 @@ paths:
         500:
           description: "Server Error"
     delete:
-      description: "Delete product by id (ONLY ADMIN)"
+      description: "Delete product by id (ONLY Shop Owner)"
       parameters:
       - in: path
         required: true
-        name: id
+        name: productId
         schema:
-          type: integer
+          type: string
         description: Get product detail by id  
       security:
         - bearerAuth: []
@@ -131,6 +130,24 @@ paths:
           description: "Product not found"
         500:
           description: "Server Error"
+  /products/categories/{categoryId}:
+    get:
+      description: "Get products detail"
+      parameters:
+        - in: path
+          required: true
+          name: categoryId
+          schema:
+            type: string
+          description: Get products by category
+      tags:
+        - "Products"
+      responses:
+        200:
+          description: "OK"
+        500:
+          description: "Server Error"
+  
 components:
   schemas:
     Product:
@@ -154,6 +171,10 @@ components:
         images: 
           type: string
           format: binary
+        categories[]:
+          type: array
+          items:
+            type: string
   securitySchemes:
     bearerAuth:
       type: http

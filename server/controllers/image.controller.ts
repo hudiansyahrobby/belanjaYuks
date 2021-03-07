@@ -1,12 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
-import { MulterError } from 'multer';
 
-const sharp = require('sharp');
-const multer = require('multer');
-const uploadFiles = require('../helpers/initMulter');
+import sharp from 'sharp';
+import multer from 'multer';
+import uploadFiles from '../helpers/initMulter';
 
 export const uploadImages = (req: Request, res: Response, next: NextFunction) => {
-    uploadFiles(req, res, (err: MulterError) => {
+    uploadFiles(req, res, (err: any) => {
         if (err instanceof multer.MulterError) {
             if (err.code === 'LIMIT_UNEXPECTED_FILE') {
                 return res.status(422).json({ message: 'Too many files to upload. Max is 5 images' });

@@ -5,4 +5,7 @@ export default interface Product {
     description: string;
     isSecond: boolean;
     images: Array<string>;
+    categories: Array<string>;
+    shopId: string;
+    // Shop': userId, owner, products
 }

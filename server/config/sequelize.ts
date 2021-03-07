@@ -34,9 +34,9 @@ const sequelize = new Sequelize({
     port: 5432,
     host: 'db',
     models: [path.join(__dirname, '..', 'models', '**')],
-    query: {
-        raw: true,
-    },
+    // query: {
+    //     raw: true,
+    // },
 });
 
 export default sequelize;

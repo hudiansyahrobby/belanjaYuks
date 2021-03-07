@@ -1,20 +1,45 @@
+import { Router } from 'express';
 import { resizeImages, uploadImages } from '../controllers/image.controller';
-import { verifyAdmin, verifyUser } from '../middlewares/userAuth';
+import isValid from '../middlewares/isValid';
+import { verifySeller, verifyUser } from '../middlewares/userAuth';
+import ProductValidation from '../validations/product.validation';
+import {
+    create,
+    getProducts,
+    getDetail,
+    update,
+    remove,
+    getProductsByCategory,
+} from '../controllers/product.controller';
 
-const { Router } = require('express');
+const router: Router = Router();
 
-const router = Router();
+router.post(
+    '/products',
+    verifyUser,
+    verifySeller,
+    uploadImages,
+    resizeImages,
+    isValid(ProductValidation.product, 'body'),
+    create,
+);
 
-const { create, get, getDetail, update, remove } = require('../controllers/product.controller');
+router.get('/products', getProducts);
 
-router.post('/products', verifyUser, verifyAdmin, uploadImages, resizeImages, create);
+router.get('/products/:productId', getDetail);
 
-router.get('/products', get);
+router.get('/products/categories/:categoryId', getProductsByCategory);
 
-router.get('/products/:id', getDetail);
+router.put(
+    '/products/:productId',
+    verifyUser,
+    verifySeller,
+    uploadImages,
+    resizeImages,
+    isValid(ProductValidation.product, 'body'),
+    update,
+);
 
-router.put('/products/:id', verifyUser, verifyAdmin, uploadImages, resizeImages, update);
+router.delete('/products/:productId', verifyUser, verifySeller, remove);
 
-router.delete('/products/:id', verifyUser, verifyAdmin, uploadImages, resizeImages, remove);
-
-module.exports = router;
+export default router;
