@@ -1,4 +1,14 @@
-import { Model, Table, Column, DataType, Default, PrimaryKey, BelongsToMany, BeforeCreate } from 'sequelize-typescript';
+import {
+    Model,
+    Table,
+    Column,
+    DataType,
+    Default,
+    PrimaryKey,
+    BelongsToMany,
+    BeforeCreate,
+    BeforeUpdate,
+} from 'sequelize-typescript';
 import Product from './product.model';
 import ProductCategory from './productCategory.model';
 
@@ -18,6 +28,7 @@ export default class Category extends Model {
     products: Product[];
 
     @BeforeCreate
+    @BeforeUpdate
     static makeLowerCase(instance: Category) {
         // this will be called when an instance is created or updated
         instance.name = instance.name.toLowerCase();

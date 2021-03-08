@@ -26,7 +26,13 @@ export const createProduct = (newProduct: ProductType) => {
     return Product.create(newProduct);
 };
 
-export const getAllProducts = (searchCondition: any, limit: number, offset: number, orderBy: any) => {
+export const getAllProducts = (
+    searchCondition: any,
+    limit: number,
+    offset: number,
+    orderBy: any,
+    categoryCondition: any,
+) => {
     return Product.findAndCountAll({
         where: searchCondition,
         limit,
@@ -39,6 +45,7 @@ export const getAllProducts = (searchCondition: any, limit: number, offset: numb
             },
             {
                 model: Category,
+                where: categoryCondition,
                 attributes: ['id', 'name'],
                 through: { attributes: [] },
             },

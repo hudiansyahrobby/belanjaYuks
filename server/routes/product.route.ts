@@ -3,14 +3,7 @@ import { resizeImages, uploadImages } from '../controllers/image.controller';
 import isValid from '../middlewares/isValid';
 import { verifySeller, verifyUser } from '../middlewares/userAuth';
 import ProductValidation from '../validations/product.validation';
-import {
-    create,
-    getProducts,
-    getDetail,
-    update,
-    remove,
-    getProductsByCategory,
-} from '../controllers/product.controller';
+import { create, getProducts, getDetail, update, remove } from '../controllers/product.controller';
 
 const router: Router = Router();
 
@@ -27,8 +20,6 @@ router.post(
 router.get('/products', getProducts);
 
 router.get('/products/:productId', getDetail);
-
-router.get('/products/categories/:categoryId', getProductsByCategory);
 
 router.put(
     '/products/:productId',

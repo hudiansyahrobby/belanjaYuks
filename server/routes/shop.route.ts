@@ -16,7 +16,7 @@ router.get('/shops/products/:shopId', getShopProduct);
 router.get('/shops/:shopId', getDetail);
 
 router.put(
-    '/shops/:shopId',
+    '/shops',
     verifyUser,
     verifySeller,
     uploadImages,
@@ -25,6 +25,6 @@ router.put(
     update,
 );
 
-router.delete('/shops/:shopId', verifyUser, verifySeller, remove);
+router.delete('/shops', verifyUser, verifySeller, remove);
 
 export default router;

@@ -7,7 +7,7 @@
 pgdata
 
 credentials.json
-
+VSCodeCounter
 # testing
 /coverage
 # production

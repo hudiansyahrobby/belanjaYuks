@@ -63,36 +63,10 @@ paths:
           description: "OK"
         500:
           description: "Server Error"
-  /shops/{shopId}:
-    get:
-      description: "Get shops detail"
-      parameters:
-        - in: path
-          required: true
-          name: shopId
-          schema:
-            type: string
-          description: Get shop detail by id  
-      tags:
-        - "Shops"
-      responses:
-        200:
-          description: "OK"
-        404:
-          description: "shop not found"
-        500:
-          description: "Server Error"
     put:
       description: "update shop by id (ONLY SHOP OWNER)"
       tags:
         - "Shops"
-      parameters:
-      - in: path
-        required: true
-        name: shopId
-        schema:
-          type: string
-        description: update shop detail by id  
       security:
         - bearerAuth: []
       requestBody:
@@ -117,13 +91,6 @@ paths:
           description: "Server Error"
     delete:
       description: "Delete shop by id (ONLY SHOP OWNER)"
-      parameters:
-      - in: path
-        required: true
-        name: shopId
-        schema:
-          type: string
-        description: Get shop detail by id  
       security:
         - bearerAuth: []
       tags:
@@ -135,6 +102,25 @@ paths:
           description: "Bad Request"
         404:
           description: "Shop not found"
+        500:
+          description: "Server Error"
+  /shops/{shopId}:
+    get:
+      description: "Get shops detail"
+      parameters:
+        - in: path
+          required: true
+          name: shopId
+          schema:
+            type: string
+          description: Get shop detail by id  
+      tags:
+        - "Shops"
+      responses:
+        200:
+          description: "OK"
+        404:
+          description: "shop not found"
         500:
           description: "Server Error"
   /shops/products/{shopId}:

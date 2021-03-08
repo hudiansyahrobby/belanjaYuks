@@ -2,13 +2,13 @@ import { Request, Response } from 'express';
 import ShopType from '../interfaces/Shop';
 import {
     createNewShop,
-    deleteShopById,
+    deleteUserShop,
     getAllShops,
     getShopById,
     getShopProducts,
     getUserShop,
     getShopByName,
-    updateShopById,
+    updateUserShop,
 } from '../services/shop.services';
 import { getPagination } from '../helpers/getPagination';
 import { getSort } from '../helpers/getSort';
@@ -18,14 +18,18 @@ import { changeUserRole } from '../services/user.services';
 import { deleteImages, uploadImages } from '../helpers/images';
 
 export const create = async (req: any, res: Response) => {
-    const { id: userId } = req.user;
+    const { id: userId, ...user } = req.user;
     const { name, images, description } = req.body;
 
     try {
+        if (user.role === 'admin') {
+            return res.status(400).json({ message: "You're an admin, you can't have shop" });
+        }
+
         const isUserHasShop = await getUserShop(userId);
 
         if (isUserHasShop) {
-            return res.status(400).json({ message: 'This user has had a shop' });
+            return res.status(400).json({ message: 'This user already has shop, delete first' });
         }
 
         const isShopExist = await getShopByName(name);
@@ -79,6 +83,12 @@ export const getShopProduct = async (req: Request, res: Response) => {
     const { page, size, sort } = req.query;
     const { shopId } = req.params;
 
+    const isShopExist = await getShopById(shopId);
+
+    if (!isShopExist) {
+        return res.status(404).json({ message: 'Shop not found' });
+    }
+
     const _page = parseInt(page as string);
     const _size = parseInt(size as string);
 
@@ -112,23 +122,25 @@ export const getDetail = async (req: Request, res: Response) => {
         return res.status(500).json({ message: error.message });
     }
 };
+
 export const update = async (req: any, res: Response) => {
-    const { shopId } = req.params;
     const { id: userId } = req.user;
     const { name, images, description } = req.body;
 
     try {
-        const shop = await getShopById(shopId);
+        const userShop = await getUserShop(userId);
 
-        if (!shop) {
-            return res.status(404).json({ message: 'Shop not found' });
+        if (!userShop) {
+            return res.status(404).json({ message: 'You do not have any shop' });
         }
 
-        if (shop.userId !== userId) {
-            return res.status(400).json({ message: "This shop doesn't belong to yours" });
+        const isExist = await getShopByName(name);
+
+        if (isExist) {
+            return res.status(400).json({ message: 'Shop with this name has exist' });
         }
 
-        await deleteImages(shop.images);
+        await deleteImages(userShop.images);
 
         const imageURL = await uploadImages(images);
 
@@ -139,7 +151,7 @@ export const update = async (req: any, res: Response) => {
             userId,
         };
 
-        const [_, _updatedShop] = await updateShopById(shopData, shopId);
+        const [_, _updatedShop] = await updateUserShop(shopData, userId);
 
         return res.status(200).json({ message: 'Shop successfully updated', shop: _updatedShop[0] });
     } catch (error) {
@@ -148,21 +160,16 @@ export const update = async (req: any, res: Response) => {
 };
 
 export const remove = async (req: any, res: Response) => {
-    const { shopId } = req.params;
     const { id: userId } = req.user;
 
     try {
-        const shop = await getShopById(shopId);
+        const shop = await getUserShop(userId);
 
         if (!shop) {
-            return res.status(404).json({ message: 'Shop not found' });
+            return res.status(404).json({ message: 'You do not have any shop' });
         }
 
-        if (shop.userId !== userId) {
-            return res.status(400).json({ message: "This shop doesn't belong to yours" });
-        }
-
-        await deleteShopById(shopId);
+        await deleteUserShop(userId);
 
         await changeUserRole('buyer', userId);
         return res.status(200).json({ message: 'Shop successfully deleted', shop });

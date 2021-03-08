@@ -11,10 +11,7 @@ import {
     deleteProductById,
     addCategories,
     deleteCategories,
-    getProductByCategory,
 } from '../services/product.services';
-import { deleteImageOnCloudinary, uploadToCloudinary } from '../helpers/initCloudinary';
-import { getPublicId } from '../helpers/getPublicId';
 import ProductType from '../interfaces/Product';
 import { deleteImages, uploadImages } from '../helpers/images';
 
@@ -43,7 +40,7 @@ export const create = async (req: any, res: Response) => {
 };
 
 export const getProducts = async (req: Request, res: Response) => {
-    const { page, size, search, sort } = req.query;
+    const { page, size, search, sort, categoryId } = req.query;
 
     const _page = parseInt(page as string);
     const _size = parseInt(size as string);
@@ -52,29 +49,13 @@ export const getProducts = async (req: Request, res: Response) => {
 
     const searchCondition = search ? { name: { [Op.iLike]: `%${search}%` } } : undefined;
     const orderBy = !!sort ? getSort(sort as string) : ['createdAt', 'DESC'];
+    const categoryCondition = categoryId ? { id: categoryId } : undefined;
 
     try {
-        const response = await getAllProducts(searchCondition, limit, offset, orderBy);
+        const response = await getAllProducts(searchCondition, limit, offset, orderBy, categoryCondition);
 
         const products = getPaginationData(response, _page, limit);
 
-        return res.status(200).json({ products });
-    } catch (error) {
-        return res.status(500).json({ message: error.message });
-    }
-};
-
-export const getProductsByCategory = async (req: Request, res: Response) => {
-    const { page, size, sort } = req.query;
-    const { categoryId } = req.params;
-    const _page = parseInt(page as string);
-    const _size = parseInt(size as string);
-    const { limit, offset } = getPagination(_page, _size);
-
-    const orderBy = !!sort ? getSort(sort as string) : ['createdAt', 'DESC'];
-    try {
-        const response = await getProductByCategory(categoryId, limit, offset, orderBy);
-        const products = getPaginationData(response, _page, limit);
         return res.status(200).json({ products });
     } catch (error) {
         return res.status(500).json({ message: error.message });
@@ -138,11 +119,7 @@ export const remove = async (req: Request, res: Response) => {
             return res.status(404).json({ message: 'Product not found' });
         }
 
-        const public_ids = getPublicId(product.images);
-
-        for (const public_id of public_ids) {
-            await deleteImageOnCloudinary(public_id);
-        }
+        await deleteImages(product.images);
 
         await deleteProductById(productId);
 

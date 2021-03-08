@@ -3,6 +3,7 @@ import ShopType from '../interfaces/Shop';
 import User from '../models/user.model';
 import Product from '../models/product.model';
 import Category from '../models/category.model';
+import { Op } from 'sequelize';
 
 export const getUserShop = (userId: number) => {
     return Shop.findOne({
@@ -20,7 +21,7 @@ export const getAllShops = (searchCondition: any, limit: number, offset: number,
         limit,
         offset,
         order: [orderBy as any],
-        attributes: { exclude: ['userId'] },
+        attributes: { exclude: ['userId', 'createdAt', 'updatedAt', 'description'] },
         include: [
             {
                 model: User,
@@ -43,8 +44,13 @@ export const getShopById = (id: string) => {
 };
 
 export const getShopByName = (name: string) => {
+    console.log(name);
     return Shop.findOne({
-        where: { name },
+        where: {
+            name: {
+                [Op.iLike]: name,
+            },
+        },
     });
 };
 
@@ -70,13 +76,13 @@ export const getShopProducts = (shopId: string, limit: number, offset: number, o
     });
 };
 
-export const updateShopById = (updatedShop: ShopType, id: string) => {
+export const updateUserShop = (updatedShop: ShopType, userId: string) => {
     return Shop.update(updatedShop, {
-        where: { id },
+        where: { userId },
         returning: true,
     });
 };
 
-export const deleteShopById = (id: string) => {
-    return Shop.destroy({ where: { id } });
+export const deleteUserShop = (userId: string) => {
+    return Shop.destroy({ where: { userId } });
 };

@@ -30,7 +30,7 @@ paths:
         500:
           description: "Server Error"
     get:
-      description: "Get All products"
+      description: "Get All products or by category"
       parameters:
         - in: query
           name: page
@@ -53,6 +53,11 @@ paths:
             type: string
             enum: [latest, oldest]
           description: sort product by latest or oldest
+        - in: query
+          name: categoryId
+          schema:
+            type: string
+          description: category id
       tags:
         - "Products"
       responses:
@@ -130,24 +135,6 @@ paths:
           description: "Product not found"
         500:
           description: "Server Error"
-  /products/categories/{categoryId}:
-    get:
-      description: "Get products detail"
-      parameters:
-        - in: path
-          required: true
-          name: categoryId
-          schema:
-            type: string
-          description: Get products by category
-      tags:
-        - "Products"
-      responses:
-        200:
-          description: "OK"
-        500:
-          description: "Server Error"
-  
 components:
   schemas:
     Product:
@@ -175,6 +162,7 @@ components:
           type: array
           items:
             type: string
+          example: ['96b46303-46ee-4c94-b774-eaabbf14777e']
   securitySchemes:
     bearerAuth:
       type: http
