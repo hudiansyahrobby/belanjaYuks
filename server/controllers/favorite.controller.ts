@@ -6,6 +6,7 @@ import {
     getFavoriteItemById,
     removeFromFavorite,
     addToFavorite,
+    createFavorite,
 } from '../services/favorite.services';
 import { getProductbyId } from '../services/product.services';
 
@@ -21,22 +22,24 @@ export const toggle = async (req: any, res: Response) => {
             if (favoriteItems.length !== 0) {
                 // If favorite items exist on favorite list, remove it
                 await removeFromFavorite(favorites, productId);
-                const deletedfavoriteItem = await getProductbyId(productId);
+                const deletedfavoriteItem = await await getFavoriteItemById(favorites, productId);
                 return res
                     .status(200)
                     .json({ message: 'Item successfully deleted from favorites', favorite: deletedfavoriteItem });
             } else {
                 // If favorite items do not exist on favorite list, add it
                 await addToFavorite(favorites, productId);
-                const newfavoriteItem = await getProductbyId(productId);
+                const newfavoriteItem = await getFavoriteItemById(favorites, productId);
                 return res
                     .status(200)
                     .json({ message: 'Item successfully added to favorites', favorite: newfavoriteItem });
             }
         } else {
-            const createdFavorite = await Favorite.create({ userId });
-            await createdFavorite.$add('products', [productId]);
-            return res.status(200).json({ message: 'Item successfully added to favorites', favorite: createdFavorite });
+            const createdFavorite = await createFavorite(userId);
+            await addToFavorite(createdFavorite, productId);
+            const newFavoriteItem = await getFavoriteItemById(favorites, productId);
+
+            return res.status(200).json({ message: 'Item successfully added to favorites', favorite: newFavoriteItem });
         }
     } catch (error) {
         return res.status(500).json({ message: error.message });
@@ -56,7 +59,7 @@ export const get = async (req: any, res: Response) => {
                 },
             ],
         });
-        return res.status(200).json({ userFavorites });
+        return res.status(200).json({ favorites: userFavorites });
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }

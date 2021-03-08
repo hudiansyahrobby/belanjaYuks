@@ -1,5 +1,9 @@
 import Favorite from '../models/favorite.model';
 
+export const createFavorite = (userId: string) => {
+    return Favorite.create({ userId });
+};
+
 export const findUserFavorite = (userId: string) => {
     return Favorite.findOne({ where: { userId } });
 };

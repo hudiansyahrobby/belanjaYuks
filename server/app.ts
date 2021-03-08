@@ -17,6 +17,7 @@ import productRoute from './routes/product.route';
 import shopRoute from './routes/shop.route';
 import categoryRoute from './routes/category.route';
 import favoriteRoute from './routes/favorite.route';
+import cartRoute from './routes/cart.route';
 
 config();
 const app = express();
@@ -56,6 +57,7 @@ app.use('/api/v1', productRoute);
 app.use('/api/v1', shopRoute);
 app.use('/api/v1', categoryRoute);
 app.use('/api/v1', favoriteRoute);
+app.use('/api/v1', cartRoute);
 
 // Swagger Documentatios
 

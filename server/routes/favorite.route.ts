@@ -1,10 +1,8 @@
 import { verifyUser } from '../middlewares/userAuth';
+import { Router } from 'express';
+import { toggle, get } from '../controllers/favorite.controller';
 
-const { Router } = require('express');
-
-const router = Router();
-
-const { toggle, get } = require('../controllers/favorite.controller');
+const router: Router = Router();
 
 router.post('/favorites/:productId', verifyUser, toggle);
 
