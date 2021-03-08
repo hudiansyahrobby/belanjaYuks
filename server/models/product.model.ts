@@ -12,6 +12,11 @@ import {
 import Shop from './shop.model';
 import ProductCategory from './productCategory.model';
 import Category from './category.model';
+import User from './user.model';
+import ProductCart from './productCart.model';
+import Cart from './cart.model';
+import Favorite from './favorite.model';
+import ProductFavorite from './productFavorite.model';
 
 @Table({
     tableName: 'products',
@@ -49,4 +54,10 @@ export default class Product extends Model {
 
     @BelongsToMany(() => Category, () => ProductCategory)
     categories: Category[];
+
+    @BelongsToMany(() => Cart, () => ProductCart)
+    carts: Cart[];
+
+    @BelongsToMany(() => Favorite, () => ProductFavorite)
+    favorites: Favorite[];
 }

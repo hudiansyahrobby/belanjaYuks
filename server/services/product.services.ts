@@ -2,7 +2,6 @@ import Product from '../models/product.model';
 import ProductType from '../interfaces/Product';
 import Shop from '../models/shop.model';
 import Category from '../models/category.model';
-import ProductCategory from '../models/productCategory.model';
 import User from '../models/user.model';
 
 export const getProductbyId = (id: string) => {

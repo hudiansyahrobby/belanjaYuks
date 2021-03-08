@@ -1,0 +1,57 @@
+openapi: 3.0.0
+
+info:
+  title: "Ecommerce APP API"
+  description: "API for ecommerce app"
+  version: "1.0.0"
+servers:
+  - url: http://localhost:8000/api/v1
+paths: 
+  /favorites:
+    get:
+      description: "Get user favorite items"
+      tags:
+        - "Favorites"
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "Success"
+        401:
+          description: "Access Denied"
+        500:
+          description: "Server Error"
+  /favorites/{productId}:
+    post:
+      description: "toggle favorite product by id"
+      tags:
+        - "Favorites"
+      parameters:
+      - in: path
+        required: true
+        name: productId
+        schema:
+          type: string
+        description: toggle favorite by id  
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "OK"
+        401:
+          description: "Access Denied"
+        500:
+          description: "Server Error"
+   
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  
+
+    
+
+  

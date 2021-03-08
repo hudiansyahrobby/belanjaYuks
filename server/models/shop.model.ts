@@ -8,8 +8,6 @@ import {
     Default,
     HasMany,
     PrimaryKey,
-    BeforeCreate,
-    BeforeFind,
 } from 'sequelize-typescript';
 import Product from './product.model';
 import User from './user.model';

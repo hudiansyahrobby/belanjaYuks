@@ -1,4 +1,6 @@
 import { Model, Table, Column, DataType, HasOne, PrimaryKey, Default } from 'sequelize-typescript';
+import Cart from './cart.model';
+import Favorite from './favorite.model';
 import Shop from './shop.model';
 
 @Table({
@@ -27,4 +29,10 @@ export default class User extends Model {
 
     @HasOne(() => Shop, 'userId')
     myShop: Shop;
+
+    @HasOne(() => Cart, 'userId')
+    cart: Cart;
+
+    @HasOne(() => Favorite, 'userId')
+    favorite: Favorite;
 }
