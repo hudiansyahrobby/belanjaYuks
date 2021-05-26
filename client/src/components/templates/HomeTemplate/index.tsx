@@ -1,4 +1,4 @@
-import { Box, Flex, HStack, Text, VStack } from "@chakra-ui/layout";
+import { Box, Flex, HStack, Text, VStack } from "@chakra-ui/react";
 import React from "react";
 import Card from "../../atoms/Card";
 import Layout from "../../atoms/Layout";

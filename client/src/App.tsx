@@ -5,6 +5,8 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import Loading from "./components/atoms/Loading";
 
 const Home = React.lazy(() => import("./pages/Home"));
+const Login = React.lazy(() => import("./pages/Login"));
+const Register = React.lazy(() => import("./pages/Register"));
 
 const App: React.FC = () => {
   const queryClient = new QueryClient();
@@ -15,6 +17,8 @@ const App: React.FC = () => {
         <Switch>
           <Suspense fallback={<Loading />}>
             <Route path="/" exact component={Home} />
+            <Route path="/login" exact component={Login} />
+            <Route path="/signup" exact component={Register} />
           </Suspense>
         </Switch>
       </Router>
