@@ -9,6 +9,8 @@ const Login = React.lazy(() => import("./pages/Login"));
 const Register = React.lazy(() => import("./pages/Register"));
 const ForgetPassword = React.lazy(() => import("./pages/ForgetPassword"));
 const ChangePassword = React.lazy(() => import("./pages/ChangePassword"));
+const Products = React.lazy(() => import("./pages/Products"));
+const Favorite = React.lazy(() => import("./pages/Favorite"));
 
 const App: React.FC = () => {
   const queryClient = new QueryClient();
@@ -19,10 +21,12 @@ const App: React.FC = () => {
         <Switch>
           <Suspense fallback={<Loading />}>
             <Route path="/" exact component={Home} />
-            <Route path="/login" exact component={Login} />
-            <Route path="/signup" exact component={Register} />
-            <Route path="/forgot-password" exact component={ForgetPassword} />
-            <Route path="/change-password" exact component={ChangePassword} />
+            <Route path="/login" component={Login} />
+            <Route path="/signup" component={Register} />
+            <Route path="/forgot-password" component={ForgetPassword} />
+            <Route path="/change-password" component={ChangePassword} />
+            <Route path="/products" exact component={Products} />
+            <Route path="/favorite" exact component={Favorite} />
           </Suspense>
         </Switch>
       </Router>
