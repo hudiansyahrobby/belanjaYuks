@@ -23,3 +23,8 @@ VSCodeCounter
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+# exclude everything
+public/*
+
+# exception to the rule
+!public/.gitkeep 

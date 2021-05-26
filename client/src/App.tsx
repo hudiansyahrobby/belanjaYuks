@@ -2,6 +2,9 @@ import React, { Suspense } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import Loading from "./components/atoms/Loading";
+
+const Home = React.lazy(() => import("./pages/Home"));
 
 const App: React.FC = () => {
   const queryClient = new QueryClient();
@@ -10,8 +13,8 @@ const App: React.FC = () => {
     <QueryClientProvider client={queryClient}>
       <Router>
         <Switch>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Route path="/" exact component={() => <div>asdawjdiw</div>} />
+          <Suspense fallback={<Loading />}>
+            <Route path="/" exact component={Home} />
           </Suspense>
         </Switch>
       </Router>

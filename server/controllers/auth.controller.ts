@@ -63,7 +63,12 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
 
         res.cookie('jwt', refreshToken, { httpOnly: true });
 
-        return res.status(200).json({ accessToken });
+        const _user: any = user;
+        delete _user['password'];
+        delete _user['refreshToken'];
+        delete _user['resetToken'];
+
+        return res.status(200).json({ accessToken, user: _user });
     } catch (error) {
         return res.status(400).json({ message: error.message });
     }

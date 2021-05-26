@@ -5,10 +5,12 @@ import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 
 import { ChakraProvider } from "@chakra-ui/react";
+import Theme from "./theme";
+import "@fontsource/noto-sans";
 
 ReactDOM.render(
   <React.StrictMode>
-    <ChakraProvider resetCSS={true}>
+    <ChakraProvider resetCSS={true} theme={Theme}>
       <App />
     </ChakraProvider>
   </React.StrictMode>,
