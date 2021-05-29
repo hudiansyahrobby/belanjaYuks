@@ -1,14 +1,14 @@
 import { useMutation } from "react-query";
 import { useHistory } from "react-router";
-import { signup } from "../API/authAPI";
+import { logout } from "../../API/AuthAPI";
 
-const useSignup = () => {
+const useLogout = () => {
   const history = useHistory();
-  return useMutation(signup, {
+  return useMutation(logout, {
     onSuccess: () => {
       history.push("/login");
     },
   });
 };
 
-export default useSignup;
+export default useLogout;

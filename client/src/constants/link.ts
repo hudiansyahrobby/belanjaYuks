@@ -4,7 +4,7 @@ export const link = [
     link: "/",
   },
   {
-    title: "Destination",
-    link: "/destination",
+    title: "Products",
+    link: "/products",
   },
 ];

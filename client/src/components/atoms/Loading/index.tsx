@@ -14,7 +14,7 @@ const Loading: React.FC = () => {
         thickness="10px"
         speed="0.65s"
         emptyColor="gray.200"
-        color="whatsapp.500"
+        color="gray.700"
         width={120}
         height={120}
       />

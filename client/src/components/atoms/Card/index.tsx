@@ -4,13 +4,14 @@ import { Box, Text } from "@chakra-ui/layout";
 import React from "react";
 import LinkNavigation from "../LinkNavigation";
 import Subtitle from "../typography/Subtitle";
-
+import { Link } from "react-router-dom";
 interface CardProps {
   title: string;
   image: string;
   subtitle?: string;
   buttonText?: string;
   children?: React.ReactNode;
+  to: string;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -19,6 +20,7 @@ const Card: React.FC<CardProps> = ({
   image,
   buttonText,
   children,
+  to,
 }) => {
   return (
     <Box width="250px">
@@ -31,7 +33,7 @@ const Card: React.FC<CardProps> = ({
       />
       <LinkNavigation
         display="block"
-        to="/"
+        to={to}
         fontSize="18px"
         mt="15px"
         fontWeight="semibold"
@@ -50,7 +52,11 @@ const Card: React.FC<CardProps> = ({
 
       {children}
 
-      {buttonText && <Button mt="10px">{buttonText}</Button>}
+      {buttonText && (
+        <Button mt="10px" as={Link} to={to}>
+          {buttonText}
+        </Button>
+      )}
     </Box>
   );
 };

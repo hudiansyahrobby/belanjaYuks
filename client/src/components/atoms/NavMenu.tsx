@@ -12,10 +12,10 @@ const NavMenu: React.FC<NavMenuProps> = ({ link, title }) => {
       as={NavLink}
       exact
       to={link}
-      activeStyle={{ color: "green" }}
+      activeStyle={{ color: "blue.600" }}
       _hover={{
         textDecoration: "none",
-        color: "green.600",
+        color: "blue.600",
       }}
       px={3}
     >

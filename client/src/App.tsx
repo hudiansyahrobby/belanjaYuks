@@ -12,6 +12,7 @@ const ChangePassword = React.lazy(() => import("./pages/ChangePassword"));
 const Products = React.lazy(() => import("./pages/Products"));
 const Favorite = React.lazy(() => import("./pages/Favorite"));
 const MyCart = React.lazy(() => import("./pages/MyCart"));
+const ProductDetail = React.lazy(() => import("./pages/ProductDetail"));
 
 const App: React.FC = () => {
   const queryClient = new QueryClient();
@@ -27,6 +28,7 @@ const App: React.FC = () => {
             <Route path="/forgot-password" component={ForgetPassword} />
             <Route path="/change-password" component={ChangePassword} />
             <Route path="/products" exact component={Products} />
+            <Route path="/products/:id" exact component={ProductDetail} />
             <Route path="/favorite" exact component={Favorite} />
             <Route path="/cart" exact component={MyCart} />
           </Suspense>

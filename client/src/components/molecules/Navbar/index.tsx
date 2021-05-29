@@ -1,7 +1,7 @@
-import { Flex, useDisclosure } from "@chakra-ui/react";
+import { Box, Flex, useDisclosure } from "@chakra-ui/react";
 import React from "react";
 import Logo from "../../atoms/Logo";
-// import NavMenu from "../atoms/NavMenu";
+import NavMenus from "../NavMenus";
 
 const Navbar: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -21,6 +21,9 @@ const Navbar: React.FC = () => {
       justifyContent="space-between"
     >
       <Logo title="BelanjaYuks" />
+      <Box>
+        <NavMenus />
+      </Box>
     </Flex>
   );
 };
