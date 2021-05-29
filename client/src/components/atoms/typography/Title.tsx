@@ -10,7 +10,7 @@ const Title: React.FC<TitleProps> = ({ children, ...rest }) => {
     <Heading
       as="h1"
       color="gray.700"
-      fontSize="4xl"
+      fontSize={{ base: "2xl", sm: "3xl", md: "4xl" }}
       fontWeight="extrabold"
       {...rest}
     >

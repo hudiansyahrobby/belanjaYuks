@@ -17,7 +17,7 @@ const HeroContent: React.FC<HeroContentProps> = ({ title, subtitle }) => {
     <VStack spacing="18px" align="start">
       <Title>{title}</Title>
       <Price price={5.49} />
-      <Box w="md">
+      <Box w={{ md: "md" }}>
         <Subtitle>{subtitle}</Subtitle>
       </Box>
       <Button leftIcon={<FaShoppingCart />}>Buy Now</Button>

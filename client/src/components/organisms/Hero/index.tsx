@@ -5,7 +5,7 @@ import HeroContent from "../../molecules/HeroContent";
 
 const Hero = () => {
   return (
-    <SimpleGrid columns={2} spacing={10} mt="40">
+    <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} mt="40" mx="20px">
       <HeroImage
         image="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"
         title="HAHAHAH"

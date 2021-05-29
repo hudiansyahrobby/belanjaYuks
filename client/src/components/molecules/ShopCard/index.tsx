@@ -29,7 +29,7 @@ const ShopCard = () => {
         style={{ paddingBottom: "20px" }}
         breakpoints={{
           200: {
-            slidesPerView: 2,
+            slidesPerView: 1,
             spaceBetween: 10,
           },
           500: {

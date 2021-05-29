@@ -37,7 +37,7 @@ const Card: React.FC<CardProps> = ({
         width="full"
         src={image}
         alt={title}
-        fallbackSrc="https://via.placeholder.com/150"
+        fallbackSrc="https://via.placeholder.com/100"
       />
       <LinkNavigation
         display="block"
