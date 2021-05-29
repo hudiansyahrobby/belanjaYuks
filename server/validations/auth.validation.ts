@@ -2,14 +2,23 @@ import Joi from 'joi';
 
 const auth = {
     signup: Joi.object().keys({
-        name: Joi.string()
+        firstName: Joi.string()
             .pattern(/^[a-zA-Z ]*$/)
             .required()
             .messages({
-                'string.base': `name should be a type of string`,
-                'string.empty': `name cannot be an empty field`,
-                'string.pattern.base': `name should only contain alphapet or space`,
-                'any.required': `name is a required field`,
+                'string.base': `firstName should be a type of string`,
+                'string.empty': `firstName cannot be an empty field`,
+                'string.pattern.base': `firstName should only contain alphapet or space`,
+                'any.required': `firstName is a required field`,
+            }),
+        lastName: Joi.string()
+            .pattern(/^[a-zA-Z ]*$/)
+            .required()
+            .messages({
+                'string.base': `lastName should be a type of string`,
+                'string.empty': `lastName cannot be an empty field`,
+                'string.pattern.base': `lastName should only contain alphapet or space`,
+                'any.required': `lastName is a required field`,
             }),
         email: Joi.string().email().required().messages({
             'string.base': `email should be a type of string`,

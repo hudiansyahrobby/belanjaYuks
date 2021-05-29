@@ -5,7 +5,7 @@ import getToken from '../helpers/getToken';
 import hashPassword from '../helpers/hashPassword';
 
 export const register = async (req: Request, res: Response): Promise<Response> => {
-    const { name, email, password } = req.body;
+    const { email, password } = req.body;
     try {
         const user = await User.findOne({ where: { email } });
 
@@ -16,8 +16,7 @@ export const register = async (req: Request, res: Response): Promise<Response> =
         const hashedPassword: string = await hashPassword(password);
 
         const newUser = {
-            name,
-            email,
+            ...req.body,
             password: hashedPassword,
         };
 

@@ -3,7 +3,7 @@ import { ShopData } from "../../types/ShopType";
 
 export const getShops = async () => {
   const { data } = await axios.get("/shops");
-  return data.data;
+  return data.shops;
 };
 
 export const addShop = async (shop: ShopData) => {

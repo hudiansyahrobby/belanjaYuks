@@ -21,11 +21,11 @@ export const getAllShops = (searchCondition: any, limit: number, offset: number,
         limit,
         offset,
         order: [orderBy as any],
-        attributes: { exclude: ['userId', 'createdAt', 'updatedAt', 'description'] },
+        attributes: { exclude: ['userId'] },
         include: [
             {
                 model: User,
-                attributes: ['name'],
+                attributes: ['firstName', 'lastName'],
             },
         ],
     });
@@ -37,14 +37,13 @@ export const getShopById = (id: string) => {
         include: [
             {
                 model: User,
-                attributes: ['name'],
+                attributes: ['firstName', 'lastName'],
             },
         ],
     });
 };
 
 export const getShopByName = (name: string) => {
-    console.log(name);
     return Shop.findOne({
         where: {
             name: {

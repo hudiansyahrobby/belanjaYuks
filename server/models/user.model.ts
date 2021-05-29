@@ -13,7 +13,10 @@ export default class User extends Model {
     id: any;
 
     @Column(DataType.STRING)
-    name: string;
+    firstName: string;
+
+    @Column(DataType.STRING)
+    lastName: string;
 
     @Column(DataType.STRING)
     email: string;

@@ -1,4 +1,11 @@
-import { Box, Button, Flex, SimpleGrid, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  SimpleGrid,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
 import React from "react";
 import { useForm } from "react-hook-form";
 import InputPassword from "../../atoms/InputPassword";
@@ -6,19 +13,52 @@ import InputText from "../../atoms/InputText";
 import LinkNavigation from "../../atoms/LinkNavigation";
 import SocialButton from "../../atoms/SocialButton";
 import Title from "../../atoms/typography/Title";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { registrationValidation } from "../../../validations/authValidation";
+import { RegisterData } from "../../../types/UserType";
+import useSignup from "../../../hooks/Auth/useSignup";
 
 interface RegisterFormProps {}
 
 const RegisterForm: React.FC<RegisterFormProps> = ({}) => {
+  const { isLoading, mutateAsync } = useSignup();
+
+  const toast = useToast();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
-  const onSubmit = (data: any) => console.log(data);
+  } = useForm({
+    resolver: yupResolver(registrationValidation),
+  });
+
+  const onSignup = handleSubmit(async (registerData: RegisterData) => {
+    await mutateAsync(registerData, {
+      onSuccess: (success) => {
+        toast({
+          title: "Account created.",
+          description: "We've created your account for you.",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
+      },
+      onError: (error) => {
+        const appError: any = error;
+        toast({
+          title: "Failed Creating Account.",
+          description: appError.response.data.message,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      },
+    });
+  });
 
   return (
-    <Box as="form" onSubmit={onSubmit}>
+    <Box as="form" onSubmit={onSignup} noValidate>
       <Title my="20px">Create Your Account</Title>
       <Flex mb="15px">
         <Text fontSize="15px">Already have an account ? </Text>
@@ -39,9 +79,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({}) => {
           type="text"
         />
         <InputText
-          register={{ ...register("lastname") }}
+          register={{ ...register("lastName") }}
           required={true}
-          error={errors.lastname?.message}
+          error={errors.lastName?.message}
           label="Last Name"
           placeholder="Enter your last name"
           type="text"
@@ -67,14 +107,16 @@ const RegisterForm: React.FC<RegisterFormProps> = ({}) => {
       />
 
       <InputPassword
-        register={{ ...register("confirmationPassword") }}
+        register={{ ...register("passwordConfirmation") }}
         required={true}
         helperText="Password must be the same as on password field"
-        error={errors.confirmationPassword?.message}
+        error={errors.passwordConfirmation?.message}
         label="Confirmation Password"
         placeholder="Enter your password again"
       />
-      <Button>Sign Up</Button>
+      <Button isLoading={isLoading} type="submit">
+        Sign Up
+      </Button>
     </Box>
   );
 };

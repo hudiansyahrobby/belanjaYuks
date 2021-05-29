@@ -6,8 +6,8 @@ const useLogin = () => {
   const history = useHistory();
   return useMutation(login, {
     onSuccess: (data) => {
-      console.log(data);
-      localStorage.setItem("token", "TEST");
+      localStorage.setItem("token", data.accessToken);
+      localStorage.setItem("user", JSON.stringify(data.user));
       history.push("/");
     },
   });

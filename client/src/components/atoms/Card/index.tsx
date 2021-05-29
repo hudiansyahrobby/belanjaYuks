@@ -1,10 +1,12 @@
 import { Button } from "@chakra-ui/button";
 import { Image } from "@chakra-ui/image";
-import { Box, Text } from "@chakra-ui/layout";
+import { Box } from "@chakra-ui/layout";
 import React from "react";
+import { Link } from "react-router-dom";
+import CardSkeleton from "../CardSkeleton";
 import LinkNavigation from "../LinkNavigation";
 import Subtitle from "../typography/Subtitle";
-import { Link } from "react-router-dom";
+
 interface CardProps {
   title: string;
   image: string;
@@ -12,6 +14,7 @@ interface CardProps {
   buttonText?: string;
   children?: React.ReactNode;
   to: string;
+  isLoading?: boolean;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -21,9 +24,14 @@ const Card: React.FC<CardProps> = ({
   buttonText,
   children,
   to,
+  isLoading,
 }) => {
+  if (isLoading) {
+    return <CardSkeleton />;
+  }
+
   return (
-    <Box width="250px">
+    <Box width={{ sm: "200px", xl: "230px" }}>
       <Image
         borderRadius="3xl"
         width="full"
@@ -45,7 +53,7 @@ const Card: React.FC<CardProps> = ({
       {subtitle && (
         <>
           <Subtitle fontSize="sm" fontWeight="thin" mt="10px">
-            {subtitle}
+            {subtitle?.substring(0, 200)}...
           </Subtitle>
         </>
       )}

@@ -6,6 +6,7 @@ const useLogout = () => {
   const history = useHistory();
   return useMutation(logout, {
     onSuccess: () => {
+      localStorage.clear();
       history.push("/login");
     },
   });

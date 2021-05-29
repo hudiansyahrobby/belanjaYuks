@@ -3,7 +3,7 @@ import { LoginData, RegisterData } from "../../types/UserType";
 
 export const login = async (loginData: LoginData) => {
   const { data } = await axios.post("/login", loginData);
-  return data.data;
+  return data;
 };
 
 export const signup = async (registerData: RegisterData) => {

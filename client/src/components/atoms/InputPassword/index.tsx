@@ -1,9 +1,10 @@
 import {
   FormControl,
+  FormErrorMessage,
   FormHelperText,
   FormLabel,
 } from "@chakra-ui/form-control";
-import { Input } from "@chakra-ui/input";
+import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import { Button } from "@chakra-ui/react";
 import React from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
@@ -37,25 +38,32 @@ const InputPassword: React.FC<InputPasswordProps> = ({
       my="10px"
     >
       <FormLabel>{label}</FormLabel>
-      <Input
-        {...register}
-        placeholder={placeholder}
-        type={show ? "text" : "password"}
-        autoComplete="off"
-        variant="filled"
-        rightIcon={
-          <Button variant="ghost" onClick={handleClick}>
-            <IconContext.Provider
-              value={{
-                color: "black",
-                size: "23px",
-              }}
-            >
-              <div>{show ? <AiFillEye /> : <AiFillEyeInvisible />}</div>
-            </IconContext.Provider>
-          </Button>
-        }
-      />
+      <InputGroup>
+        <Input
+          {...register}
+          placeholder={placeholder}
+          type={show ? "text" : "password"}
+          autoComplete="off"
+          variant="filled"
+        />
+
+        <InputRightElement
+          children={
+            <Button variant="ghost" onClick={handleClick}>
+              <IconContext.Provider
+                value={{
+                  color: "black",
+                  size: "23px",
+                }}
+              >
+                <div>{show ? <AiFillEye /> : <AiFillEyeInvisible />}</div>
+              </IconContext.Provider>
+            </Button>
+          }
+        />
+      </InputGroup>
+      <FormErrorMessage>{error}</FormErrorMessage>
+
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
     </FormControl>
   );

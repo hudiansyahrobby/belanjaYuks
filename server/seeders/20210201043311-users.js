@@ -14,7 +14,8 @@ module.exports = {
             [
                 {
                     id: '96b46303-46ee-4c94-b774-eaabbf14777e',
-                    name: 'John Doe1',
+                    firstName: 'John',
+                    lastName: 'Carlos',
                     email: 'john1@gmail.com',
                     role: 'seller',
                     password: await hashPassword('1234567890'),
@@ -23,7 +24,8 @@ module.exports = {
                 },
                 {
                     id: '22a606bd-8c71-4407-ba8b-7e6ad2c9c07d',
-                    name: 'John Doe2',
+                    firstName: 'John',
+                    lastName: 'Alexander',
                     email: 'john2@gmail.com',
                     role: 'seller',
                     password: await hashPassword('1234567890'),
@@ -32,7 +34,8 @@ module.exports = {
                 },
                 {
                     id: '3e369cd9-fc96-43bf-93ef-ccec3c98c81a',
-                    name: 'John Doe',
+                    firstName: 'John',
+                    lastName: 'John',
                     email: 'john3@gmail.com',
                     role: 'admin',
                     password: await hashPassword('1234567890'),

@@ -1,23 +1,54 @@
-import { Box, Button, Flex, SimpleGrid, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  SimpleGrid,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
+import useLogin from "../../../hooks/Auth/useLogin";
+import { LoginData } from "../../../types/UserType";
 import InputPassword from "../../atoms/InputPassword";
 import InputText from "../../atoms/InputText";
 import LinkNavigation from "../../atoms/LinkNavigation";
 import Title from "../../atoms/typography/Title";
 
 const LoginForm = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { isLoading, mutateAsync } = useLogin();
 
-  const onSubmit = (data: any) => console.log(data);
+  const toast = useToast();
+
+  const { register, handleSubmit } = useForm();
+
+  const onLogin = handleSubmit(async (loginData: LoginData) => {
+    await mutateAsync(loginData, {
+      onSuccess: () => {
+        toast({
+          title: "Login Successfully.",
+          description: "Your email and password are correct",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+      },
+      onError: (error) => {
+        const appError: any = error;
+        toast({
+          title: "Failed Login",
+          description: appError.response.data.message,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      },
+    });
+  });
 
   return (
-    <Box as="form" onSubmit={onSubmit}>
+    <Box as="form" onSubmit={onLogin} noValidate>
       <Title my="20px">Login To Your Account</Title>
       <Flex mb="15px">
         <Text fontSize="15px">Do not have an account ? </Text>
@@ -46,7 +77,6 @@ const LoginForm = () => {
       <InputText
         register={{ ...register("email") }}
         required={true}
-        error={errors.email?.message}
         label="Email Address"
         placeholder="Enter your email address"
         type="email"
@@ -55,7 +85,6 @@ const LoginForm = () => {
       <InputPassword
         register={{ ...register("password") }}
         required={true}
-        error={errors.password?.message}
         label="Password"
         placeholder="Enter your password"
       />
@@ -71,7 +100,9 @@ const LoginForm = () => {
         Forget Password ?
       </LinkNavigation>
 
-      <Button>Login</Button>
+      <Button type="submit" isLoading={isLoading}>
+        Login
+      </Button>
     </Box>
   );
 };

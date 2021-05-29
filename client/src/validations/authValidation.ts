@@ -1,23 +1,28 @@
 import * as Yup from "yup";
 
-export const registedValidation = Yup.object({
-  name: Yup.string()
+export const registrationValidation = Yup.object({
+  firstName: Yup.string()
     .matches(/^[a-zA-Z ]*$/, {
-      message: "name should only contain alphapet or space",
+      message: "First Name should only contain alphapet or space",
     })
-    .required("name is required"),
-  email: Yup.string().email("email is not valid").required("email is required"),
+    .required("First Name is required"),
+  lastName: Yup.string()
+    .matches(/^[a-zA-Z ]*$/, {
+      message: "Last Name should only contain alphapet or space",
+    })
+    .required("Last Name is required"),
+  email: Yup.string().email("Email is not valid").required("Email is required"),
   password: Yup.string()
-    .min(8, "password must be at least 8 characters")
+    .min(8, "Password must be at least 8 characters")
     .matches(
       /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/,
       {
         message:
-          "password must be at least one uppercase letter, one lowercase letter, one number and one special character",
+          "Password must be at least one uppercase letter, one lowercase letter, one number and one special character",
       }
     )
-    .required("password is required"),
+    .required("Password is required"),
   passwordConfirmation: Yup.string()
-    .oneOf([Yup.ref("password"), null], "password does not match")
-    .required("password confirmation is required"),
+    .oneOf([Yup.ref("password"), null], "Password does not match")
+    .required("Password confirmation is required"),
 });

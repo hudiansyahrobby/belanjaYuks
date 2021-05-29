@@ -1,9 +1,11 @@
 import {
   FormControl,
+  FormErrorMessage,
   FormHelperText,
   FormLabel,
 } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
+import { Box } from "@chakra-ui/layout";
 import React from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 
@@ -30,8 +32,8 @@ const InputText: React.FC<InputTextProps> = ({
     <FormControl
       id={register.name}
       isInvalid={!!error}
-      isRequired={required}
       my="10px"
+      isRequired={required}
     >
       <FormLabel>{label}</FormLabel>
       <Input
@@ -40,6 +42,8 @@ const InputText: React.FC<InputTextProps> = ({
         type={type}
         autoComplete="off"
         variant="filled"
+        isInvalid={!!error}
+        errorBorderColor="red.300"
       />
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
     </FormControl>

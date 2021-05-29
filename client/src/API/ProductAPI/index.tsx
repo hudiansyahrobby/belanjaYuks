@@ -3,7 +3,7 @@ import { ProductData } from "../../types/ProductType";
 
 export const getProducts = async () => {
   const { data } = await axios.get("/products");
-  return data.data;
+  return data.products;
 };
 
 export const getProductById = async (productId: number) => {

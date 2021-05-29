@@ -1,4 +1,5 @@
 import { CategoryData } from "./CategoryType";
+import { ShopData } from "./ShopType";
 
 export interface ProductData {
   id: number;
@@ -9,4 +10,5 @@ export interface ProductData {
   isSecond: boolean;
   images: string;
   categories: Array<CategoryData>;
+  seller: Pick<ShopData, "id" | "name">;
 }
