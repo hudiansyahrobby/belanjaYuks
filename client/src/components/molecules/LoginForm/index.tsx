@@ -57,7 +57,12 @@ const LoginForm = () => {
         </LinkNavigation>
       </Flex>
 
-      <SimpleGrid columns={2} spacing={5} alignItems="center" my="30px">
+      <SimpleGrid
+        columns={{ base: 1, lg: 2 }}
+        spacing={5}
+        alignItems="center"
+        my="30px"
+      >
         <Button
           leftIcon={<FaFacebook />}
           backgroundColor="blue.600"

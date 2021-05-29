@@ -14,7 +14,13 @@ const ForgotPasswordForm = () => {
   const onSubmit = (data: any) => console.log(data);
 
   return (
-    <Box as="form" onSubmit={onSubmit} mb="50px" width="container.md" mx="auto">
+    <Box
+      as="form"
+      onSubmit={onSubmit}
+      mb="50px"
+      maxWidth="container.md"
+      mx="auto"
+    >
       <Title my="20px" textAlign="center">
         Forgot Your Password ?
       </Title>

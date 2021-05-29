@@ -1,15 +1,18 @@
-import { Box, Text, VStack } from "@chakra-ui/react";
+import { Box, Flex, Text, VStack } from "@chakra-ui/react";
 import React from "react";
 import CheckBoxButton from "../../atoms/CheckBoxButton";
 
-interface FilterBoxProps {}
-
-const FilterBox: React.FC<FilterBoxProps> = ({}) => {
+const FilterBox = () => {
   return (
     <Box borderWidth="2px" borderColor="gray.100" p="4" borderRadius="xl">
       <Text color="blue.500">Filter</Text>
-      <VStack spacing={10} direction="row">
-        <Box alignSelf="flex-start" mt="20px">
+      <VStack spacing={10}>
+        <Flex
+          alignSelf="flex-start"
+          mt="20px"
+          direction={{ base: "row", md: "column" }}
+          wrap="wrap"
+        >
           <CheckBoxButton />
           <CheckBoxButton />
           <CheckBoxButton />
@@ -18,7 +21,7 @@ const FilterBox: React.FC<FilterBoxProps> = ({}) => {
           <CheckBoxButton />
           <CheckBoxButton />
           <CheckBoxButton />
-        </Box>
+        </Flex>
       </VStack>
     </Box>
   );

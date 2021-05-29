@@ -5,7 +5,7 @@ interface CheckBoxButtonProps {}
 
 const CheckBoxButton: React.FC<CheckBoxButtonProps> = ({}) => {
   return (
-    <Box mt="8px">
+    <Box m="8px">
       <Checkbox size="md" colorScheme="blue">
         Checkbox
       </Checkbox>

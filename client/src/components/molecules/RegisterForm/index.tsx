@@ -18,9 +18,7 @@ import { registrationValidation } from "../../../validations/authValidation";
 import { RegisterData } from "../../../types/UserType";
 import useSignup from "../../../hooks/Auth/useSignup";
 
-interface RegisterFormProps {}
-
-const RegisterForm: React.FC<RegisterFormProps> = ({}) => {
+const RegisterForm = () => {
   const { isLoading, mutateAsync } = useSignup();
 
   const toast = useToast();
@@ -69,7 +67,11 @@ const RegisterForm: React.FC<RegisterFormProps> = ({}) => {
 
       <SocialButton />
 
-      <SimpleGrid columns={2} spacing={10} alignItems="center">
+      <SimpleGrid
+        columns={{ base: 1, lg: 2 }}
+        spacing={{ base: 0, lg: 10 }}
+        alignItems="center"
+      >
         <InputText
           register={{ ...register("firstName") }}
           required={true}

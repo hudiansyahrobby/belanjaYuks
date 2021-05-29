@@ -1,4 +1,4 @@
-import { chakra, Flex } from "@chakra-ui/react";
+import { Box, chakra, Flex } from "@chakra-ui/react";
 import React from "react";
 import { ReactComponent as Image } from "../../../assets/images/change_password.svg";
 import Layout from "../../atoms/Layout";
@@ -9,10 +9,12 @@ const ChangePasswordTemplate = () => {
 
   return (
     <Layout>
-      <Flex alignItems="center" justifyContent="center" mt="100px">
-        <ChangePasswordImage width="full" height="300px" />
-      </Flex>
-      <ChangePasswordForm />
+      <Box mx="20px">
+        <Flex alignItems="center" justifyContent="center" mt="100px">
+          <ChangePasswordImage width="full" height="300px" />
+        </Flex>
+        <ChangePasswordForm />
+      </Box>
     </Layout>
   );
 };

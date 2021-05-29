@@ -9,8 +9,18 @@ const RegisterTemplate = () => {
 
   return (
     <Layout>
-      <SimpleGrid columns={2} spacing={10} alignItems="center" my="20">
-        <Flex alignItems="center" justifyContent="center">
+      <SimpleGrid
+        columns={{ base: 1, md: 2 }}
+        spacing={10}
+        alignItems="center"
+        my="20"
+        mx="20px"
+      >
+        <Flex
+          alignItems="center"
+          justifyContent="center"
+          display={{ base: "none", md: "flex" }}
+        >
           <RegisterImage width="full" height="70vh" />
         </Flex>
         <RegisterForm />
