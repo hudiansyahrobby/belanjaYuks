@@ -19,8 +19,7 @@ import { deleteImages, uploadImages } from '../helpers/images';
 
 export const create = async (req: any, res: Response) => {
     const { id: userId, ...user } = req.user;
-    const { name, images, description } = req.body;
-
+    const { images, name } = req.body;
     try {
         if (user.role === 'admin') {
             return res.status(400).json({ message: "You're an admin, you can't have shop" });
@@ -41,8 +40,7 @@ export const create = async (req: any, res: Response) => {
         const imageURL = await uploadImages(images);
 
         const shopData: ShopType = {
-            description,
-            name,
+            ...req.body,
             images: imageURL,
             userId,
         };

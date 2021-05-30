@@ -1,53 +1,80 @@
 import { Button } from "@chakra-ui/button";
-import { Box, Flex, HStack, Text, VStack } from "@chakra-ui/react";
+import { Box, Flex, HStack, SimpleGrid, Text, VStack } from "@chakra-ui/react";
 import React from "react";
 import { AiOutlineShop } from "react-icons/ai";
 import StarRatings from "react-star-ratings";
+import useFavorites from "../../../hooks/Favorite/useFavorites";
+import { ProductData } from "../../../types/ProductType";
+import AlertMessage from "../../atoms/AlertMessage";
 import Card from "../../atoms/Card";
 import Layout from "../../atoms/Layout";
 import LinkNavigation from "../../atoms/LinkNavigation";
+import Loading from "../../atoms/Loading";
 import Title from "../../atoms/typography/Title";
 
 const FavoriteTemplate = () => {
+  const { isLoading, data: favorites, isError, error } = useFavorites();
+  const customError: any = error;
+  const appError = customError?.response?.data?.message;
+
+  if (isLoading) {
+    return <Loading />;
+  }
+  console.log(favorites.products);
+
   return (
     <Layout>
       <Box mt="120px">
         <Title textAlign="center">Your Favorites</Title>
-        <HStack spacing="20px" my="30px">
-          <Card
-            to="/products/1"
-            title="Keyboard Warrior"
-            image="https://images.unsplash.com/photo-1546213290-e1b492ab3eee?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=667&q=80"
-            buttonText="See Products"
+        {isError ? (
+          <AlertMessage
+            title="Something Went Wrong"
+            description={appError}
+            status="error"
+          />
+        ) : (
+          <SimpleGrid
+            columns={{ sm: 2, md: 4, xl: 5 }}
+            spacing="20px"
+            mx="20px"
+            my="30px"
+            justifyItems="center"
           >
-            <VStack spacing="5px" align="left" mt="5px">
-              <Text fontWeight="thin">$5.43</Text>
-              <Flex alignItems="center">
-                <AiOutlineShop />{" "}
-                <LinkNavigation ml="8px" to="/shops/1">
-                  Toko Uncle Moto
-                </LinkNavigation>
-              </Flex>
-              <StarRatings
-                rating={5}
-                starRatedColor="#FBBF24"
-                numberOfStars={5}
-                starDimension="20px"
-                starSpacing="1px"
-                name="rating"
-              />
-            </VStack>
-          </Card>
-        </HStack>
-        <Button
-          variant="outline"
-          mx="auto"
-          display="block"
-          my="40px"
-          colorScheme="telegram"
-        >
-          Load More
-        </Button>
+            {favorites.products?.map((product: ProductData) => {
+              return (
+                <Card
+                  key={product.id}
+                  isLoading={isLoading}
+                  to={`/products/${product.id}`}
+                  title={product.name}
+                  image={product.images}
+                  buttonText="See Products"
+                >
+                  <VStack spacing="5px" align="left" mt="5px">
+                    <Text fontWeight="thin">${product.price}</Text>
+                    <Flex alignItems="center">
+                      <AiOutlineShop />{" "}
+                      <LinkNavigation
+                        ml="8px"
+                        to={`/shop?shopId=${product.seller.id}`}
+                      >
+                        {product.seller.name}
+                      </LinkNavigation>
+                    </Flex>
+                    <StarRatings
+                      rating={5}
+                      starRatedColor="#FBBF24"
+                      numberOfStars={5}
+                      starDimension="20px"
+                      starSpacing="1px"
+                      name="rating"
+                    />
+                  </VStack>
+                </Card>
+              );
+            })}
+          </SimpleGrid>
+        )}
       </Box>
     </Layout>
   );

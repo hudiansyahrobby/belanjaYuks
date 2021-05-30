@@ -1,6 +1,7 @@
 import { Response } from 'express';
 import Favorite from '../models/favorite.model';
 import Product from '../models/product.model';
+import Shop from '../models/shop.model';
 import {
     findUserFavorite,
     getFavoriteItemById,
@@ -56,6 +57,12 @@ export const get = async (req: any, res: Response) => {
                 {
                     model: Product,
                     through: { attributes: [] },
+                    include: [
+                        {
+                            model: Shop,
+                            attributes: ['id', 'name', 'location'],
+                        },
+                    ],
                 },
             ],
         });

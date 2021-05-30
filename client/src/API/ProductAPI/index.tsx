@@ -8,7 +8,8 @@ export const getProducts = async () => {
 
 export const getProductById = async (productId: number) => {
   const { data } = await axios.get(`/products/${productId}`);
-  return data.data;
+  console.log(data);
+  return data.product;
 };
 
 export const addProduct = async (productData: Omit<ProductData, "id">) => {

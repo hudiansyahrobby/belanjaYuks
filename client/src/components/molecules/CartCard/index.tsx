@@ -5,16 +5,57 @@ import CircleButton from "../../atoms/CircleButton";
 import LinkNavigation from "../../atoms/LinkNavigation";
 import ChangeQuantityButton from "../ChangeQuantityButton";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import useDeleteFromCart from "../../../hooks/Cart/useDeleteFromCart";
+import { useToast } from "@chakra-ui/toast";
 
 interface CartCardProps {
+  id: number;
   image: string;
   title: string;
   price: number;
+  maxQuantity: number;
+  defaultQuantity: number;
 }
 
-const CartCard: React.FC<CartCardProps> = ({ image, title, price }) => {
+const CartCard: React.FC<CartCardProps> = ({
+  id,
+  image,
+  title,
+  price,
+  maxQuantity,
+  defaultQuantity,
+}) => {
+  const [quantity, setQuantity] = React.useState<number>(defaultQuantity);
+  const { mutateAsync } = useDeleteFromCart();
+  const toast = useToast();
+
+  const onDeleteCart = async () => {
+    await mutateAsync(id, {
+      onSuccess: (success) => {
+        console.log(success);
+        toast({
+          title: "Delete Successfully",
+          description: success?.message,
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+      },
+      onError: (error) => {
+        console.log(error);
+        const appError: any = error;
+        toast({
+          title: "Error",
+          description: appError?.response?.data?.message,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      },
+    });
+  };
   return (
-    <SimpleGrid columns={2} w="500px" mt="30px">
+    <SimpleGrid columns={{ base: 1, lg: 2 }} maxWidth="500px" mt="30px">
       <Image
         borderRadius="3xl"
         width="full"
@@ -22,17 +63,26 @@ const CartCard: React.FC<CartCardProps> = ({ image, title, price }) => {
         alt={title}
         fallbackSrc="https://via.placeholder.com/150"
       />
-      <VStack ml="20px" spacing="8px" align="left">
-        <LinkNavigation to="/" fontWeight="extrabold" fontSize="20px">
+      <VStack ml="20px" spacing="8px" align="left" mt={{ base: "10px", lg: 0 }}>
+        <LinkNavigation
+          to={`products/${id}`}
+          fontWeight="extrabold"
+          fontSize="20px"
+        >
           {title}
         </LinkNavigation>
         <Text fontWeight="semibold" fontSize="17px" color="gray.800" mb="10px">
           ${price}
         </Text>
         <Flex justifyContent="space-between">
-          <ChangeQuantityButton quantity={2} />
+          <ChangeQuantityButton
+            quantity={quantity}
+            setQuantity={setQuantity}
+            maxQuantity={maxQuantity}
+          />
           <CircleButton
             icon={<RiDeleteBin6Line />}
+            onClick={onDeleteCart}
             variant="outline"
             backgroundColor="gray.200"
           />

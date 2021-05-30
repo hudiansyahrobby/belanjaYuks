@@ -34,6 +34,9 @@ export default class Shop extends Model {
     @Column(DataType.TEXT)
     description: string;
 
+    @Column(DataType.STRING)
+    location: string;
+
     @ForeignKey(() => User)
     @Column
     userId: string;

@@ -2,7 +2,7 @@ import { QueryClient, useQuery } from "react-query";
 import { getProductById } from "../../API/ProductAPI";
 import { ProductData } from "../../types/ProductType";
 
-const useShop = (productId: number) => {
+const useProduct = (productId: number) => {
   const queryClient: any = new QueryClient();
   return useQuery(["products", productId], () => getProductById(productId), {
     initialData: () => {
@@ -14,4 +14,4 @@ const useShop = (productId: number) => {
   });
 };
 
-export default useShop;
+export default useProduct;

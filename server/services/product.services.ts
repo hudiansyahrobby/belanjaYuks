@@ -10,7 +10,7 @@ export const getProductbyId = (id: string) => {
         include: [
             {
                 model: Shop,
-                attributes: ['id', 'name'],
+                attributes: ['id', 'name', 'location'],
             },
             {
                 model: Category,
@@ -40,7 +40,7 @@ export const getAllProducts = (
         include: [
             {
                 model: Shop,
-                attributes: ['id', 'name'],
+                attributes: ['id', 'name', 'location'],
             },
             {
                 model: Category,

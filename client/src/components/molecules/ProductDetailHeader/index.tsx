@@ -5,24 +5,111 @@ import {
   Flex,
   Heading,
   Text,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import React from "react";
 import { AiOutlineShop } from "react-icons/ai";
 import { GiBoxUnpacking } from "react-icons/gi";
 import StarRatings from "react-star-ratings";
+import { capitalizeEachWord } from "../../../helpers/capitalizeEachWord";
+import { ProductData } from "../../../types/ProductType";
 import LinkNavigation from "../../atoms/LinkNavigation";
 import Price from "../../atoms/typography/Price";
 import ChangeQuantityButton from "../ChangeQuantityButton";
+import { Icon } from "@chakra-ui/react";
+import { GoHeart } from "react-icons/go";
+import { FaBoxOpen } from "react-icons/fa";
+import useToggleFavorite from "../../../hooks/Favorite/useToggleFavorite";
+import { useHistory } from "react-router";
+import useAddToCart from "../../../hooks/Cart/useAddToCart";
 
-interface ProductDetailHeaderProps {}
+interface ProductDetailHeaderProps {
+  product: ProductData;
+}
 
-const ProductDetailHeader: React.FC<ProductDetailHeaderProps> = ({}) => {
+const ProductDetailHeader: React.FC<ProductDetailHeaderProps> = ({
+  product,
+}) => {
+  const { mutateAsync } = useToggleFavorite();
+  const { mutateAsync: addToCart } = useAddToCart();
+
+  const toast = useToast();
+  const history = useHistory();
+
+  const onToggleFavorite = async () => {
+    await mutateAsync(product.id, {
+      onSuccess: (success) => {
+        console.log(success);
+        toast({
+          title: "Success",
+          description: success?.message,
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+      },
+      onError: (error) => {
+        const appError: any = error;
+        if (appError?.response?.status === 403) {
+          history.push("/login");
+        } else {
+          toast({
+            title: "Error",
+            description: appError?.response?.data?.message,
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+          });
+        }
+      },
+    });
+  };
+
+  const [quantity, setQuantity] = React.useState<number>(1);
+
+  const onAddToCart = async () => {
+    await addToCart(product.id, {
+      onSuccess: (success) => {
+        console.log(success);
+        toast({
+          title: "Success",
+          description: success?.message,
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+      },
+      onError: (error) => {
+        const appError: any = error;
+        if (appError?.response?.status === 403) {
+          history.push("/login");
+        } else {
+          toast({
+            title: "Error",
+            description: appError?.response?.data?.message,
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+          });
+        }
+      },
+    });
+  };
+
   return (
     <VStack spacing="8px" align="flex-start">
-      <Heading as="h1" fontSize="27px">
-        Casual Shoes
-      </Heading>
+      <Flex justifyContent="space-between" alignItems="center" w="full">
+        <Heading as="h1" fontSize={{ base: "24px", md: "27px" }}>
+          {capitalizeEachWord(product.name)}
+        </Heading>
+        <Icon
+          as={GoHeart}
+          onClick={onToggleFavorite}
+          fontSize="27px"
+          _hover={{ color: "red.500", cursor: "pointer" }}
+        />
+      </Flex>
       <Flex alignItems="flex-end">
         <Box>
           <StarRatings
@@ -40,25 +127,45 @@ const ProductDetailHeader: React.FC<ProductDetailHeaderProps> = ({}) => {
         </Text>
       </Flex>
 
-      <Price price={5.43} />
+      <Price price={product.price} />
       <Divider />
       <Flex alignItems="center">
         <AiOutlineShop />{" "}
-        <LinkNavigation ml="8px" to="/">
-          Toko Uncle Moto
+        <LinkNavigation ml="8px" to={`/shop/${product.seller.id}`}>
+          {product.seller.name}
         </LinkNavigation>
       </Flex>
 
       <Flex alignItems="center">
         <GiBoxUnpacking />{" "}
-        <Text ml="8px" to="/" fontSize="15px">
-          Delivered From Jakarta
+        <Text ml="8px" fontSize="15px">
+          Delivered From {product.seller.location}
         </Text>
       </Flex>
-      <Box py="15px">
-        <ChangeQuantityButton quantity={1} />
-      </Box>
-      <Button>Add To Cart</Button>
+
+      <Flex alignItems="center">
+        <FaBoxOpen />{" "}
+        <Text ml="8px" fontSize="15px">
+          Quantity {product.quantity}
+        </Text>
+      </Flex>
+      {/* <Flex py="15px" alignItems="center">
+        <ChangeQuantityButton
+          quantity={quantity}
+          setQuantity={setQuantity}
+          maxQuantity={product.quantity}
+        />
+        <Text
+          color="gray.500"
+          ml="20px"
+          fontSize={{ base: "12px", sm: "16px" }}
+        >
+          Max Quantity : {product.quantity}
+        </Text>
+      </Flex> */}
+      <Button width={{ base: "full", sm: "max-content" }} onClick={onAddToCart}>
+        Add To Cart
+      </Button>
     </VStack>
   );
 };

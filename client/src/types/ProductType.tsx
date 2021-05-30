@@ -10,5 +10,5 @@ export interface ProductData {
   isSecond: boolean;
   images: string;
   categories: Array<CategoryData>;
-  seller: Pick<ShopData, "id" | "name">;
+  seller: Pick<ShopData, "id" | "name" | "location">;
 }

@@ -26,6 +26,10 @@ module.exports = {
                 type: Sequelize.TEXT(1500),
                 allowNull: false,
             },
+            location: {
+                type: Sequelize.STRING(150),
+                allowNull: false,
+            },
             userId: {
                 type: Sequelize.UUID,
                 onDelete: 'CASCADE',

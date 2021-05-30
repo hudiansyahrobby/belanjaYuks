@@ -29,8 +29,8 @@ const App: React.FC = () => {
             <Route path="/change-password" component={ChangePassword} />
             <Route path="/products" exact component={Products} />
             <Route path="/products/:id" exact component={ProductDetail} />
-            <Route path="/favorite" exact component={Favorite} />
-            <Route path="/cart" exact component={MyCart} />
+            <Route path="/favorites" exact component={Favorite} />
+            <Route path="/carts" exact component={MyCart} />
           </Suspense>
         </Switch>
       </Router>
