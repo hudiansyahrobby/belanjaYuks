@@ -56,7 +56,7 @@ const ShopCard = () => {
               <Card
                 key={shop.id}
                 isLoading={isLoading}
-                to={`/shop?shopId=${shop.id}`}
+                to={`/shops/${shop.id}`}
                 title={shop.name}
                 image={shop.images}
                 subtitle={shop.description}

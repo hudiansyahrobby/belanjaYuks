@@ -17,6 +17,8 @@ const MyProfile = React.lazy(() => import("./pages/MyProfile"));
 const AdminDashboard = React.lazy(() => import("./pages/AdminDashboard"));
 const CreateShop = React.lazy(() => import("./pages/CreateShop"));
 const CreateProduct = React.lazy(() => import("./pages/CreateProduct"));
+const Shops = React.lazy(() => import("./pages/Shops"));
+const ShopDetail = React.lazy(() => import("./pages/ShopDetail"));
 
 const App: React.FC = () => {
   const queryClient = new QueryClient();
@@ -37,7 +39,10 @@ const App: React.FC = () => {
             <Route path="/carts" exact component={MyCart} />
             <Route path="/me" exact component={MyProfile} />
             <Route path="/admin" exact component={AdminDashboard} />
+            <Route path="/shops" exact component={Shops} />
             <Route path="/shops/create" exact component={CreateShop} />
+            <Route path="/shops/:id" component={ShopDetail} />
+
             <Route
               path="/shops/products/create"
               exact

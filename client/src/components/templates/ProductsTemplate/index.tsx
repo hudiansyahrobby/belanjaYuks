@@ -1,19 +1,7 @@
 import { Button } from "@chakra-ui/button";
-import {
-  Box,
-  Flex,
-  HStack,
-  Text,
-  VStack,
-  Grid,
-  GridItem,
-} from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem } from "@chakra-ui/react";
 import React from "react";
-import { AiOutlineShop } from "react-icons/ai";
-import StarRatings from "react-star-ratings";
-import Card from "../../atoms/Card";
 import Layout from "../../atoms/Layout";
-import LinkNavigation from "../../atoms/LinkNavigation";
 import MenuSelect from "../../atoms/MenuSelect";
 import Title from "../../atoms/typography/Title";
 import FilterBox from "../../molecules/FilterBox";
