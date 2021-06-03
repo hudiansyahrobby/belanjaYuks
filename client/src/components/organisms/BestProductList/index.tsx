@@ -4,9 +4,7 @@ import LinkNavigation from "../../atoms/LinkNavigation";
 import Title from "../../atoms/typography/Title";
 import BestProductsCard from "../../molecules/BestProductsCard";
 
-interface ProductListProps {}
-
-const BestProductList: React.FC<ProductListProps> = ({}) => {
+const BestProductList = () => {
   return (
     <Box mt="100px" mx="20px">
       <Flex alignItems="center">

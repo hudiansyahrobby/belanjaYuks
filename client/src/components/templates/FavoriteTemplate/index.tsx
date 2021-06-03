@@ -20,7 +20,6 @@ const FavoriteTemplate = () => {
   if (isLoading) {
     return <Loading />;
   }
-  console.log(favorites.products);
 
   return (
     <Layout>
@@ -40,7 +39,7 @@ const FavoriteTemplate = () => {
             my="30px"
             justifyItems="center"
           >
-            {favorites.products?.map((product: ProductData) => {
+            {favorites?.products?.map((product: ProductData) => {
               return (
                 <Card
                   key={product.id}

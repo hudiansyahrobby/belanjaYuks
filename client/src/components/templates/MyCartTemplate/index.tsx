@@ -35,7 +35,7 @@ const MyCartTemplate = () => {
   if (isCartsLoading) {
     return <Loading />;
   }
-  console.log("CARTS", carts);
+
   return (
     <Layout>
       <Box mt="120px" mx="20px">

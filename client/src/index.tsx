@@ -1,12 +1,11 @@
+import { ChakraProvider } from "@chakra-ui/react";
+import "@fontsource/noto-sans";
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
-
-import { ChakraProvider } from "@chakra-ui/react";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import Theme from "./theme";
-import "@fontsource/noto-sans";
 
 ReactDOM.render(
   <React.StrictMode>

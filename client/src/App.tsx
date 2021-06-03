@@ -13,6 +13,7 @@ const Products = React.lazy(() => import("./pages/Products"));
 const Favorite = React.lazy(() => import("./pages/Favorite"));
 const MyCart = React.lazy(() => import("./pages/MyCart"));
 const ProductDetail = React.lazy(() => import("./pages/ProductDetail"));
+const MyProfile = React.lazy(() => import("./pages/MyProfile"));
 
 const App: React.FC = () => {
   const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ const App: React.FC = () => {
             <Route path="/products/:id" exact component={ProductDetail} />
             <Route path="/favorites" exact component={Favorite} />
             <Route path="/carts" exact component={MyCart} />
+            <Route path="/me" exact component={MyProfile} />
           </Suspense>
         </Switch>
       </Router>
