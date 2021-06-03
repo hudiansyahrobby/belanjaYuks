@@ -20,6 +20,7 @@
     "framer-motion": "^3.2.2-rc.1",
     "jsonwebtoken": "^8.5.1",
     "node-sass": "^4.14.1",
+    "query-string": "^7.0.0",
     "react": "^17.0.1",
     "react-avatar": "^3.10.0",
     "react-chartjs-2": "^3.0.3",

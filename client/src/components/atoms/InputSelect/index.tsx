@@ -37,7 +37,7 @@ const InputSelect: React.FC<InputSelectProps> = (props) => {
   const [select, setSelect] = React.useState<string>("");
 
   return (
-    <FormControl isInvalid={!!error}>
+    <FormControl isInvalid={!!error} my="10px">
       <FormLabel htmlFor={name}>{label}</FormLabel>
       <InputGroup width="full">
         <SelectInput
