@@ -14,6 +14,7 @@ const Favorite = React.lazy(() => import("./pages/Favorite"));
 const MyCart = React.lazy(() => import("./pages/MyCart"));
 const ProductDetail = React.lazy(() => import("./pages/ProductDetail"));
 const MyProfile = React.lazy(() => import("./pages/MyProfile"));
+const AdminDashboard = React.lazy(() => import("./pages/AdminDashboard"));
 
 const App: React.FC = () => {
   const queryClient = new QueryClient();
@@ -33,6 +34,7 @@ const App: React.FC = () => {
             <Route path="/favorites" exact component={Favorite} />
             <Route path="/carts" exact component={MyCart} />
             <Route path="/me" exact component={MyProfile} />
+            <Route path="/admin" exact component={AdminDashboard} />
           </Suspense>
         </Switch>
       </Router>
