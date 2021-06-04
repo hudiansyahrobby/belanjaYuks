@@ -23,10 +23,10 @@ export const deleteShop = async () => {
 
 export const getShopById = async (shopId: number) => {
   const { data } = await axios.get(`/shops/${shopId}`);
-  return data.data;
+  return data.shop;
 };
 
 export const getProductByShopId = async (shopId: number) => {
   const { data } = await axios.get(`/shops/products/${shopId}`);
-  return data.data;
+  return data.products;
 };

@@ -15,6 +15,8 @@ const MyCart = React.lazy(() => import("./pages/MyCart"));
 const ProductDetail = React.lazy(() => import("./pages/ProductDetail"));
 const MyProfile = React.lazy(() => import("./pages/MyProfile"));
 const AdminDashboard = React.lazy(() => import("./pages/AdminDashboard"));
+const AdminProductList = React.lazy(() => import("./pages/AdminProductList"));
+const AdminShopList = React.lazy(() => import("./pages/AdminShopList"));
 const CreateShop = React.lazy(() => import("./pages/CreateShop"));
 const CreateProduct = React.lazy(() => import("./pages/CreateProduct"));
 const Shops = React.lazy(() => import("./pages/Shops"));
@@ -34,14 +36,16 @@ const App: React.FC = () => {
             <Route path="/forgot-password" component={ForgetPassword} />
             <Route path="/change-password" component={ChangePassword} />
             <Route path="/products" exact component={Products} />
-            <Route path="/products/:id" exact component={ProductDetail} />
+            <Route path="/products/:id" component={ProductDetail} />
             <Route path="/favorites" exact component={Favorite} />
             <Route path="/carts" exact component={MyCart} />
             <Route path="/me" exact component={MyProfile} />
+            <Route path="/admin/shops" component={AdminShopList} />
             <Route path="/admin" exact component={AdminDashboard} />
+            <Route path="/admin/products" component={AdminProductList} />
             <Route path="/shops" exact component={Shops} />
             <Route path="/shops/create" exact component={CreateShop} />
-            <Route path="/shops/:id" component={ShopDetail} />
+            <Route path="/shops/:shopId" component={ShopDetail} />
 
             <Route
               path="/shops/products/create"

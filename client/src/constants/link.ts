@@ -15,4 +15,8 @@ export const link = [
     title: "Favorites",
     link: "/favorites",
   },
+  {
+    title: "My Profile",
+    link: "/me",
+  },
 ];

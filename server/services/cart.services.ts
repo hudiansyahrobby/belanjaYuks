@@ -1,5 +1,6 @@
 import Cart from '../models/cart.model';
 import Product from '../models/product.model';
+import Shop from '../models/shop.model';
 
 export const createCart = (userId: string) => {
     return Cart.create({ userId });
@@ -12,6 +13,11 @@ export const getAllCartItems = (userId: string) => {
             {
                 model: Product,
                 through: { as: 'productCart', attributes: ['quantity'] },
+                include: [
+                    {
+                        model: Shop,
+                    },
+                ],
             },
         ],
     });
