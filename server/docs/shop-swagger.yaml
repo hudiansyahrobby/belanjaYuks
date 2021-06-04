@@ -90,7 +90,7 @@ paths:
         500:
           description: "Server Error"
     delete:
-      description: "Delete shop by id (ONLY SHOP OWNER)"
+      description: "Delete my shop (ONLY SHOP OWNER)"
       security:
         - bearerAuth: []
       tags:
@@ -123,9 +123,58 @@ paths:
           description: "shop not found"
         500:
           description: "Server Error"
+    delete:
+      description: "Delete Shop By ID (ONLY ADMIN)"
+      parameters:
+        - in: path
+          required: true
+          name: shopId
+          schema:
+            type: string
+          description: delete shop by id  
+      security:
+        - bearerAuth: []
+      tags:
+        - "Shops"
+      responses:
+        200:
+          description: "OK"
+        404:
+          description: "shop not found"
+        500:
+          description: "Server Error"
+  /shops/products:
+    get:
+      description: "Get My Shop Product"
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+          description: shop list at particular page  
+        - in: query
+          name: size
+          schema:
+            type: integer
+          description: The numbers of items to return
+        - in: query
+          name: sort
+          schema:
+            type: string
+            enum: [latest, oldest]
+          description: sort shop by latest or oldest
+      security:
+        - bearerAuth: []
+      tags:
+        - "Shops"
+      responses:
+        200:
+          description: "OK"
+        500:
+          description: "Server Error"
   /shops/products/{shopId}:
     get:
-      description: "Get All Shop Product"
+      description: "Get All Shop Product By Shop ID"
       parameters:
         - in: query
           name: page
@@ -164,6 +213,9 @@ components:
         name:
           type: string
           example: "Garuda shop"
+        location:
+          type: string
+          example: "Jakarta"
         images:
           type: string
           format: binary

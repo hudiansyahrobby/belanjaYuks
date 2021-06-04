@@ -1,19 +1,110 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Table,
-  Tbody,
-  Td,
-  Text,
-  Tfoot,
-  Th,
-  Thead,
-  Tr,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, Image, Text, useToast } from "@chakra-ui/react";
+import queryString from "query-string";
 import React from "react";
+import { RiDeleteBin6Fill } from "react-icons/ri";
+import { useLocation } from "react-router";
+import useDeleteShopById from "../../../hooks/Shop/useDeleteShopById";
+import useShopsPagination from "../../../hooks/Shop/useShopsPagination";
+import { ShopData } from "../../../types/ShopType";
+import AlertMessage from "../../atoms/AlertMessage";
+import Loading from "../../atoms/Loading";
+import TableItem from "../../atoms/TableItem";
 
 const AdminShopListTemplate = () => {
+  const { search } = useLocation();
+  const { page } = queryString.parse(search);
+  const pageNumber = parseInt((page as string) || "0");
+
+  const toast = useToast();
+  const { isLoading, isError, error, data: shops } = useShopsPagination(
+    pageNumber
+  );
+
+  const { isLoading: isDeleteShopLoading, mutateAsync } = useDeleteShopById();
+
+  const onDeleteShop = React.useCallback(
+    async (shopId: number) => {
+      await mutateAsync(shopId, {
+        onSuccess: (success) => {
+          toast({
+            title: "Delete Successfully",
+            description: success?.message,
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+          });
+        },
+        onError: (error) => {
+          const appError: any = error;
+          toast({
+            title: "Error",
+            description: appError?.response?.data?.message,
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+          });
+        },
+      });
+    },
+    [mutateAsync, toast]
+  );
+
+  const columns: any = React.useMemo(
+    () => [
+      {
+        Header: "Name",
+        accessor: "name",
+      },
+
+      {
+        Header: "Location",
+        accessor: "location",
+      },
+      {
+        Header: "Action",
+        accessor: "action",
+      },
+    ],
+    []
+  );
+
+  const data = React.useMemo(() => {
+    return shops?.results?.map((shop: ShopData) => {
+      return {
+        name: (
+          <Flex alignItems="center">
+            <Image
+              src={shop.images}
+              width="40px"
+              height="40px"
+              mr="15px"
+              rounded="full"
+            />
+            <Text>{shop.name}</Text>
+          </Flex>
+        ),
+        location: shop.location,
+        action: (
+          <Button
+            bgColor="red.500"
+            leftIcon={<RiDeleteBin6Fill />}
+            onClick={() => onDeleteShop(shop.id)}
+            isLoading={isDeleteShopLoading}
+          >
+            Delete
+          </Button>
+        ),
+      };
+    });
+  }, [isDeleteShopLoading, onDeleteShop, shops?.results]);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  const customError: any = error;
+  const appError = customError?.response?.data?.message;
+
   return (
     <Flex>
       <Box mr="20px">
@@ -43,39 +134,21 @@ const AdminShopListTemplate = () => {
               Shop List
             </Text>
           </Flex>
-          <Table variant="simple">
-            <Thead>
-              <Tr>
-                <Th>To convert</Th>
-                <Th>into</Th>
-                <Th isNumeric>multiply by</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              <Tr>
-                <Td>inches</Td>
-                <Td>millimetres (mm)</Td>
-                <Td isNumeric>25.4</Td>
-              </Tr>
-              <Tr>
-                <Td>feet</Td>
-                <Td>centimetres (cm)</Td>
-                <Td isNumeric>30.48</Td>
-              </Tr>
-              <Tr>
-                <Td>yards</Td>
-                <Td>metres (m)</Td>
-                <Td isNumeric>0.91444</Td>
-              </Tr>
-            </Tbody>
-            <Tfoot>
-              <Tr>
-                <Th>To convert</Th>
-                <Th>into</Th>
-                <Th isNumeric>multiply by</Th>
-              </Tr>
-            </Tfoot>
-          </Table>
+
+          {isError ? (
+            <AlertMessage
+              title="Something Went Wrong"
+              description={appError}
+              status="error"
+            />
+          ) : (
+            <TableItem
+              columns={columns}
+              data={data}
+              pageNumber={pageNumber}
+              totalPage={shops.totalPages}
+            />
+          )}
         </Box>
       </Box>
     </Flex>

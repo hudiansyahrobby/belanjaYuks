@@ -85,3 +85,7 @@ export const updateUserShop = (updatedShop: ShopType, userId: string) => {
 export const deleteUserShop = (userId: string) => {
     return Shop.destroy({ where: { userId } });
 };
+
+export const deleteShopById = (shopId: string) => {
+    return Shop.destroy({ where: { id: shopId } });
+};

@@ -9,6 +9,7 @@ import {
     getUserShop,
     getShopByName,
     updateUserShop,
+    deleteShopById,
 } from '../services/shop.services';
 import { getPagination } from '../helpers/getPagination';
 import { getSort } from '../helpers/getSort';
@@ -105,6 +106,29 @@ export const getShopProduct = async (req: Request, res: Response) => {
     }
 };
 
+export const getMyShopProduct = async (req: any, res: Response) => {
+    const { page, size, sort } = req.query;
+    const user = req.user;
+    const shopId = user.myShop.id;
+
+    const _page = parseInt(page as string);
+    const _size = parseInt(size as string);
+
+    const { limit, offset } = getPagination(_page, _size);
+
+    const orderBy = !!sort ? getSort(sort as string) : ['createdAt', 'DESC'];
+
+    try {
+        const response = await getShopProducts(shopId, limit, offset, orderBy);
+
+        const products = getPaginationData(response, _page, limit);
+
+        return res.status(200).json({ products });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
+
 export const getDetail = async (req: Request, res: Response) => {
     const { shopId } = req.params;
 
@@ -157,7 +181,7 @@ export const update = async (req: any, res: Response) => {
     }
 };
 
-export const remove = async (req: any, res: Response) => {
+export const removeMyShop = async (req: any, res: Response) => {
     const { id: userId } = req.user;
 
     try {
@@ -170,6 +194,25 @@ export const remove = async (req: any, res: Response) => {
         await deleteUserShop(userId);
 
         await changeUserRole('buyer', userId);
+        return res.status(200).json({ message: 'Shop successfully deleted', shop });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
+
+export const removeShopById = async (req: any, res: Response) => {
+    const { shopId } = req.params;
+
+    try {
+        const shop = await getShopById(shopId);
+
+        if (!shop) {
+            return res.status(404).json({ message: `Shop with ID ${shopId} not found` });
+        }
+
+        await deleteShopById(shopId);
+
+        await changeUserRole('buyer', shop.userId);
         return res.status(200).json({ message: 'Shop successfully deleted', shop });
     } catch (error) {
         return res.status(500).json({ message: error.message });

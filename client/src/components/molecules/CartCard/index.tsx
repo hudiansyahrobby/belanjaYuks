@@ -32,7 +32,6 @@ const CartCard: React.FC<CartCardProps> = ({
   const onDeleteCart = async () => {
     await mutateAsync(id, {
       onSuccess: (success) => {
-        console.log(success);
         toast({
           title: "Delete Successfully",
           description: success?.message,
@@ -42,7 +41,6 @@ const CartCard: React.FC<CartCardProps> = ({
         });
       },
       onError: (error) => {
-        console.log(error);
         const appError: any = error;
         toast({
           title: "Error",

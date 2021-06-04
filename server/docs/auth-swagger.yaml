@@ -24,9 +24,12 @@ paths:
                     passwordConfirmation:
                       type: string
                       example: "Testing12,."
-                    name:
+                    firstName:
                       type: string
-                      example: "testing testing"
+                      example: "testing"
+                    lastName:
+                      type: string
+                      example: "testing"
                     
       responses:
         201:

@@ -8,6 +8,12 @@ const shop = {
             'any.required': `name is a required field`,
         }),
 
+        location: Joi.string().required().messages({
+            'string.base': `location must be a type of string`,
+            'string.empty': `location cannot be an empty field`,
+            'any.required': `location is a required field`,
+        }),
+
         images: Joi.array().items(Joi.string().required()).messages({
             'string.base': `images must be a type of string`,
             'string.empty': `images cannot be an empty field`,
