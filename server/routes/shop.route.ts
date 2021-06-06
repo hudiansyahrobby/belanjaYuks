@@ -12,6 +12,7 @@ import {
     removeMyShop,
     removeShopById,
     getMyShopProduct,
+    getMyShop,
 } from '../controllers/shop.controller';
 
 const router: Router = Router();
@@ -23,6 +24,8 @@ router.get('/shops', get);
 router.get('/shops/products', verifyUser, verifySeller, getMyShopProduct);
 
 router.get('/shops/products/:shopId', getShopProduct);
+
+router.get('/shops/me', verifyUser, verifySeller, getMyShop);
 
 router.get('/shops/:shopId', getDetail);
 

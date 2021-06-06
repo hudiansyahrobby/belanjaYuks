@@ -19,6 +19,7 @@ import { useParams } from "react-router";
 import { ProductData } from "../../../types/ProductType";
 import Loading from "../../atoms/Loading";
 import AlertMessage from "../../atoms/AlertMessage";
+import ReactHtmlParser from "react-html-parser";
 
 const ProductsDetailTemplate = () => {
   let params: any = useParams();
@@ -84,7 +85,9 @@ const ProductsDetailTemplate = () => {
 
               <TabPanels>
                 <TabPanel>
-                  <Text fontSize="15px">{product.description}</Text>
+                  <Text fontSize="15px">
+                    {ReactHtmlParser(product.description)}
+                  </Text>
                 </TabPanel>
                 <TabPanel>
                   <CommentCards />

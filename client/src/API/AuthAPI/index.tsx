@@ -13,5 +13,6 @@ export const signup = async (registerData: RegisterData) => {
 
 export const logout = async () => {
   const { data } = await axios.post("/logout");
+  console.log(data);
   return data.data;
 };

@@ -58,7 +58,7 @@ const ShopCard = () => {
                 isLoading={isLoading}
                 to={`/shops/${shop.id}`}
                 title={shop.name}
-                image={shop.images}
+                image={shop.images[0]}
                 subtitle={shop.description}
                 buttonText="Visit Shop"
               />

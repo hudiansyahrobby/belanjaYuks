@@ -19,10 +19,10 @@ const product = {
             'any.required': `images is a required field`,
         }),
 
-        price: Joi.number().required().min(1).messages({
+        price: Joi.number().required().min(0).messages({
             'number.base': `price must be a type of number`,
             'number.empty': `price cannot be an empty field`,
-            'number.min': `price must be greater than 0`,
+            'number.min': `price must not be less than 0`,
             'any.required': `price is a required field`,
         }),
 
@@ -30,7 +30,7 @@ const product = {
             'string.base': `description must be a type of string`,
             'string.empty': `description cannot be an empty field`,
             'string.min': 'description must be at least 150 characters',
-            'string.max': 'description must not be greater than 1500 characters',
+            'string.max': 'description must not be greater than 5000 characters',
             'any.required': `description is a required field`,
         }),
 

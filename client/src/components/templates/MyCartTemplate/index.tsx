@@ -74,7 +74,7 @@ const MyCartTemplate = () => {
 
           <Title textAlign="center">Payment Method</Title>
           <Box my="50px">
-            <InputSelect
+            {/* <InputSelect
               register={{ ...register("payment") }}
               name="payment"
               label="Choose Payment Option"
@@ -82,7 +82,7 @@ const MyCartTemplate = () => {
               isLoading={false}
               options={options}
               error={errors.payment?.message}
-            />
+            /> */}
           </Box>
 
           <Title textAlign="center">Order Info</Title>

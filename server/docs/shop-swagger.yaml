@@ -172,6 +172,18 @@ paths:
           description: "OK"
         500:
           description: "Server Error"
+  /shops/me:
+    get:
+      description: "Get My Shop"
+      security:
+        - bearerAuth: []
+      tags:
+        - "Shops"
+      responses:
+        200:
+          description: "OK"
+        500:
+          description: "Server Error"
   /shops/products/{shopId}:
     get:
       description: "Get All Shop Product By Shop ID"

@@ -1,31 +1,134 @@
-import { Box, Button } from "@chakra-ui/react";
+import { Box, Button, Image, useToast } from "@chakra-ui/react";
+import { yupResolver } from "@hookform/resolvers/yup";
 import queryString from "query-string";
 import React from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useLocation } from "react-router";
 import InputImages from "../../atoms/InputImages";
 import InputText from "../../atoms/InputText";
 import TextEditor from "../../atoms/TextEditor";
 import Title from "../../atoms/typography/Title";
+import { shopValidation } from "../../../validations/shopValidation";
+import useAddShop from "../../../hooks/Shop/useAddShop";
+import { ShopData } from "../../../types/ShopType";
+import useMyShop from "../../../hooks/Shop/useMyShop";
+import useUpdateShop from "../../../hooks/Shop/useUpdateShop";
+import Loading from "../../atoms/Loading";
+import AlertMessage from "../../atoms/AlertMessage";
 
 const ShopForm = () => {
   const { search } = useLocation();
   const { edit } = queryString.parse(search);
+
+  const isEdit = edit === "true";
+
+  const {
+    data: shop,
+    isLoading: isShopLoading,
+    isError: isShopError,
+    error: shopError,
+  } = useMyShop(isEdit);
+
+  const customError: any = shopError;
+  const appError = customError?.response?.data?.message;
 
   const {
     register,
     handleSubmit,
     setValue,
     getValues,
+    control,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(shopValidation),
+  });
 
-  const onSubmit = (data: any) => console.log(data);
+  React.useEffect(() => {
+    if (shop) {
+      setValue("name", shop.name);
+      setValue("location", shop.location);
+      setValue("description", shop.description);
+    }
+  }, [setValue, shop]);
+
+  const toast = useToast();
+  const { isLoading, mutateAsync } = useAddShop();
+  const {
+    isLoading: isUpdateShopLoading,
+    mutateAsync: updateShop,
+  } = useUpdateShop();
+
+  const onCreateShop = async (data: FormData) => {
+    await mutateAsync(data, {
+      onSuccess: (success) => {
+        toast({
+          title: "Shop created.",
+          description: success?.message,
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
+      },
+      onError: (error) => {
+        const appError: any = error;
+        toast({
+          title: "Failed Creating Shop.",
+          description: appError?.response?.data?.message,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      },
+    });
+  };
+
+  const onUpdateShop = async (data: FormData) => {
+    await updateShop(data, {
+      onSuccess: (success) => {
+        toast({
+          title: "Shop Updated Successfully",
+          description: success?.message,
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
+      },
+      onError: (error) => {
+        const appError: any = error;
+        toast({
+          title: "Failed Updating Shop",
+          description: appError?.response?.data?.message,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      },
+    });
+  };
+  const onSubmit = handleSubmit(async (shopData: ShopData) => {
+    const { name, description, images, location } = shopData;
+    const form = new FormData();
+    form.append("name", name);
+    form.append("location", location);
+    form.append("images", images[0][0]);
+    form.append("description", description);
+
+    if (!!edit) {
+      onUpdateShop(form);
+    } else {
+      await onCreateShop(form);
+    }
+  });
+
+  if (isShopLoading) {
+    return <Loading />;
+  }
 
   return (
     <Box
       as="form"
       onSubmit={onSubmit}
+      noValidate
       mb="50px"
       maxWidth="container.md"
       mx="auto"
@@ -34,37 +137,67 @@ const ShopForm = () => {
         {!!edit ? "Edit Shop" : "Create Shop"}
       </Title>
 
-      <InputText
-        register={{ ...register("name") }}
-        required={true}
-        error={errors.name?.message}
-        label="Name"
-        placeholder="Enter your shop name"
-        type="text"
-      />
+      {isShopError ? (
+        <AlertMessage
+          title="Something Went Wrong"
+          description={appError}
+          status="error"
+        />
+      ) : (
+        <>
+          <InputText
+            register={{ ...register("name") }}
+            required={true}
+            error={errors.name?.message}
+            label="Name"
+            placeholder="Enter your shop name"
+            type="text"
+          />
 
-      <InputImages
-        register={{ ...register("images") }}
-        name="images"
-        label="Upload Images"
-        error={errors.name?.message}
-        getValue={getValues}
-        setValue={setValue}
-      />
+          <InputText
+            register={{ ...register("location") }}
+            required={true}
+            error={errors.location?.message}
+            label="Location"
+            placeholder="Enter your shop location"
+            type="text"
+          />
 
-      <TextEditor
-        register={{ ...register("description") }}
-        error={errors.description?.message}
-        setValue={setValue}
-        name="description"
-        placeholder="Description..."
-        label="Description"
-        getValue={getValues}
-      />
+          <InputImages
+            register={{ ...register("images") }}
+            name="images"
+            label="Upload Images"
+            error={errors.images?.message}
+            getValue={getValues}
+            setValue={setValue}
+          />
 
-      <Button mt={{ base: "100px", sm: "70px" }} type="submit">
-        {!!edit ? "Edit Shop" : "Create Shop"}
-      </Button>
+          <Controller
+            name="description"
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <TextEditor
+                  value={value}
+                  onChange={onChange}
+                  error={errors.description?.message}
+                  name="description"
+                  placeholder="Description..."
+                  label="Description"
+                />
+              );
+            }}
+          />
+
+          <Button
+            mt={{ base: "100px", sm: "70px" }}
+            type="submit"
+            isLoading={isLoading || isUpdateShopLoading}
+          >
+            {!!edit ? "Edit Shop" : "Create Shop"}
+          </Button>
+        </>
+      )}
     </Box>
   );
 };

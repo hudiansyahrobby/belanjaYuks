@@ -43,7 +43,7 @@ const ShopDetailTemplate = () => {
             <ShopHeader
               name={shop.name}
               subtitle={shop.location}
-              image={shop.images}
+              image={shop.images[0]}
             />
 
             <ShopContent description={shop.description} />

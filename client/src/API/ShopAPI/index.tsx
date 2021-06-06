@@ -16,12 +16,12 @@ export const getMyShopProductPagination = async (page: number) => {
   return data.products;
 };
 
-export const addShop = async (shop: ShopData) => {
+export const addShop = async (shop: FormData) => {
   const { data } = await axios.post("/shops", shop);
   return data.shop;
 };
 
-export const updateShop = async (shop: ShopData) => {
+export const updateShop = async (shop: FormData) => {
   const { data } = await axios.put("/shops", shop);
   return data.shop;
 };
@@ -31,17 +31,22 @@ export const deleteShop = async () => {
   return data.shop;
 };
 
-export const deleteShopById = async (shopId: number) => {
+export const deleteShopById = async (shopId: string) => {
   const { data } = await axios.delete(`/shops/${shopId}`);
   return data.shop;
 };
 
-export const getShopById = async (shopId: number) => {
+export const getShopById = async (shopId: string) => {
   const { data } = await axios.get(`/shops/${shopId}`);
   return data.shop;
 };
 
-export const getProductByShopId = async (shopId: number) => {
+export const getMyShop = async () => {
+  const { data } = await axios.get(`/shops/me`);
+  return data.shop;
+};
+
+export const getProductByShopId = async (shopId: string) => {
   const { data } = await axios.get(`/shops/products/${shopId}`);
   return data.products;
 };

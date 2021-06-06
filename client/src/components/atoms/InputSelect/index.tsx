@@ -6,7 +6,6 @@ import {
   InputGroup,
 } from "@chakra-ui/react";
 import React, { InputHTMLAttributes } from "react";
-import { UseFormRegisterReturn } from "react-hook-form";
 import Select from "react-select";
 
 type InputSelectProps = InputHTMLAttributes<HTMLInputElement> & {
@@ -19,7 +18,8 @@ type InputSelectProps = InputHTMLAttributes<HTMLInputElement> & {
     label: string;
   }>;
   error: string | undefined;
-  register: UseFormRegisterReturn;
+  value: any;
+  onChange: (...event: any[]) => void;
 };
 
 const InputSelect: React.FC<InputSelectProps> = (props) => {
@@ -30,30 +30,31 @@ const InputSelect: React.FC<InputSelectProps> = (props) => {
     isLoading,
     options,
     error,
-    register,
+    value,
+    onChange,
   } = props;
 
   const SelectInput = chakra(Select);
-  const [select, setSelect] = React.useState<string>("");
+  // const [select, setSelect] = React.useState<string>("");
 
   return (
     <FormControl isInvalid={!!error} my="10px">
       <FormLabel htmlFor={name}>{label}</FormLabel>
       <InputGroup width="full">
         <SelectInput
-          {...register}
           width="full"
           maxMenuHeight={200}
           placeholder={placeholder}
           isLoading={isLoading}
           onChange={(option: any) => {
-            if (option) {
-              setSelect(option.value);
-              //   setValue("categoryId", option.value);
-            } else {
-              setSelect("");
-              //   setValue("categoryId", "");
-            }
+            onChange(option.value);
+            // if (option) {
+            //   setSelect(option.value);
+            //   //   setValue("categoryId", option.value);
+            // } else {
+            //   setSelect("");
+            //   //   setValue("categoryId", "");
+            // }
           }}
           cacheOptions
           defaultOptions
@@ -61,7 +62,7 @@ const InputSelect: React.FC<InputSelectProps> = (props) => {
           value={
             options
               ? options.find((option) => {
-                  return option.value === select;
+                  return option.value === value;
                 })
               : ""
           }

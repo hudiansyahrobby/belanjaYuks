@@ -3,12 +3,12 @@ import { CategoryData } from "../../types/CategoryType";
 
 export const getCategories = async () => {
   const { data } = await axios.get("/categories");
-  return data.data;
+  return data.categories;
 };
 
 export const addCategory = async (categoryData: Pick<CategoryData, "name">) => {
   const { data } = await axios.post("/categories", categoryData);
-  return data.data;
+  return data.category;
 };
 
 export const updateCategory = async (category: CategoryData) => {

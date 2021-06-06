@@ -20,7 +20,7 @@ import { deleteImages, uploadImages } from '../helpers/images';
 
 export const create = async (req: any, res: Response) => {
     const { id: userId, ...user } = req.user;
-    const { images, name } = req.body;
+    const { images } = req.body;
     try {
         if (user.role === 'admin') {
             return res.status(400).json({ message: "You're an admin, you can't have shop" });
@@ -30,12 +30,6 @@ export const create = async (req: any, res: Response) => {
 
         if (isUserHasShop) {
             return res.status(400).json({ message: 'This user already has shop, delete first' });
-        }
-
-        const isShopExist = await getShopByName(name);
-
-        if (isShopExist) {
-            return res.status(400).json({ message: 'Shop with this name has exist' });
         }
 
         const imageURL = await uploadImages(images);
@@ -73,6 +67,22 @@ export const get = async (req: Request, res: Response) => {
         const shops = getPaginationData(response, _page, limit);
 
         return res.status(200).json({ shops });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
+
+export const getMyShop = async (req: any, res: Response) => {
+    const user = req.user;
+
+    try {
+        const shop = await getShopById(user.myShop.id);
+
+        if (!shop) {
+            return res.status(404).json({ message: 'Shop not found' });
+        }
+
+        return res.status(200).json({ shop });
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
@@ -154,12 +164,6 @@ export const update = async (req: any, res: Response) => {
 
         if (!userShop) {
             return res.status(404).json({ message: 'You do not have any shop' });
-        }
-
-        const isExist = await getShopByName(name);
-
-        if (isExist) {
-            return res.status(400).json({ message: 'Shop with this name has exist' });
         }
 
         await deleteImages(userShop.images);

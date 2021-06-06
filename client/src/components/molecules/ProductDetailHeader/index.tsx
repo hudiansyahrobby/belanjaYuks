@@ -4,25 +4,24 @@ import {
   Divider,
   Flex,
   Heading,
+  Icon,
   Text,
   useToast,
   VStack,
 } from "@chakra-ui/react";
 import React from "react";
 import { AiOutlineShop } from "react-icons/ai";
+import { FaBoxOpen } from "react-icons/fa";
 import { GiBoxUnpacking } from "react-icons/gi";
+import { GoHeart } from "react-icons/go";
+import { useHistory } from "react-router";
 import StarRatings from "react-star-ratings";
 import { capitalizeEachWord } from "../../../helpers/capitalizeEachWord";
+import useAddToCart from "../../../hooks/Cart/useAddToCart";
+import useToggleFavorite from "../../../hooks/Favorite/useToggleFavorite";
 import { ProductData } from "../../../types/ProductType";
 import LinkNavigation from "../../atoms/LinkNavigation";
 import Price from "../../atoms/typography/Price";
-import ChangeQuantityButton from "../ChangeQuantityButton";
-import { Icon } from "@chakra-ui/react";
-import { GoHeart } from "react-icons/go";
-import { FaBoxOpen } from "react-icons/fa";
-import useToggleFavorite from "../../../hooks/Favorite/useToggleFavorite";
-import { useHistory } from "react-router";
-import useAddToCart from "../../../hooks/Cart/useAddToCart";
 
 interface ProductDetailHeaderProps {
   product: ProductData;

@@ -5,7 +5,7 @@ export const getFavorites = async () => {
   return data.favorites;
 };
 
-export const toggleFavorite = async (productId: number) => {
+export const toggleFavorite = async (productId: string) => {
   const { data } = await axios.post(`/favorites/${productId}`);
   console.log(data);
   return data;

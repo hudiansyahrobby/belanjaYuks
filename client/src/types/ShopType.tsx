@@ -1,5 +1,5 @@
 export interface ShopData {
-  id: number;
+  id: string;
   name: string;
   images: string;
   description: string;

@@ -6,6 +6,9 @@ import uploadFiles from '../helpers/initMulter';
 
 export const uploadImages = (req: Request, res: Response, next: NextFunction) => {
     uploadFiles(req, res, (err: any) => {
+        console.log(req.body);
+        console.log(req.file);
+        console.log(req.files);
         if (err instanceof multer.MulterError) {
             if (err.code === 'LIMIT_UNEXPECTED_FILE') {
                 return res.status(422).json({ message: 'Too many files to upload. Max is 5 images' });

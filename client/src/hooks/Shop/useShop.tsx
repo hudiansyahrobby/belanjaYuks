@@ -1,7 +1,7 @@
 import { QueryClient, useQuery } from "react-query";
 import { getShopById } from "../../API/ShopAPI";
 
-const useShop = (shopId: number) => {
+const useShop = (shopId: string) => {
   const queryClient: any = new QueryClient();
   return useQuery(["shops", shopId], () => getShopById(shopId), {
     initialData: () => {

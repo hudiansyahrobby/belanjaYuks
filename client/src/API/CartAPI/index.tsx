@@ -6,17 +6,17 @@ export const getCarts = async () => {
   return data.carts;
 };
 
-export const addProductToCart = async (productId: number) => {
+export const addProductToCart = async (productId: string) => {
   const { data } = await axios.post(`/carts/${productId}`);
   return data;
 };
 
-export const decreaseProductQtyOnCart = async (productId: number) => {
+export const decreaseProductQtyOnCart = async (productId: string) => {
   const { data } = await axios.put(`/carts/${productId}`);
   return data;
 };
 
-export const deleteProductOnCart = async (productId: number) => {
+export const deleteProductOnCart = async (productId: string) => {
   const { data } = await axios.delete(`/carts/${productId}`);
   return data;
 };

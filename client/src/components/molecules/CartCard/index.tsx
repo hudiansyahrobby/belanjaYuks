@@ -9,7 +9,7 @@ import useDeleteFromCart from "../../../hooks/Cart/useDeleteFromCart";
 import { useToast } from "@chakra-ui/toast";
 
 interface CartCardProps {
-  id: number;
+  id: string;
   image: string;
   title: string;
   price: number;

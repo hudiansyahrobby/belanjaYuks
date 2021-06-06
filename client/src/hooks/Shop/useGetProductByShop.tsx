@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "react-query";
 import { getProductByShopId } from "../../API/ShopAPI";
 
-const useGetProductByShop = (shopId: number) => {
+const useGetProductByShop = (shopId: string) => {
   return useInfiniteQuery(
     ["shop-products", shopId],
     () => getProductByShopId(shopId),

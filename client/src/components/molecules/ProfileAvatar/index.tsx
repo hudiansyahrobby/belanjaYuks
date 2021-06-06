@@ -1,5 +1,6 @@
 import { Flex, Avatar, Box, Text } from "@chakra-ui/react";
 import React from "react";
+import { capitalizeEachWord } from "../../../helpers/capitalizeEachWord";
 import Subtitle from "../../atoms/typography/Subtitle";
 
 type ProfileAvatarProps = {
@@ -22,9 +23,11 @@ const ProfileAvatar: React.FC<ProfileAvatarProps> = ({
           fontSize={{ base: "20px", sm: "24px", md: "4xl" }}
           fontWeight="extrabold"
         >
-          {name}
+          {capitalizeEachWord(name)}
         </Text>
-        <Subtitle fontSize={{ base: "15px" }}>{subtitle}</Subtitle>
+        <Subtitle fontSize={{ base: "15px" }}>
+          {capitalizeEachWord(subtitle)}
+        </Subtitle>
       </Box>
     </Flex>
   );

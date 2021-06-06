@@ -45,7 +45,7 @@ const ProductShopCard = () => {
                   isLoading={isLoading}
                   to={`/products/${product.id}`}
                   title={product.name}
-                  image={product.images}
+                  image={product.images[0]}
                   buttonText="See Products"
                 >
                   <VStack spacing="5px" align="left" mt="5px">

@@ -28,32 +28,31 @@ const App: React.FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <Router>
-        <Switch>
-          <Suspense fallback={<Loading />}>
+        <Suspense fallback={<Loading />}>
+          <Switch>
             <Route path="/" exact component={Home} />
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Register} />
-            <Route path="/forgot-password" component={ForgetPassword} />
-            <Route path="/change-password" component={ChangePassword} />
+            <Route path="/login" exact component={Login} />
+            <Route path="/signup" exact component={Register} />
+            <Route path="/forgot-password" exact component={ForgetPassword} />
+            <Route path="/change-password" exact component={ChangePassword} />
             <Route path="/products" exact component={Products} />
             <Route path="/products/:id" component={ProductDetail} />
             <Route path="/favorites" exact component={Favorite} />
             <Route path="/carts" exact component={MyCart} />
             <Route path="/me" exact component={MyProfile} />
-            <Route path="/admin/shops" component={AdminShopList} />
+            <Route path="/admin/shops" exact component={AdminShopList} />
             <Route path="/admin" exact component={AdminDashboard} />
-            <Route path="/admin/products" component={AdminProductList} />
-            <Route path="/shops" exact component={Shops} />
-            <Route path="/shops/create" exact component={CreateShop} />
-            <Route path="/shops/:shopId" component={ShopDetail} />
-
+            <Route path="/admin/products" exact component={AdminProductList} />
             <Route
-              path="/shops/products/create"
+              path="/admin/products/create"
               exact
               component={CreateProduct}
             />
-          </Suspense>
-        </Switch>
+            <Route path="/shops" exact component={Shops} />
+            <Route path="/shops/create" component={CreateShop} />
+            <Route path="/shops/:shopId" component={ShopDetail} />
+          </Switch>
+        </Suspense>
       </Router>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

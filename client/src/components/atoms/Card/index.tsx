@@ -3,9 +3,11 @@ import { Image } from "@chakra-ui/image";
 import { Box } from "@chakra-ui/layout";
 import React from "react";
 import { Link } from "react-router-dom";
+import { capitalizeEachWord } from "../../../helpers/capitalizeEachWord";
 import CardSkeleton from "../CardSkeleton";
 import LinkNavigation from "../LinkNavigation";
 import Subtitle from "../typography/Subtitle";
+import ReactHtmlParser from "react-html-parser";
 
 interface CardProps {
   title: string;
@@ -36,6 +38,8 @@ const Card: React.FC<CardProps> = ({
         borderRadius="3xl"
         width="full"
         src={image}
+        height="150px"
+        fit="cover"
         alt={title}
         fallbackSrc="https://via.placeholder.com/100"
       />
@@ -47,13 +51,13 @@ const Card: React.FC<CardProps> = ({
         fontWeight="semibold"
         textAlign={!buttonText ? "center" : "left"}
       >
-        {title}
+        {capitalizeEachWord(title)}
       </LinkNavigation>
 
       {subtitle && (
         <>
           <Subtitle fontSize="sm" fontWeight="thin" mt="10px">
-            {subtitle?.substring(0, 200)}...
+            {ReactHtmlParser(subtitle?.substring(0, 200))}
           </Subtitle>
         </>
       )}

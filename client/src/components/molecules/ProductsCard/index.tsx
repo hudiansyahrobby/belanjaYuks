@@ -25,7 +25,7 @@ const ProductsCard = () => {
     <>
       {products?.pages[0]?.results?.length > 0 ? (
         <SimpleGrid
-          columns={{ sm: 2, md: 4, xl: 5 }}
+          columns={{ sm: 2, md: 4 }}
           spacing="20px"
           my="30px"
           justifyItems="center"
@@ -37,17 +37,14 @@ const ProductsCard = () => {
                 isLoading={isLoading}
                 to={`/products/${product.id}`}
                 title={product.name}
-                image={product.images}
+                image={product.images[0]}
                 buttonText="See Products"
               >
                 <VStack spacing="5px" align="left" mt="5px">
                   <Text fontWeight="thin">${product.price}</Text>
                   <Flex alignItems="center">
                     <AiOutlineShop />{" "}
-                    <LinkNavigation
-                      ml="8px"
-                      to={`/shop?shopId=${product.seller.id}`}
-                    >
+                    <LinkNavigation ml="8px" to={`/shops/${product.seller.id}`}>
                       {product.seller.name}
                     </LinkNavigation>
                   </Flex>

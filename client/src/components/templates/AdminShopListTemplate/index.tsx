@@ -23,7 +23,7 @@ const AdminShopListTemplate = () => {
   const { isLoading: isDeleteShopLoading, mutateAsync } = useDeleteShopById();
 
   const onDeleteShop = React.useCallback(
-    async (shopId: number) => {
+    async (shopId: string) => {
       await mutateAsync(shopId, {
         onSuccess: (success) => {
           toast({

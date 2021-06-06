@@ -31,13 +31,13 @@ const InputImages: React.FC<InputImagesProps> = React.memo((props) => {
     if (!e.target.files) {
       return;
     }
-
     setValue("images", [e.target.files]);
   }
 
   return (
     <FormControl isInvalid={!!error} my="10px">
       <FormLabel htmlFor={name}>{label}</FormLabel>
+
       <Grid templateColumns="repeat(2, 1fr)" gap={6}>
         {images?.length > 0 &&
           images?.map((items: any, index: number) => {
@@ -81,6 +81,7 @@ const InputImages: React.FC<InputImagesProps> = React.memo((props) => {
           style={{ display: "none" }}
           type="file"
           accept="image/*"
+          name="images"
           multiple
           // disabled={field.value?.length === 5}
           className="form-control"

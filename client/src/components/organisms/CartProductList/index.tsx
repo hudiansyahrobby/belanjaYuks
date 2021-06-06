@@ -35,46 +35,46 @@ const CartProductList = () => {
       </Flex>
 
       <Box my="30px">
-        <Swiper
-          spaceBetween={50}
-          navigation
-          scrollbar={{ draggable: true }}
-          style={{ paddingBottom: "20px" }}
-          breakpoints={{
-            200: {
-              slidesPerView: 1,
-              spaceBetween: 10,
-            },
-            500: {
-              slidesPerView: 2,
-              spaceBetween: 20,
-            },
-            660: {
-              slidesPerView: 3,
-              spaceBetween: 20,
-            },
-            900: {
-              slidesPerView: 4,
-              spaceBetween: 40,
-            },
-            1050: {
-              slidesPerView: 5,
-              spaceBetween: 200,
-            },
-          }}
-        >
-          {carts?.products.length > 0 ? (
-            carts?.products?.map((product: CartData) => {
+        {carts?.products.length > 0 ? (
+          <Swiper
+            spaceBetween={50}
+            navigation
+            scrollbar={{ draggable: true }}
+            style={{ paddingBottom: "20px" }}
+            breakpoints={{
+              200: {
+                slidesPerView: 1,
+                spaceBetween: 10,
+              },
+              500: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+              },
+              660: {
+                slidesPerView: 3,
+                spaceBetween: 20,
+              },
+              900: {
+                slidesPerView: 4,
+                spaceBetween: 40,
+              },
+              1050: {
+                slidesPerView: 5,
+                spaceBetween: 200,
+              },
+            }}
+          >
+            {carts?.products?.map((product: CartData) => {
               return (
                 <SwiperSlide key={product.id}>
                   <CardItem isLoading={isLoading} product={product} />
                 </SwiperSlide>
               );
-            })
-          ) : (
-            <Text>Cart is empty</Text>
-          )}
-        </Swiper>
+            })}
+          </Swiper>
+        ) : (
+          <Text>Cart is empty</Text>
+        )}
       </Box>
     </Box>
   );

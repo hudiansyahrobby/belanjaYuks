@@ -27,7 +27,7 @@ const fetchClient = () => {
     function (error) {
       const originalRequest = error.config;
       // let refreshToken = localStorage.getItem('refreshToken');
-      if (error.response.status === 401 && !originalRequest._retry) {
+      if (error?.response?.status === 401 && !originalRequest._retry) {
         originalRequest._retry = true;
         return instance.post("/refresh-token").then((res) => {
           if (res.status === 200) {

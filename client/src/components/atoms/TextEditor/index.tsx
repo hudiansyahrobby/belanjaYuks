@@ -1,10 +1,5 @@
 import { FormControl, FormErrorMessage, FormLabel } from "@chakra-ui/react";
 import React, { InputHTMLAttributes } from "react";
-import {
-  UseFormGetValues,
-  UseFormRegisterReturn,
-  UseFormSetValue,
-} from "react-hook-form";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
@@ -12,10 +7,9 @@ type TextEditorProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
   name: string;
   placeholder: string;
+  value: any;
   error: string | undefined;
-  register: UseFormRegisterReturn;
-  setValue: UseFormSetValue<any>;
-  getValue: UseFormGetValues<any>;
+  onChange: (...event: any[]) => void;
 };
 
 const TextEditor: React.FC<TextEditorProps> = (props) => {
@@ -48,20 +42,16 @@ const TextEditor: React.FC<TextEditorProps> = (props) => {
     "image",
   ];
 
-  const { name, label, placeholder, error, setValue, getValue } = props;
+  const { name, label, placeholder, error, value } = props;
 
-  const defaultValue = getValue("description") || "";
   return (
     <FormControl isInvalid={!!error} my="10px">
       <FormLabel htmlFor={name}>{label}</FormLabel>
       <ReactQuill
         theme="snow"
-        onChange={(value) => {
-          setValue("description", value);
-        }}
-        defaultValue={defaultValue}
-        value={defaultValue || ""}
+        onChange={props.onChange}
         modules={modules}
+        value={value || ""}
         formats={formats}
         placeholder={placeholder}
         style={{ height: "150px" }}

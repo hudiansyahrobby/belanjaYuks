@@ -33,7 +33,7 @@ const RegisterForm = () => {
 
   const onSignup = handleSubmit(async (registerData: RegisterData) => {
     await mutateAsync(registerData, {
-      onSuccess: (success) => {
+      onSuccess: () => {
         toast({
           title: "Account created.",
           description: "We've created your account for you.",

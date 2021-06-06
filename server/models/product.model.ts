@@ -36,7 +36,7 @@ export default class Product extends Model {
     @Column(DataType.ARRAY(DataType.STRING))
     images: Array<string>;
 
-    @Column(DataType.NUMBER)
+    @Column(DataType.DECIMAL(10, 2))
     price: number;
 
     @Column(DataType.TEXT)
