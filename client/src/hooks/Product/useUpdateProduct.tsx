@@ -8,7 +8,7 @@ const useUpdateProduct = () => {
   return useMutation(updateProductById, {
     onSuccess: () => {
       queryClient.invalidateQueries("products");
-      history.push("/products");
+      history.push("/seller/products");
     },
   });
 };

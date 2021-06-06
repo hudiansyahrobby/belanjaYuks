@@ -25,7 +25,7 @@ const ProductsCard = () => {
     <>
       {products?.pages[0]?.results?.length > 0 ? (
         <SimpleGrid
-          columns={{ sm: 2, md: 4 }}
+          columns={{ sm: 2, md: 4, xl: 5 }}
           spacing="20px"
           my="30px"
           justifyItems="center"

@@ -1,4 +1,14 @@
-import { Box, Button, Flex, Image, Text, useToast } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Image,
+  List,
+  ListIcon,
+  ListItem,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
 import queryString from "query-string";
 import React from "react";
 import { RiDeleteBin6Fill } from "react-icons/ri";
@@ -11,6 +21,8 @@ import AlertMessage from "../../atoms/AlertMessage";
 import Loading from "../../atoms/Loading";
 import TableItem from "../../atoms/TableItem";
 import { Link } from "react-router-dom";
+import ModalItem from "../../atoms/Modal";
+import { MdCheckCircle } from "react-icons/md";
 
 const AdminProductListTemplate = () => {
   const { search } = useLocation();
@@ -24,6 +36,8 @@ const AdminProductListTemplate = () => {
     isError,
     error,
     data: products,
+    isFetching,
+    refetch,
   } = useProductShopPagination(pageNumber);
 
   const { isLoading: isDeleteProductLoading, mutateAsync } = useDeleteProduct();
@@ -39,6 +53,7 @@ const AdminProductListTemplate = () => {
             duration: 3000,
             isClosable: true,
           });
+          refetch();
         },
         onError: (error) => {
           const appError: any = error;
@@ -52,7 +67,7 @@ const AdminProductListTemplate = () => {
         },
       });
     },
-    [mutateAsync, toast]
+    [mutateAsync, refetch, toast]
   );
 
   const columns: any = React.useMemo(
@@ -88,6 +103,7 @@ const AdminProductListTemplate = () => {
               width="40px"
               height="40px"
               mr="15px"
+              fit="cover"
               rounded="full"
             />
             <Text>{product.name}</Text>
@@ -99,29 +115,48 @@ const AdminProductListTemplate = () => {
           <>
             <Button
               bgColor="yellow.500"
+              _hover={{ bgColor: "yellow.700" }}
               as={Link}
-              to={`/products/create/${product.id}?edit=true`}
+              to={`/seller/products/create?productId=${product.id}&edit=true`}
               leftIcon={<BsPencilSquare />}
-              isLoading={isDeleteProductLoading}
             >
               Update
             </Button>
-            <Button
-              bgColor="red.500"
-              ml="10px"
+            <ModalItem
               leftIcon={<RiDeleteBin6Fill />}
+              bgColor="red.500"
+              _hover={{ bgColor: "red.700" }}
+              ml="10px"
+              buttonTitle="Delete"
+              modalTitle="Delete Product"
               onClick={() => onDeleteProduct(product.id)}
               isLoading={isDeleteProductLoading}
             >
-              Delete
-            </Button>
+              <Text mb="10px">
+                Are you sure do you want to delete this product ?
+              </Text>
+              <List spacing={3}>
+                <ListItem>
+                  <ListIcon as={MdCheckCircle} color="green.500" />
+                  Name : <Text as="strong">{product.name}</Text>
+                </ListItem>
+                <ListItem>
+                  <ListIcon as={MdCheckCircle} color="green.500" />
+                  Price : <Text as="strong">${product.price}</Text>
+                </ListItem>
+                <ListItem>
+                  <ListIcon as={MdCheckCircle} color="green.500" />
+                  Quantity : <Text as="strong">{product.quantity}</Text>
+                </ListItem>
+              </List>
+            </ModalItem>
           </>
         ),
       };
     });
   }, [isDeleteProductLoading, onDeleteProduct, products?.results]);
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return <Loading />;
   }
 
@@ -151,7 +186,7 @@ const AdminProductListTemplate = () => {
         </Button>
       </Box>
       <Box flexGrow={1}>
-        <Box mt="20px">
+        <Box mt="-20px">
           <Flex alignItems="center" my="30px">
             <Text fontSize="28px" fontWeight="bold">
               Product List

@@ -3,6 +3,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import useCarts from "../../../hooks/Cart/useCarts";
 import { CartData } from "../../../types/CartType";
+import AlertMessage from "../../atoms/AlertMessage";
 import InputSelect from "../../atoms/InputSelect";
 import InputText from "../../atoms/InputText";
 import Layout from "../../atoms/Layout";
@@ -30,9 +31,18 @@ const MyCartTemplate = () => {
     },
   ];
 
-  const { isLoading: isCartsLoading, data: carts, isError } = useCarts();
+  const {
+    isLoading: isCartsLoading,
+    data: carts,
+    isError,
+    isFetching,
+    error: cartError,
+  } = useCarts();
 
-  if (isCartsLoading) {
+  const customError: any = cartError;
+  const appError = customError?.response?.data?.message;
+
+  if (isCartsLoading || isFetching) {
     return <Loading />;
   }
 
@@ -40,41 +50,49 @@ const MyCartTemplate = () => {
     <Layout>
       <Box mt="120px" mx="20px">
         <Title textAlign="center">My Cart</Title>
-        <SimpleGrid
-          my="50px"
-          columns={{ base: 1, md: 2 }}
-          spacing="20px"
-          mx="auto"
-          justifyItems="center"
-        >
-          {carts?.products?.map((product: CartData) => (
-            <CartCard
-              id={product.id}
-              image={product.images[0]}
-              title={product.name}
-              price={product.price}
-              maxQuantity={product.quantity}
-              defaultQuantity={product.productCart.quantity}
-            />
-          ))}
-        </SimpleGrid>
+        {isError ? (
+          <AlertMessage
+            title="Something Went Wrong"
+            description={appError}
+            status="error"
+          />
+        ) : carts?.products?.length > 0 ? (
+          <>
+            <SimpleGrid
+              my="50px"
+              columns={{ base: 1, md: 2 }}
+              spacing="20px"
+              mx="auto"
+              justifyItems="center"
+            >
+              {carts?.products?.map((product: CartData) => (
+                <CartCard
+                  key={product.id}
+                  id={product.id}
+                  image={product.images[0]}
+                  title={product.name}
+                  price={product.price}
+                  maxQuantity={product.quantity}
+                  defaultQuantity={product.productCart.quantity}
+                />
+              ))}
+            </SimpleGrid>
+            <Box mx="auto" maxWidth="container.md" mb="50px">
+              <Title textAlign="center">Delivery Location</Title>
+              <Box my="50px">
+                <InputText
+                  register={{ ...register("address") }}
+                  required={true}
+                  error={errors.address?.message}
+                  label="Delivery Location"
+                  placeholder="Enter your address"
+                  type="text"
+                />
+              </Box>
 
-        <Box mx="auto" maxWidth="container.md" mb="50px">
-          <Title textAlign="center">Delivery Location</Title>
-          <Box my="50px">
-            <InputText
-              register={{ ...register("address") }}
-              required={true}
-              error={errors.address?.message}
-              label="Delivery Location"
-              placeholder="Enter your address"
-              type="text"
-            />
-          </Box>
-
-          <Title textAlign="center">Payment Method</Title>
-          <Box my="50px">
-            {/* <InputSelect
+              <Title textAlign="center">Payment Method</Title>
+              <Box my="50px">
+                {/* <InputSelect
               register={{ ...register("payment") }}
               name="payment"
               label="Choose Payment Option"
@@ -83,42 +101,48 @@ const MyCartTemplate = () => {
               options={options}
               error={errors.payment?.message}
             /> */}
-          </Box>
+              </Box>
 
-          <Title textAlign="center">Order Info</Title>
-          <Box my="50px" maxWidth="450px" mx="auto">
-            <Flex justifyContent="space-between" mt="10px">
-              <Text fontSize="20px" fontWeight="bold" color="gray.400">
-                Subtotal
-              </Text>
-              <Text fontSize="20px" fontWeight="bold">
-                $5.43
-              </Text>
-            </Flex>
+              <Title textAlign="center">Order Info</Title>
+              <Box my="50px" maxWidth="450px" mx="auto">
+                <Flex justifyContent="space-between" mt="10px">
+                  <Text fontSize="20px" fontWeight="bold" color="gray.400">
+                    Subtotal
+                  </Text>
+                  <Text fontSize="20px" fontWeight="bold">
+                    $5.43
+                  </Text>
+                </Flex>
 
-            <Flex justifyContent="space-between" mt="10px">
-              <Text fontSize="20px" fontWeight="bold" color="gray.400">
-                Shipping Cost
-              </Text>
-              <Text fontSize="20px" fontWeight="bold">
-                $5.43
-              </Text>
-            </Flex>
+                <Flex justifyContent="space-between" mt="10px">
+                  <Text fontSize="20px" fontWeight="bold" color="gray.400">
+                    Shipping Cost
+                  </Text>
+                  <Text fontSize="20px" fontWeight="bold">
+                    $5.43
+                  </Text>
+                </Flex>
 
-            <Flex justifyContent="space-between" mt="10px">
-              <Text fontSize="20px" fontWeight="bold" color="gray.400">
-                Total
-              </Text>
-              <Text fontSize="30px" fontWeight="bold">
-                $5.43
-              </Text>
-            </Flex>
+                <Flex justifyContent="space-between" mt="10px">
+                  <Text fontSize="20px" fontWeight="bold" color="gray.400">
+                    Total
+                  </Text>
+                  <Text fontSize="30px" fontWeight="bold">
+                    $5.43
+                  </Text>
+                </Flex>
 
-            <Button w="full" mt="15px">
-              Checkout
-            </Button>
-          </Box>
-        </Box>
+                <Button w="full" mt="15px">
+                  Checkout
+                </Button>
+              </Box>
+            </Box>
+          </>
+        ) : (
+          <Text my="50px" textAlign="center">
+            Cart is Empty
+          </Text>
+        )}
       </Box>
     </Layout>
   );

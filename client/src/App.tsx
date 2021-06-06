@@ -42,9 +42,10 @@ const App: React.FC = () => {
             <Route path="/me" exact component={MyProfile} />
             <Route path="/admin/shops" exact component={AdminShopList} />
             <Route path="/admin" exact component={AdminDashboard} />
-            <Route path="/admin/products" exact component={AdminProductList} />
+            <Route path="/seller" exact component={AdminDashboard} />
+            <Route path="/seller/products" exact component={AdminProductList} />
             <Route
-              path="/admin/products/create"
+              path="/seller/products/create"
               exact
               component={CreateProduct}
             />

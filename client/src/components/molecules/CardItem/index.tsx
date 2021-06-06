@@ -18,14 +18,14 @@ const CardItem: React.FC<CardItemProps> = ({ product, isLoading }) => {
       isLoading={isLoading}
       to={`/products/${product.id}`}
       title={product.name}
-      image={product.images}
+      image={product.images[0]}
       buttonText="See Products"
     >
       <VStack spacing="5px" align="left" mt="5px">
         <Text fontWeight="thin">${product.price}</Text>
         <Flex alignItems="center">
           <AiOutlineShop />{" "}
-          <LinkNavigation ml="8px" to={`/shop?shopId=${product.seller.id}`}>
+          <LinkNavigation ml="8px" to={`/shops/${product.seller.id}`}>
             {product.seller.name}
           </LinkNavigation>
         </Flex>

@@ -9,7 +9,7 @@ const useAddProduct = () => {
   return useMutation(addProduct, {
     onSuccess: () => {
       queryClient.invalidateQueries("products");
-      history.push("/products");
+      history.push("/seller/products");
     },
   });
 };

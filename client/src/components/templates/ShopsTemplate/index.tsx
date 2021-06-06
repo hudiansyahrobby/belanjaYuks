@@ -24,9 +24,9 @@ const ShopsTemplate = () => {
         <GridItem rowSpan={1} colSpan={5} mt={{ base: "30px", md: 0 }}>
           <Box>
             <Title textAlign="center">Shop List</Title>
-            <Flex justifyContent="flex-end" mt="20px">
+            {/* <Flex justifyContent="flex-end" mt="20px">
               <MenuSelect />
-            </Flex>
+            </Flex> */}
 
             <SimpleGrid
               columns={{ sm: 2, md: 4, xl: 5 }}

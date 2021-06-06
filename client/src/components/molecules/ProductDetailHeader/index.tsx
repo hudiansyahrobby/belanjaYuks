@@ -18,9 +18,11 @@ import { useHistory } from "react-router";
 import StarRatings from "react-star-ratings";
 import { capitalizeEachWord } from "../../../helpers/capitalizeEachWord";
 import useAddToCart from "../../../hooks/Cart/useAddToCart";
+import useFavorites from "../../../hooks/Favorite/useFavorites";
 import useToggleFavorite from "../../../hooks/Favorite/useToggleFavorite";
 import { ProductData } from "../../../types/ProductType";
 import LinkNavigation from "../../atoms/LinkNavigation";
+import Loading from "../../atoms/Loading";
 import Price from "../../atoms/typography/Price";
 
 interface ProductDetailHeaderProps {
@@ -31,6 +33,7 @@ const ProductDetailHeader: React.FC<ProductDetailHeaderProps> = ({
   product,
 }) => {
   const { mutateAsync } = useToggleFavorite();
+  const { data: favorites, isLoading, refetch } = useFavorites();
   const { mutateAsync: addToCart } = useAddToCart();
 
   const toast = useToast();
@@ -39,7 +42,6 @@ const ProductDetailHeader: React.FC<ProductDetailHeaderProps> = ({
   const onToggleFavorite = async () => {
     await mutateAsync(product.id, {
       onSuccess: (success) => {
-        console.log(success);
         toast({
           title: "Success",
           description: success?.message,
@@ -47,6 +49,7 @@ const ProductDetailHeader: React.FC<ProductDetailHeaderProps> = ({
           duration: 3000,
           isClosable: true,
         });
+        refetch();
       },
       onError: (error) => {
         const appError: any = error;
@@ -96,6 +99,15 @@ const ProductDetailHeader: React.FC<ProductDetailHeaderProps> = ({
     });
   };
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  console.log("favorites", favorites);
+  const isFavorited = favorites?.products?.some((favorite: ProductData) => {
+    return favorite.id === product.id;
+  });
+  console.log(isFavorited);
   return (
     <VStack spacing="8px" align="flex-start">
       <Flex justifyContent="space-between" alignItems="center" w="full">
@@ -104,9 +116,13 @@ const ProductDetailHeader: React.FC<ProductDetailHeaderProps> = ({
         </Heading>
         <Icon
           as={GoHeart}
+          color={isFavorited ? "red.500" : "black"}
           onClick={onToggleFavorite}
           fontSize="27px"
-          _hover={{ color: "red.500", cursor: "pointer" }}
+          _hover={{
+            color: isFavorited ? "black" : "red.500",
+            cursor: "pointer",
+          }}
         />
       </Flex>
       <Flex alignItems="flex-end">

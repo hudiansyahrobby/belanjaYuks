@@ -1,5 +1,4 @@
-import { Button } from "@chakra-ui/button";
-import { Box, Flex, HStack, SimpleGrid, Text, VStack } from "@chakra-ui/react";
+import { Box, Flex, SimpleGrid, Text, VStack } from "@chakra-ui/react";
 import React from "react";
 import { AiOutlineShop } from "react-icons/ai";
 import StarRatings from "react-star-ratings";
@@ -13,11 +12,17 @@ import Loading from "../../atoms/Loading";
 import Title from "../../atoms/typography/Title";
 
 const FavoriteTemplate = () => {
-  const { isLoading, data: favorites, isError, error } = useFavorites();
+  const {
+    isLoading,
+    data: favorites,
+    isError,
+    error,
+    isFetching,
+  } = useFavorites();
   const customError: any = error;
   const appError = customError?.response?.data?.message;
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return <Loading />;
   }
 
@@ -46,7 +51,7 @@ const FavoriteTemplate = () => {
                   isLoading={isLoading}
                   to={`/products/${product.id}`}
                   title={product.name}
-                  image={product.images}
+                  image={product.images[0]}
                   buttonText="See Products"
                 >
                   <VStack spacing="5px" align="left" mt="5px">

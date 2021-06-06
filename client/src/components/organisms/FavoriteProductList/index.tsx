@@ -32,7 +32,7 @@ const FavoriteProductList = () => {
       <Flex alignItems="center">
         <Title>Favorites</Title>
         {favorites?.products?.length > 0 && (
-          <LinkNavigation to="/" ml="20px">
+          <LinkNavigation to="/favorites" ml="20px">
             See Others
           </LinkNavigation>
         )}

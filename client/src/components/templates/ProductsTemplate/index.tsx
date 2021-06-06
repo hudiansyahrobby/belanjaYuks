@@ -18,23 +18,19 @@ const ProductsTemplate = () => {
         templateColumns="repeat(5, 1fr)"
         gap={4}
       >
-        <GridItem
+        {/* <GridItem
           rowSpan={{ base: 1, md: 2 }}
           colSpan={{ base: 5, md: 1 }}
           mt={{ md: "120px" }}
         >
           <FilterBox />
-        </GridItem>
-        <GridItem
-          rowSpan={1}
-          colSpan={{ base: 5, md: 4 }}
-          mt={{ base: "30px", md: 0 }}
-        >
+        </GridItem> */}
+        <GridItem rowSpan={1} colSpan={5} mt={{ base: "30px", md: 0 }}>
           <Box>
             <Title textAlign="center">Product List</Title>
-            <Flex justifyContent="flex-end" mt="20px">
+            {/* <Flex justifyContent="flex-end" mt="20px">
               <MenuSelect />
-            </Flex>
+            </Flex> */}
             <ProductsCard />
             <Button
               variant="outline"

@@ -11,33 +11,65 @@ import {
   Flex,
   SimpleGrid,
   Text,
+  Icon,
 } from "@chakra-ui/react";
 import React from "react";
+import { Link } from "react-router-dom";
 import LinkNavigation from "../../atoms/LinkNavigation";
 import StackedBar from "../../atoms/StackedBar";
 import StatCard from "../../atoms/StatCard";
+import { GiConverseShoe } from "react-icons/gi";
+import { TiDocumentAdd } from "react-icons/ti";
+import { AiOutlineShop, AiFillDelete } from "react-icons/ai";
+import { BsPencilSquare } from "react-icons/bs";
 
 const AdminDashboardTemplate = () => {
   return (
     <Flex>
-      <Box mr="20px">
-        <Button display="block" mt="20px">
-          Create APp
+      <Box mr="20px" mt="-20px">
+        <Button
+          mt="20px"
+          as={Link}
+          to="/seller/products"
+          display="flex"
+          leftIcon={<GiConverseShoe />}
+        >
+          Product Lists
         </Button>
-        <Button display="block" mt="20px">
-          Create APp
+        <Button
+          mt="20px"
+          as={Link}
+          to="/seller/products/create"
+          display="flex"
+          leftIcon={<Icon as={TiDocumentAdd} color="white" />}
+        >
+          Add Product
         </Button>
-        <Button display="block" mt="20px">
-          Create App
+        <Button
+          mt="20px"
+          as={Link}
+          to="/seller/products/create"
+          display="flex"
+          leftIcon={<Icon as={AiOutlineShop} color="white" />}
+        >
+          My Shop
         </Button>
-        <Button display="block" mt="20px">
-          Create APp
+        <Button
+          mt="20px"
+          as={Link}
+          to="/seller/products/create"
+          display="flex"
+          leftIcon={<Icon as={BsPencilSquare} color="white" />}
+        >
+          Edit Shop
         </Button>
-        <Button display="block" mt="20px">
-          Create APp
-        </Button>
-        <Button display="block" mt="20px">
-          Create APp
+        <Button
+          mt="20px"
+          width="full"
+          display="flex"
+          leftIcon={<Icon as={AiFillDelete} color="white" />}
+        >
+          Delete Shop
         </Button>
       </Box>
       <Box flexGrow={1}>
