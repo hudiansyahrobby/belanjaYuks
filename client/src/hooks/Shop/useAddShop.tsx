@@ -1,15 +1,15 @@
 import { QueryClient, useMutation } from "react-query";
-import { useHistory } from "react-router";
 import { addShop } from "../../API/ShopAPI";
+import useLogout from "../Auth/useLogout";
 
 const useAddShop = () => {
   const queryClient = new QueryClient();
-  const history = useHistory();
+  const { mutateAsync: logout } = useLogout();
 
   return useMutation(addShop, {
     onSuccess: () => {
       queryClient.invalidateQueries("shops");
-      history.push("/shops");
+      logout();
     },
   });
 };

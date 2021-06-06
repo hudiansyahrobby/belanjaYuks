@@ -1,4 +1,4 @@
-import { Box, Button, Image, useToast } from "@chakra-ui/react";
+import { Box, Button, Icon, Image, Text, useToast } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import queryString from "query-string";
 import React from "react";
@@ -15,6 +15,7 @@ import useMyShop from "../../../hooks/Shop/useMyShop";
 import useUpdateShop from "../../../hooks/Shop/useUpdateShop";
 import Loading from "../../atoms/Loading";
 import AlertMessage from "../../atoms/AlertMessage";
+import ModalItem from "../../atoms/Modal";
 
 const ShopForm = () => {
   const { search } = useLocation();
@@ -189,13 +190,29 @@ const ShopForm = () => {
             }}
           />
 
-          <Button
+          <ModalItem
+            mt={{ base: "110px", sm: "75px" }}
+            // width="full"
+            display="flex"
+            buttonTitle={!!edit ? "Edit Shop" : "Create Shop"}
+            modalTitle={!!edit ? "Edit Shop" : "Create Shop"}
+            onClick={onSubmit}
+            isLoading={isLoading || isUpdateShopLoading}
+          >
+            <Text mb="10px">
+              {!!edit
+                ? "Are you sure do you want to edit your shop?"
+                : "Are you sure do you want to create a shop? You have to re-login after creating shop"}
+            </Text>
+          </ModalItem>
+
+          {/* <Button
             mt={{ base: "100px", sm: "70px" }}
             type="submit"
             isLoading={isLoading || isUpdateShopLoading}
           >
-            {!!edit ? "Edit Shop" : "Create Shop"}
-          </Button>
+            
+          </Button> */}
         </>
       )}
     </Box>

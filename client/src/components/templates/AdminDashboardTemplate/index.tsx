@@ -1,29 +1,62 @@
 import {
+  Box,
+  Button,
+  Flex,
+  Icon,
+  SimpleGrid,
   Table,
   Tbody,
   Td,
+  Text,
   Tfoot,
   Th,
   Thead,
   Tr,
-  Button,
-  Box,
-  Flex,
-  SimpleGrid,
-  Text,
-  Icon,
+  useToast,
 } from "@chakra-ui/react";
 import React from "react";
-import { Link } from "react-router-dom";
-import LinkNavigation from "../../atoms/LinkNavigation";
-import StackedBar from "../../atoms/StackedBar";
-import StatCard from "../../atoms/StatCard";
+import { AiFillDelete, AiOutlineShop } from "react-icons/ai";
+import { BsPencilSquare } from "react-icons/bs";
 import { GiConverseShoe } from "react-icons/gi";
 import { TiDocumentAdd } from "react-icons/ti";
-import { AiOutlineShop, AiFillDelete } from "react-icons/ai";
-import { BsPencilSquare } from "react-icons/bs";
+import { Link } from "react-router-dom";
+import useAuthenticated from "../../../hooks/Auth/useAuthenticated";
+import useDeleteShop from "../../../hooks/Shop/useDeleteShop";
+import LinkNavigation from "../../atoms/LinkNavigation";
+import ModalItem from "../../atoms/Modal";
+import StackedBar from "../../atoms/StackedBar";
+import StatCard from "../../atoms/StatCard";
 
 const AdminDashboardTemplate = () => {
+  const { isLoading, mutateAsync, isSuccess, isError, error } = useDeleteShop();
+  const { shopId } = useAuthenticated();
+  const toast = useToast();
+
+  const onDeleteShop = async () => {
+    await mutateAsync();
+  };
+
+  if (isSuccess) {
+    toast({
+      title: "Success Deleting Shop",
+      description: "Shop deleted successfully",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
+  }
+
+  if (isError) {
+    const customError: any = error;
+    toast({
+      title: "Error Deleting Shop",
+      description: customError?.response?.data?.message,
+      status: "error",
+      duration: 3000,
+      isClosable: true,
+    });
+  }
+
   return (
     <Flex>
       <Box mr="20px" mt="-20px">
@@ -48,7 +81,7 @@ const AdminDashboardTemplate = () => {
         <Button
           mt="20px"
           as={Link}
-          to="/seller/products/create"
+          to={`/shops/${shopId}`}
           display="flex"
           leftIcon={<Icon as={AiOutlineShop} color="white" />}
         >
@@ -57,20 +90,28 @@ const AdminDashboardTemplate = () => {
         <Button
           mt="20px"
           as={Link}
-          to="/seller/products/create"
+          to="/shops/create?edit=true"
           display="flex"
           leftIcon={<Icon as={BsPencilSquare} color="white" />}
         >
           Edit Shop
         </Button>
-        <Button
+
+        <ModalItem
           mt="20px"
           width="full"
           display="flex"
           leftIcon={<Icon as={AiFillDelete} color="white" />}
+          buttonTitle="Delete Shop"
+          modalTitle="Delete Shop"
+          onClick={onDeleteShop}
+          isLoading={isLoading}
         >
-          Delete Shop
-        </Button>
+          <Text mb="10px">
+            Are you sure do you want to delete your shop ? You have to re-login
+            after deleting your shop
+          </Text>
+        </ModalItem>
       </Box>
       <Box flexGrow={1}>
         <SimpleGrid columns={{ base: 2, lg: 4 }} spacing="10px">

@@ -62,7 +62,9 @@ const ProductsCard = () => {
           })}
         </SimpleGrid>
       ) : (
-        <Text textAlign="center">Product is empty</Text>
+        <Text textAlign="center" mt="30px">
+          Product is empty
+        </Text>
       )}
     </>
   );

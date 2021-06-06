@@ -18,22 +18,22 @@ export const getMyShopProductPagination = async (page: number) => {
 
 export const addShop = async (shop: FormData) => {
   const { data } = await axios.post("/shops", shop);
-  return data.shop;
+  return data;
 };
 
 export const updateShop = async (shop: FormData) => {
   const { data } = await axios.put("/shops", shop);
-  return data.shop;
+  return data;
 };
 
 export const deleteShop = async () => {
   const { data } = await axios.delete("/shops");
-  return data.shop;
+  return data;
 };
 
 export const deleteShopById = async (shopId: string) => {
   const { data } = await axios.delete(`/shops/${shopId}`);
-  return data.shop;
+  return data;
 };
 
 export const getShopById = async (shopId: string) => {

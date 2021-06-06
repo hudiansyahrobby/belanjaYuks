@@ -5,7 +5,7 @@ import Product from '../models/product.model';
 import Category from '../models/category.model';
 import { Op } from 'sequelize';
 
-export const getUserShop = (userId: number) => {
+export const getUserShop = (userId: string) => {
     return Shop.findOne({
         where: { userId },
     });
@@ -32,6 +32,7 @@ export const getAllShops = (searchCondition: any, limit: number, offset: number,
 };
 
 export const getShopById = (id: string) => {
+    console.log('ID PASS', id);
     return Shop.findOne({
         where: { id },
         include: [

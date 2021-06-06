@@ -73,17 +73,17 @@ export const get = async (req: Request, res: Response) => {
 };
 
 export const getMyShop = async (req: any, res: Response) => {
-    const user = req.user;
+    const { id: userId } = req.user;
 
     try {
-        const shop = await getShopById(user.myShop.id);
-
+        const shop = await getUserShop(userId);
         if (!shop) {
             return res.status(404).json({ message: 'Shop not found' });
         }
 
         return res.status(200).json({ shop });
     } catch (error) {
+        console.log('ERRPR', error);
         return res.status(500).json({ message: error.message });
     }
 };

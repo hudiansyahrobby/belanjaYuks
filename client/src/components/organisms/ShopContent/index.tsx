@@ -1,11 +1,4 @@
-import {
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import React from "react";
 import ReactHtmlParser from "react-html-parser";
 import ProductShopCard from "../../molecules/ProductShopCard";
@@ -38,7 +31,7 @@ const ShopContent: React.FC<ShopContentProps> = ({ description }) => {
 
         <TabPanels>
           <TabPanel>
-            <Text fontSize="15px">{ReactHtmlParser(description)}</Text>
+            <Box fontSize="15px">{ReactHtmlParser(description)}</Box>
           </TabPanel>
           <TabPanel>
             <ProductShopCard />

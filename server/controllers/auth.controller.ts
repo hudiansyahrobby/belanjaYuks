@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import User from '../models/user.model';
 import getToken from '../helpers/getToken';
 import hashPassword from '../helpers/hashPassword';
+import Shop from '../models/shop.model';
 
 export const register = async (req: Request, res: Response): Promise<Response> => {
     const { email, password } = req.body;
@@ -42,7 +43,13 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
             where: {
                 email: email,
             },
-            raw: true,
+            // raw: true,
+            include: [
+                {
+                    model: Shop,
+                    attributes: ['id'],
+                },
+            ],
         });
 
         if (!user) {
@@ -62,7 +69,7 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
 
         res.cookie('jwt', refreshToken, { httpOnly: true });
 
-        const _user: any = user;
+        const _user: any = user.toJSON();
         delete _user['password'];
         delete _user['refreshToken'];
         delete _user['resetToken'];
