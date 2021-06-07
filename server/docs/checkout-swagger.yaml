@@ -1,0 +1,77 @@
+openapi: 3.0.0
+
+info:
+  title: "Ecommerce APP API"
+  description: "API for ecommerce app"
+  version: "1.0.0"
+servers:
+  - url: http://localhost:8000/api/v1
+paths: 
+  /provinces:
+    get:
+      description: "Get All Provinces"
+      tags:
+        - "Checkout"
+      responses:
+        200:
+          description: "Success"
+        500:
+          description: "Server Error"
+  /provinces/{provinceId}:
+    get:
+      description: "Get City By Province ID"
+      tags:
+        - "Checkout"
+      parameters:
+      - in: path
+        required: true
+        name: provinceId
+        schema:
+          type: string
+        description: Province ID
+      responses:
+        200:
+          description: "Success"
+        500:
+          description: "Server Error"
+  /checkout/cost:
+    get:
+      description: "Get Shipping Cost"
+      tags:
+        - "Checkout"
+      parameters:
+      - in: query
+        name: origin
+        required: true
+        schema:
+          type: string
+          description: origin city ID
+      - in: query
+        name: destination
+        required: true
+        schema:
+          type: string
+          description: destination city ID
+      - in: query
+        name: weight
+        required: true
+        schema:
+          type: string
+          description: Weight of the product
+      responses:
+        200:
+          description: "Success"
+        500:
+          description: "Server Error"
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  
+
+    
+
+  

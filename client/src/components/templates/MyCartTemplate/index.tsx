@@ -35,14 +35,13 @@ const MyCartTemplate = () => {
     isLoading: isCartsLoading,
     data: carts,
     isError,
-    isFetching,
     error: cartError,
   } = useCarts();
 
   const customError: any = cartError;
   const appError = customError?.response?.data?.message;
 
-  if (isCartsLoading || isFetching) {
+  if (isCartsLoading) {
     return <Loading />;
   }
 

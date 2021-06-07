@@ -18,14 +18,15 @@ import shopRoute from './routes/shop.route';
 import categoryRoute from './routes/category.route';
 import favoriteRoute from './routes/favorite.route';
 import cartRoute from './routes/cart.route';
+import checkoutRoute from './routes/checkout.route';
 
 config();
 const app = express();
 
 initDB();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -58,6 +59,7 @@ app.use('/api/v1', shopRoute);
 app.use('/api/v1', categoryRoute);
 app.use('/api/v1', favoriteRoute);
 app.use('/api/v1', cartRoute);
+app.use('/api/v1', checkoutRoute);
 
 // Swagger Documentatios
 

@@ -7,6 +7,7 @@ import ChangeQuantityButton from "../ChangeQuantityButton";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import useDeleteFromCart from "../../../hooks/Cart/useDeleteFromCart";
 import { useToast } from "@chakra-ui/toast";
+import useCarts from "../../../hooks/Cart/useCarts";
 
 interface CartCardProps {
   id: string;
@@ -27,6 +28,7 @@ const CartCard: React.FC<CartCardProps> = ({
 }) => {
   const [quantity, setQuantity] = React.useState<number>(defaultQuantity);
   const { mutateAsync } = useDeleteFromCart();
+  const { refetch } = useCarts();
   const toast = useToast();
 
   const onDeleteCart = async () => {
@@ -39,6 +41,7 @@ const CartCard: React.FC<CartCardProps> = ({
           duration: 3000,
           isClosable: true,
         });
+        refetch();
       },
       onError: (error) => {
         const appError: any = error;
