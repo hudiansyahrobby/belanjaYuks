@@ -192,7 +192,6 @@ const ShopForm = () => {
 
           <ModalItem
             mt={{ base: "110px", sm: "75px" }}
-            // width="full"
             display="flex"
             buttonTitle={!!edit ? "Edit Shop" : "Create Shop"}
             modalTitle={!!edit ? "Edit Shop" : "Create Shop"}
@@ -205,14 +204,6 @@ const ShopForm = () => {
                 : "Are you sure do you want to create a shop? You have to re-login after creating shop"}
             </Text>
           </ModalItem>
-
-          {/* <Button
-            mt={{ base: "100px", sm: "70px" }}
-            type="submit"
-            isLoading={isLoading || isUpdateShopLoading}
-          >
-            
-          </Button> */}
         </>
       )}
     </Box>

@@ -1,22 +1,23 @@
 import {
-    Model,
-    Table,
-    Column,
-    DataType,
-    PrimaryKey,
-    Default,
-    ForeignKey,
     BelongsTo,
     BelongsToMany,
+    Column,
+    DataType,
+    Default,
+    ForeignKey,
+    Model,
+    PrimaryKey,
+    Table,
 } from 'sequelize-typescript';
-import Shop from './shop.model';
-import ProductCategory from './productCategory.model';
-import Category from './category.model';
-import User from './user.model';
-import ProductCart from './productCart.model';
 import Cart from './cart.model';
+import Category from './category.model';
 import Favorite from './favorite.model';
+import History from './history.model';
+import ProductCart from './productCart.model';
+import ProductCategory from './productCategory.model';
 import ProductFavorite from './productFavorite.model';
+import ProductHistory from './ProductHistory.model';
+import Shop from './shop.model';
 
 @Table({
     tableName: 'products',
@@ -60,4 +61,7 @@ export default class Product extends Model {
 
     @BelongsToMany(() => Favorite, () => ProductFavorite)
     favorites: Favorite[];
+
+    @BelongsToMany(() => History, () => ProductHistory)
+    checkout: History[];
 }

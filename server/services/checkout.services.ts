@@ -1,5 +1,11 @@
 import axios from 'axios';
 import { config } from 'dotenv';
+// @ts-ignore
+import midtransClient from 'midtrans-client';
+import { Cart } from '../interfaces/Cart';
+import HistoryType from '../interfaces/History';
+import History from '../models/history.model';
+import Product from '../models/product.model';
 
 config();
 
@@ -56,4 +62,76 @@ export const getCost = async (origin: string, destination: string, weight: numbe
         console.log(error);
         throw new Error(error);
     }
+};
+
+export const getTransactionToken = async (
+    orderId: string,
+    price: number,
+    user: { firstName: string; lastName: string; email: string },
+    products: Cart[],
+) => {
+    const { email, firstName, lastName } = user;
+    try {
+        let snap = new midtransClient.Snap({
+            isProduction: false,
+            serverKey: process.env.MIDTRANS_API_KEY,
+        });
+
+        let parameter = {
+            transaction_details: {
+                order_id: orderId,
+                gross_amount: price,
+            },
+            item_details: products.map((product) => {
+                return {
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    quantity: product.productCart.quantity,
+                };
+            }),
+            credit_card: {
+                secure: true,
+            },
+            customer_details: {
+                first_name: firstName,
+                last_name: lastName,
+                email,
+            },
+        };
+
+        const transaction = await snap.createTransaction(parameter);
+        return transaction;
+    } catch (error) {
+        console.log(error);
+        throw new Error(error);
+    }
+};
+
+export const getMyHistory = (userId: string) => {
+    return History.findAll({
+        where: { userId },
+        include: [
+            {
+                model: Product,
+                through: {},
+            },
+        ],
+    });
+};
+
+export const createNewHistory = (userId: string) => {
+    console.log(userId);
+    return History.create({ userId });
+};
+
+export const addProductsToHistory = async (
+    schema: History,
+    products: Array<{ productId: string; quantity: number }>,
+) => {
+    products.map(async (product) => {
+        await schema.$add('products', product.productId, {
+            through: { quantity: product.quantity },
+        });
+    });
 };

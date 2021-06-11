@@ -28,8 +28,6 @@ export const findAllCategories = () => {
 };
 
 export const updateCategoryById = (updatedCategory: CategoryType, id: string) => {
-    console.log(updatedCategory);
-    console.log(id);
     return Category.update(updatedCategory, {
         where: {
             id,

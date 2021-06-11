@@ -63,7 +63,79 @@ paths:
           description: "Success"
         500:
           description: "Server Error"
+  /checkout/pay:
+    post:
+      description: "Pay Product"
+      tags:
+        - "Checkout"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Checkout'
+      responses:
+        200:
+          description: "Success"
+        500:
+          description: "Server Error"
+  /checkout/history:
+    get:
+      description: "Get Checkout History"
+      tags:
+        - "Checkout"
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "Success"
+        500:
+          description: "Server Error"
+    post:
+      description: "Create Checkout History"
+      tags:
+        - "Checkout"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/History'
+      security:
+        - bearerAuth: []
+      responses:
+        201:
+          description: "Success"
+        500:
+          description: "Server Error"
 components:
+  schemas:
+    Checkout:
+      type: object
+      properties:
+        orderId:
+          type: string
+          example: "asd781283gaydga67"
+        price:
+          type: number
+          example: 10000
+    History:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "f09c2218-5129-49ad-92d4-e4803406de9d"
+        products[]:
+          type: array
+          items:
+            type: object
+            properties:
+              productId:
+                type: string
+                example: "35732c79-4d9a-451a-a3eb-5366a9c35687"
+              quantity:
+                type: number
+                example: 4
   securitySchemes:
     bearerAuth:
       type: http
