@@ -17,6 +17,7 @@
     "axios": "^0.21.1",
     "chart.js": "^3.3.2",
     "classnames": "^2.2.6",
+    "date-fns": "^2.22.1",
     "framer-motion": "^3.2.2-rc.1",
     "jsonwebtoken": "^8.5.1",
     "node-sass": "^4.14.1",

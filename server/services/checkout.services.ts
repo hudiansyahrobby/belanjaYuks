@@ -2,10 +2,12 @@ import axios from 'axios';
 import { config } from 'dotenv';
 // @ts-ignore
 import midtransClient from 'midtrans-client';
+import { Sequelize } from 'sequelize-typescript';
 import { Cart } from '../interfaces/Cart';
 import HistoryType from '../interfaces/History';
 import History from '../models/history.model';
 import Product from '../models/product.model';
+import User from '../models/user.model';
 
 config();
 
@@ -108,30 +110,52 @@ export const getTransactionToken = async (
     }
 };
 
+export const getAllHistories = () => {
+    return History.findAll({
+        // attributes: [[Sequelize.literal('COUNT(products.price * qty)'), 'result']],
+        include: [
+            {
+                model: Product,
+                through: { as: 'checkout', attributes: ['qty'] },
+                attributes: ['id', 'name', 'images', [Sequelize.literal('products.price * qty'), 'totalPrice']],
+            },
+            {
+                model: User,
+                attributes: ['id', 'firstName', 'lastName'],
+            },
+        ],
+        // group: [
+        //     'History.id',
+        //     'products.id',
+        //     'products->checkout.qty',
+        //     'products->checkout.productId',
+        //     'products->checkout.historyId',
+        //     'user.id',
+        // ],
+    });
+};
+
 export const getMyHistory = (userId: string) => {
     return History.findAll({
         where: { userId },
         include: [
             {
                 model: Product,
-                through: {},
+                through: { as: 'checkout', attributes: ['qty'] },
+                attributes: ['id', 'name', 'images', [Sequelize.literal('products.price * qty'), 'totalPrice']],
             },
         ],
     });
 };
 
 export const createNewHistory = (userId: string) => {
-    console.log(userId);
     return History.create({ userId });
 };
 
-export const addProductsToHistory = async (
-    schema: History,
-    products: Array<{ productId: string; quantity: number }>,
-) => {
+export const addProductsToHistory = async (schema: History, products: Array<{ productId: string; qty: number }>) => {
     products.map(async (product) => {
         await schema.$add('products', product.productId, {
-            through: { quantity: product.quantity },
+            through: { qty: product.qty },
         });
     });
 };

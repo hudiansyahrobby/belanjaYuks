@@ -33,6 +33,8 @@ const fetchClient = () => {
           if (res.status === 200) {
             localStorage.setItem("token", res.data.accessToken);
             return instance(originalRequest);
+          } else {
+            localStorage.clear();
           }
         });
       }

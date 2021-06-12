@@ -16,5 +16,5 @@ export default class ProductHistory extends Model {
     productId: string;
 
     @Column(DataType.NUMBER)
-    quantity: number;
+    qty: number;
 }

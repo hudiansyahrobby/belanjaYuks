@@ -23,7 +23,7 @@ module.exports = {
                 allowNull: false,
             },
             description: {
-                type: Sequelize.TEXT(1500),
+                type: Sequelize.TEXT(),
                 allowNull: false,
             },
             location: {

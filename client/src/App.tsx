@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import Loading from "./components/atoms/Loading";
+import AdminRoute from "./hooks/Auth/AdminRoute";
 
 const Home = React.lazy(() => import("./pages/Home"));
 const Login = React.lazy(() => import("./pages/Login"));
@@ -21,6 +22,10 @@ const CreateShop = React.lazy(() => import("./pages/CreateShop"));
 const CreateProduct = React.lazy(() => import("./pages/CreateProduct"));
 const Shops = React.lazy(() => import("./pages/Shops"));
 const ShopDetail = React.lazy(() => import("./pages/ShopDetail"));
+const MyHistory = React.lazy(() => import("./pages/MyHistory"));
+const AdminHistory = React.lazy(() => import("./pages/AdminHistory"));
+const Unauthorized = React.lazy(() => import("./pages/Unauthorized"));
+const NotFound = React.lazy(() => import("./pages/NotFound"));
 
 const App: React.FC = () => {
   const queryClient = new QueryClient();
@@ -39,9 +44,15 @@ const App: React.FC = () => {
             <Route path="/products/:id" component={ProductDetail} />
             <Route path="/favorites" exact component={Favorite} />
             <Route path="/carts" exact component={MyCart} />
+            <Route path="/histories" exact component={MyHistory} />
+            <AdminRoute
+              path="/admin/histories"
+              exact
+              component={AdminHistory}
+            />
+            <AdminRoute path="/admin/shops" exact component={AdminShopList} />
+            <AdminRoute path="/admin" exact component={AdminDashboard} />
             <Route path="/me" exact component={MyProfile} />
-            <Route path="/admin/shops" exact component={AdminShopList} />
-            <Route path="/admin" exact component={AdminDashboard} />
             <Route path="/seller" exact component={AdminDashboard} />
             <Route path="/seller/products" exact component={AdminProductList} />
             <Route
@@ -52,6 +63,8 @@ const App: React.FC = () => {
             <Route path="/shops" exact component={Shops} />
             <Route path="/shops/create" component={CreateShop} />
             <Route path="/shops/:shopId" component={ShopDetail} />
+            <Route path="/unauthorized" exact component={Unauthorized} />
+            <Route path="*" component={NotFound} />
           </Switch>
         </Suspense>
       </Router>

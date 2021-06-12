@@ -3,6 +3,7 @@ import User from '../interfaces/User';
 import {
     addProductsToHistory,
     createNewHistory,
+    getAllHistories,
     getAllProvinces,
     getCityByProvince,
     getCost,
@@ -52,6 +53,15 @@ export const payProduct = async (req: any, res: Response) => {
         };
         const transaction = await getTransactionToken(orderId, price, _user, products);
         return res.status(200).json({ message: 'OK', transaction });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
+
+export const getHistories = async (req: any, res: Response) => {
+    try {
+        const histories = await getAllHistories();
+        return res.status(200).json({ message: 'OK', histories });
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }

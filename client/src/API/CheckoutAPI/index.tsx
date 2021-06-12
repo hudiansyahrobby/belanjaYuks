@@ -37,3 +37,28 @@ export const getTransactionToken = async (transaction: {
   const { data } = await axios.post("/checkout/pay", order);
   return data;
 };
+
+export const getAllHistories = async () => {
+  const { data } = await axios.get("/checkout/history/all");
+  return data.histories;
+};
+
+export const getUserHistory = async () => {
+  const { data } = await axios.get("/checkout/history");
+  return data.histories;
+};
+
+export const createHistory = async ({
+  id,
+  products,
+}: {
+  id: string;
+  products: { productId: string; qty: number }[];
+}) => {
+  const history = {
+    id,
+    products,
+  };
+  const { data } = await axios.post("/checkout/history", history);
+  return data;
+};
