@@ -16,7 +16,7 @@ interface CardProps {
   buttonText?: string;
   children?: React.ReactNode;
   to: string;
-  isLoading?: boolean;
+  isLoading: boolean;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -33,7 +33,7 @@ const Card: React.FC<CardProps> = ({
   }
 
   return (
-    <Box width={{ sm: "200px", xl: "230px" }}>
+    <Box width={{ sm: "200px", xl: "230px" }} mb="20px">
       <Image
         borderRadius="3xl"
         width="full"

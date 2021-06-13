@@ -1,4 +1,4 @@
-interface ProductHistory {
+export interface ProductHistory {
   id: string;
   name: string;
   images: Array<string>;

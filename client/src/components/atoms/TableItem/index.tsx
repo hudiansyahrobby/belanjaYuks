@@ -67,7 +67,11 @@ const TableItem: React.FC<TableItemProps> = ({
               {headerGroups.map((headerGroup) => (
                 <Tr {...headerGroup.getHeaderGroupProps()}>
                   {headerGroup.headers.map((column) => (
-                    <Th {...column.getHeaderProps()}>
+                    <Th
+                      {...column.getHeaderProps()}
+                      fontSize="16px"
+                      color="black"
+                    >
                       {column.render("Header")}
                     </Th>
                   ))}

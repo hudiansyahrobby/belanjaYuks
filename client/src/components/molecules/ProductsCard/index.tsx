@@ -1,4 +1,4 @@
-import { Flex, SimpleGrid, Text, VStack } from "@chakra-ui/react";
+import { Flex, SimpleGrid, Text, VStack, Button } from "@chakra-ui/react";
 import React from "react";
 import { AiOutlineShop } from "react-icons/ai";
 import StarRatings from "react-star-ratings";
@@ -7,9 +7,27 @@ import { ProductData } from "../../../types/ProductType";
 import AlertMessage from "../../atoms/AlertMessage";
 import Card from "../../atoms/Card";
 import LinkNavigation from "../../atoms/LinkNavigation";
+import { useInView } from "react-intersection-observer";
 
 const ProductsCard = () => {
-  const { isLoading, data: products, isError: isProductsError } = useProducts();
+  const {
+    isLoading,
+    data: products,
+    isError: isProductsError,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useProducts();
+
+  const { ref, inView } = useInView({
+    threshold: 0,
+  });
+
+  React.useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, fetchNextPage]);
 
   if (isProductsError) {
     return (
@@ -20,7 +38,7 @@ const ProductsCard = () => {
       />
     );
   }
-
+  console.log(products?.pages);
   return (
     <>
       {products?.pages[0]?.results?.length > 0 ? (
@@ -66,6 +84,19 @@ const ProductsCard = () => {
           Product is empty
         </Text>
       )}
+      <Button
+        ref={ref}
+        variant="outline"
+        mx="auto"
+        display="block"
+        my="40px"
+        colorScheme="telegram"
+        onClick={() => fetchNextPage()}
+        disabled={!hasNextPage || isFetchingNextPage}
+        isLoading={isFetchingNextPage}
+      >
+        {hasNextPage ? "Load More" : "Nothing more to load"}
+      </Button>
     </>
   );
 };

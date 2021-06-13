@@ -50,21 +50,19 @@ const ShopCard = () => {
           },
         }}
       >
-        {shops?.pages?.map((_shops) => {
-          return _shops.results.map((shop: ShopData) => (
-            <SwiperSlide key={shop.id}>
-              <Card
-                key={shop.id}
-                isLoading={isLoading}
-                to={`/shops/${shop.id}`}
-                title={shop.name}
-                image={shop.images[0]}
-                subtitle={shop.description}
-                buttonText="Visit Shop"
-              />
-            </SwiperSlide>
-          ));
-        })}
+        {shops?.pages[0]?.results.map((shop: ShopData) => (
+          <SwiperSlide key={shop.id}>
+            <Card
+              key={shop.id}
+              isLoading={isLoading}
+              to={`/shops/${shop.id}`}
+              title={shop.name}
+              image={shop.images[0]}
+              subtitle={shop.description}
+              buttonText="Visit Shop"
+            />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </Box>
   );

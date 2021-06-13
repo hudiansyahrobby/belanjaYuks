@@ -9,7 +9,7 @@ const ShopList = () => {
     <Box mt="100px" mx="20px">
       <Flex alignItems="center">
         <Title>Best Shops</Title>
-        <LinkNavigation to="/" ml="20px">
+        <LinkNavigation to="/shops" ml="20px">
           See Others
         </LinkNavigation>
       </Flex>

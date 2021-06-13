@@ -24,6 +24,9 @@ export default class Category extends Model {
     @Column(DataType.STRING)
     name: string;
 
+    @Column(DataType.STRING)
+    image: string;
+
     @BelongsToMany(() => Product, () => ProductCategory)
     products: Product[];
 

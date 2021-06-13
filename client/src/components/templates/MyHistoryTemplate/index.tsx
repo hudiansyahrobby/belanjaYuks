@@ -2,6 +2,8 @@ import { Box, Flex, Image, Text } from "@chakra-ui/react";
 import { format } from "date-fns";
 import React from "react";
 import { capitalizeEachWord } from "../../../helpers/capitalizeEachWord";
+import { numberWithCommas } from "../../../helpers/numberWithCommas";
+import { sumTotalPrice } from "../../../helpers/sumTotalPrice";
 import useUserHistory from "../../../hooks/Checkout/useUserHistory";
 import { HistoryData } from "../../../types/HistoryType";
 import AlertMessage from "../../atoms/AlertMessage";
@@ -18,6 +20,10 @@ const MyHistoryTemplate = () => {
 
   const columns: any = React.useMemo(
     () => [
+      {
+        Header: "No",
+        accessor: "no",
+      },
       {
         Header: "Checkout ID",
         accessor: "id",
@@ -40,8 +46,9 @@ const MyHistoryTemplate = () => {
   );
 
   const data = React.useMemo(() => {
-    return histories?.map((history: HistoryData) => {
+    return histories?.map((history: HistoryData, historyIdx: number) => {
       return {
+        no: historyIdx + 1,
         id: history.id,
         products: (
           <>
@@ -63,13 +70,8 @@ const MyHistoryTemplate = () => {
             })}
           </>
         ),
-        price:
-          "$" +
-          history.products.reduce(
-            (accumulator, currentValue) =>
-              accumulator + +currentValue.totalPrice,
-            0
-          ),
+        price: "$" + numberWithCommas(sumTotalPrice(history.products)),
+
         checkout: format(new Date(history.createdAt), "do 'of' MMMM yyyy"),
       };
     });

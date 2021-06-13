@@ -1,7 +1,7 @@
 import axios from "../../axios";
 
-export const getProducts = async () => {
-  const { data } = await axios.get("/products");
+export const getProducts = async ({ pageParam = 0 }) => {
+  const { data } = await axios.get(`/products?page=${pageParam}`);
   return data.products;
 };
 

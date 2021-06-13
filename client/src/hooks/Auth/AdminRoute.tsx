@@ -2,17 +2,17 @@ import { Redirect, Route } from "react-router-dom";
 
 const AdminRoute = ({ component: Component, ...rest }: any) => {
   const user = localStorage.getItem("user");
-  let isAdmin = false;
+  let role = "";
   if (user) {
     const _user = JSON.parse(user);
-    isAdmin = _user.isAdmin;
+    role = _user.role;
   }
 
   return (
     <Route
       {...rest}
       render={(props) => {
-        if (isAdmin) {
+        if (role === "admin") {
           return <Component {...rest} {...props} />;
         } else {
           return (

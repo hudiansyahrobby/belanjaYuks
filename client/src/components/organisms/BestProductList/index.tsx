@@ -9,7 +9,7 @@ const BestProductList = () => {
     <Box mt="100px" mx="20px">
       <Flex alignItems="center">
         <Title>Best Products</Title>
-        <LinkNavigation to="/" ml="20px">
+        <LinkNavigation to="/products" ml="20px">
           See Others
         </LinkNavigation>
       </Flex>

@@ -1,8 +1,8 @@
 import { useQuery } from "react-query";
 import { getUserHistory } from "../../API/CheckoutAPI";
 
-const useAllHistories = () => {
+const useUserHistory = () => {
   return useQuery("user-histories", getUserHistory);
 };
 
-export default useAllHistories;
+export default useUserHistory;

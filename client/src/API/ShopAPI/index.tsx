@@ -1,8 +1,7 @@
 import axios from "../../axios";
-import { ShopData } from "../../types/ShopType";
 
-export const getShops = async () => {
-  const { data } = await axios.get("/shops");
+export const getShops = async ({ pageParam = 0 }) => {
+  const { data } = await axios.get(`/shops?page=${pageParam}`);
   return data.shops;
 };
 

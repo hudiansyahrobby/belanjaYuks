@@ -3,9 +3,7 @@ import React from "react";
 import Title from "../../atoms/typography/Title";
 import CategoriesCard from "../../molecules/CategoriesCard";
 
-interface CategoryListProps {}
-
-const CategoryList: React.FC<CategoryListProps> = ({}) => {
+const CategoryList = () => {
   return (
     <Box mt="100px" mx="20px">
       <Title>Product Categories</Title>

@@ -1,8 +1,20 @@
-import { Box, Button, Flex, Image, Text, useToast } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Icon,
+  Image,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
 import queryString from "query-string";
 import React from "react";
+import { AiOutlineShop } from "react-icons/ai";
+import { GiConverseShoe } from "react-icons/gi";
 import { RiDeleteBin6Fill } from "react-icons/ri";
+import { TiDocumentAdd } from "react-icons/ti";
 import { useLocation } from "react-router";
+import { Link } from "react-router-dom";
 import useDeleteShopById from "../../../hooks/Shop/useDeleteShopById";
 import useShopsPagination from "../../../hooks/Shop/useShopsPagination";
 import { ShopData } from "../../../types/ShopType";
@@ -52,6 +64,10 @@ const AdminShopListTemplate = () => {
   const columns: any = React.useMemo(
     () => [
       {
+        Header: "No",
+        accessor: "no",
+      },
+      {
         Header: "Name",
         accessor: "name",
       },
@@ -69,8 +85,9 @@ const AdminShopListTemplate = () => {
   );
 
   const data = React.useMemo(() => {
-    return shops?.results?.map((shop: ShopData) => {
+    return shops?.results?.map((shop: ShopData, shopIdx: number) => {
       return {
+        no: shopIdx + 1,
         name: (
           <Flex alignItems="center">
             <Image
@@ -108,28 +125,37 @@ const AdminShopListTemplate = () => {
   return (
     <Flex>
       <Box mr="20px">
-        <Button display="block" mt="20px">
-          Create APp
+        <Button
+          mt="20px"
+          as={Link}
+          to="/admin"
+          display="flex"
+          leftIcon={<GiConverseShoe />}
+        >
+          Dashboard
         </Button>
-        <Button display="block" mt="20px">
-          Create APp
+        <Button
+          mt="20px"
+          as={Link}
+          to="/admin/shops"
+          display="flex"
+          leftIcon={<Icon as={AiOutlineShop} color="white" />}
+        >
+          Shop Lists
         </Button>
-        <Button display="block" mt="20px">
-          Create App
-        </Button>
-        <Button display="block" mt="20px">
-          Create APp
-        </Button>
-        <Button display="block" mt="20px">
-          Create APp
-        </Button>
-        <Button display="block" mt="20px">
-          Create APp
+        <Button
+          mt="20px"
+          as={Link}
+          to="/admin/histories"
+          display="flex"
+          leftIcon={<Icon as={TiDocumentAdd} color="white" />}
+        >
+          History
         </Button>
       </Box>
       <Box flexGrow={1}>
-        <Box mt="20px">
-          <Flex alignItems="center" my="30px">
+        <Box>
+          <Flex alignItems="center" mb="30px" mt="13px">
             <Text fontSize="28px" fontWeight="bold">
               Shop List
             </Text>

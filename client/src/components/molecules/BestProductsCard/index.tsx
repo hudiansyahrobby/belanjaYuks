@@ -57,40 +57,35 @@ const BestProductsCard = () => {
           },
         }}
       >
-        {products?.pages?.map((_products) => {
-          return _products.results.map((product: ProductData) => (
-            <SwiperSlide key={product.id}>
-              <Card
-                isLoading={isLoading}
-                to={`/products/${product.id}`}
-                title={product.name}
-                image={product.images[0]}
-                buttonText="See Products"
-              >
-                <VStack spacing="5px" align="left" mt="5px">
-                  <Text fontWeight="thin">${product.price}</Text>
-                  <Flex alignItems="center">
-                    <AiOutlineShop />{" "}
-                    <LinkNavigation
-                      ml="8px"
-                      to={`/shop?shopId=${product.seller.id}`}
-                    >
-                      {product.seller.name}
-                    </LinkNavigation>
-                  </Flex>
-                  <StarRatings
-                    rating={5}
-                    starRatedColor="#FBBF24"
-                    numberOfStars={5}
-                    starDimension="20px"
-                    starSpacing="1px"
-                    name="rating"
-                  />
-                </VStack>
-              </Card>
-            </SwiperSlide>
-          ));
-        })}
+        {products?.pages[0].results.map((product: ProductData) => (
+          <SwiperSlide key={product.id}>
+            <Card
+              isLoading={isLoading}
+              to={`/products/${product.id}`}
+              title={product.name}
+              image={product.images[0]}
+              buttonText="See Products"
+            >
+              <VStack spacing="5px" align="left" mt="5px">
+                <Text fontWeight="thin">${product.price}</Text>
+                <Flex alignItems="center">
+                  <AiOutlineShop />{" "}
+                  <LinkNavigation ml="8px" to={`/shops/${product.seller.id}`}>
+                    {product.seller.name}
+                  </LinkNavigation>
+                </Flex>
+                <StarRatings
+                  rating={5}
+                  starRatedColor="#FBBF24"
+                  numberOfStars={5}
+                  starDimension="20px"
+                  starSpacing="1px"
+                  name="rating"
+                />
+              </VStack>
+            </Card>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </Box>
   );

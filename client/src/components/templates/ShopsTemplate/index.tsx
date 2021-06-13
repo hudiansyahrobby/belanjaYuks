@@ -1,15 +1,36 @@
 import { Button } from "@chakra-ui/button";
-import { Box, Flex, Grid, GridItem, SimpleGrid } from "@chakra-ui/react";
+import { Box, Grid, GridItem, SimpleGrid } from "@chakra-ui/react";
 import React from "react";
+import { useInView } from "react-intersection-observer";
 import useShops from "../../../hooks/Shop/useShops";
 import { ShopData } from "../../../types/ShopType";
-import Layout from "../../atoms/Layout";
-import MenuSelect from "../../atoms/MenuSelect";
-import Title from "../../atoms/typography/Title";
+import AlertMessage from "../../atoms/AlertMessage";
 import Card from "../../atoms/Card";
+import Layout from "../../atoms/Layout";
+import Title from "../../atoms/typography/Title";
 
 const ShopsTemplate = () => {
-  const { isLoading, data: shops, isError: isShopsError } = useShops();
+  const {
+    isLoading,
+    data: shops,
+    isError: isShopsError,
+    error,
+    isFetchingNextPage,
+    fetchNextPage,
+    hasNextPage,
+  } = useShops();
+
+  const appError = (error as any)?.response.data?.message;
+
+  const { ref, inView } = useInView({
+    threshold: 0,
+  });
+
+  React.useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, fetchNextPage]);
 
   return (
     <Layout>
@@ -28,36 +49,50 @@ const ShopsTemplate = () => {
               <MenuSelect />
             </Flex> */}
 
-            <SimpleGrid
-              columns={{ sm: 2, md: 4, xl: 5 }}
-              spacing="20px"
-              my="30px"
-              justifyItems="center"
-            >
-              {shops?.pages?.map((_shops) => {
-                return _shops.results.map((shop: ShopData) => (
-                  <Card
-                    key={shop.id}
-                    isLoading={isLoading}
-                    to={`/shops/${shop.id}`}
-                    title={shop.name}
-                    image={shop.images[0]}
-                    subtitle={shop.description}
-                    buttonText="Visit Shop"
-                  />
-                ));
-              })}
-            </SimpleGrid>
+            {isShopsError ? (
+              <AlertMessage
+                title="Something Went Wrong"
+                description={appError}
+                status="error"
+              />
+            ) : (
+              <>
+                <SimpleGrid
+                  columns={{ sm: 2, md: 4, xl: 5 }}
+                  spacing="20px"
+                  my="30px"
+                  justifyItems="center"
+                >
+                  {shops?.pages?.map((_shops) => {
+                    return _shops.results.map((shop: ShopData) => (
+                      <Card
+                        key={shop.id}
+                        isLoading={isLoading}
+                        to={`/shops/${shop.id}`}
+                        title={shop.name}
+                        image={shop.images[0]}
+                        subtitle={shop.description}
+                        buttonText="Visit Shop"
+                      />
+                    ));
+                  })}
+                </SimpleGrid>
 
-            <Button
-              variant="outline"
-              mx="auto"
-              display="block"
-              my="40px"
-              colorScheme="telegram"
-            >
-              Load More
-            </Button>
+                <Button
+                  ref={ref}
+                  variant="outline"
+                  mx="auto"
+                  display="block"
+                  my="40px"
+                  colorScheme="telegram"
+                  onClick={() => fetchNextPage()}
+                  disabled={!hasNextPage || isFetchingNextPage}
+                  isLoading={isFetchingNextPage}
+                >
+                  {hasNextPage ? "Load More" : "Nothing more to load"}
+                </Button>
+              </>
+            )}
           </Box>
         </GridItem>
       </Grid>

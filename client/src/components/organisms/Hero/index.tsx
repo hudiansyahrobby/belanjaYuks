@@ -7,11 +7,11 @@ const Hero = () => {
   return (
     <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} mt="40" mx="20px">
       <HeroImage
-        image="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"
-        title="HAHAHAH"
+        image="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=750&q=80"
+        title="Nike Revolt"
       />
       <HeroContent
-        title="Headset Black Box"
+        title="Red Nike Revolt"
         subtitle="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Excepturi,
           magni repellat. Exercitationem deserunt ducimus doloribus sapiente
           iure in. Fugit voluptatibus amet vel sequi esse quia iste possimus

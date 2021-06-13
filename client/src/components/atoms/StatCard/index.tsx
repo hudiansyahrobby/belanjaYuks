@@ -1,14 +1,36 @@
-import { Stat, StatLabel, StatNumber, StatHelpText } from "@chakra-ui/react";
+import { Stat, StatHelpText, StatLabel, StatNumber } from "@chakra-ui/react";
 import React from "react";
+import AlertMessage from "../AlertMessage";
 
-interface StatCardProps {}
+interface StatCardProps {
+  label: string;
+  total: number | string;
+  information?: string;
+  isError: boolean;
+  error: string;
+}
 
-const StatCard: React.FC<StatCardProps> = ({}) => {
+const StatCard: React.FC<StatCardProps> = ({
+  label,
+  total,
+  information,
+  isError,
+  error,
+}) => {
+  if (isError) {
+    return (
+      <AlertMessage
+        title="Something Went Wrong"
+        description={error}
+        status="error"
+      />
+    );
+  }
   return (
     <Stat borderColor="gray.200" borderWidth="1px" p="15px" borderRadius="15px">
-      <StatLabel>Collected Fees</StatLabel>
-      <StatNumber>£0.00</StatNumber>
-      <StatHelpText>Feb 12 - Feb 28</StatHelpText>
+      <StatLabel>{label}</StatLabel>
+      <StatNumber>{total}</StatNumber>
+      {information && <StatHelpText>{information}</StatHelpText>}
     </Stat>
   );
 };

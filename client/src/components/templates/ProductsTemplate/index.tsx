@@ -1,10 +1,7 @@
-import { Button } from "@chakra-ui/button";
-import { Box, Flex, Grid, GridItem } from "@chakra-ui/react";
+import { Box, Grid, GridItem } from "@chakra-ui/react";
 import React from "react";
 import Layout from "../../atoms/Layout";
-import MenuSelect from "../../atoms/MenuSelect";
 import Title from "../../atoms/typography/Title";
-import FilterBox from "../../molecules/FilterBox";
 import ProductsCard from "../../molecules/ProductsCard";
 
 const ProductsTemplate = () => {
@@ -32,15 +29,6 @@ const ProductsTemplate = () => {
               <MenuSelect />
             </Flex> */}
             <ProductsCard />
-            <Button
-              variant="outline"
-              mx="auto"
-              display="block"
-              my="40px"
-              colorScheme="telegram"
-            >
-              Load More
-            </Button>
           </Box>
         </GridItem>
       </Grid>
