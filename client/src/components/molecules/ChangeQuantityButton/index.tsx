@@ -1,7 +1,7 @@
-import { ButtonGroup, Button, Text } from "@chakra-ui/react";
+import { ButtonGroup, Text } from "@chakra-ui/react";
 import React from "react";
+import { FaMinus, FaPlus } from "react-icons/fa";
 import CircleButton from "../../atoms/CircleButton";
-import { FaPlus, FaMinus } from "react-icons/fa";
 
 interface ChangeQuantityButtonProps {
   quantity: number;

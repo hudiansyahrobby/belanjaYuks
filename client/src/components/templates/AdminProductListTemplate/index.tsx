@@ -11,18 +11,19 @@ import {
 } from "@chakra-ui/react";
 import queryString from "query-string";
 import React from "react";
-import { RiDeleteBin6Fill } from "react-icons/ri";
 import { BsPencilSquare } from "react-icons/bs";
+import { MdCheckCircle } from "react-icons/md";
+import { RiDeleteBin6Fill } from "react-icons/ri";
 import { useLocation } from "react-router";
+import { Link } from "react-router-dom";
 import useDeleteProduct from "../../../hooks/Product/useDeleteProduct";
 import useProductShopPagination from "../../../hooks/Shop/useProductShopPagination";
 import { ProductData } from "../../../types/ProductType";
 import AlertMessage from "../../atoms/AlertMessage";
 import Loading from "../../atoms/Loading";
-import TableItem from "../../atoms/TableItem";
-import { Link } from "react-router-dom";
 import ModalItem from "../../atoms/Modal";
-import { MdCheckCircle } from "react-icons/md";
+import TableItem from "../../atoms/TableItem";
+import SellerButtonMenu from "../../molecules/SellerButtonMenu";
 
 const AdminProductListTemplate = () => {
   const { search } = useLocation();
@@ -164,30 +165,11 @@ const AdminProductListTemplate = () => {
   const appError = customError?.response?.data?.message;
 
   return (
-    <Flex>
-      <Box mr="20px">
-        <Button display="block" mt="20px">
-          Create APp
-        </Button>
-        <Button display="block" mt="20px">
-          Create APp
-        </Button>
-        <Button display="block" mt="20px">
-          Create App
-        </Button>
-        <Button display="block" mt="20px">
-          Create APp
-        </Button>
-        <Button display="block" mt="20px">
-          Create APp
-        </Button>
-        <Button display="block" mt="20px">
-          Create APp
-        </Button>
-      </Box>
+    <Flex flexDirection={{ base: "column", lg: "row" }} mx={{ base: "20px" }}>
+      <SellerButtonMenu />
       <Box flexGrow={1}>
         <Box mt="-20px">
-          <Flex alignItems="center" my="30px">
+          <Flex alignItems="center" mb="30px" mt="12px">
             <Text fontSize="28px" fontWeight="bold">
               Product List
             </Text>

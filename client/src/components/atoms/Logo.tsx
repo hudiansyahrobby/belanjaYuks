@@ -16,7 +16,7 @@ const Logo: React.FC<LogoProps> = ({ title }) => {
       <LogoLink to="/" display={{ base: "none", lg: "block" }} fontSize="2xl">
         {title}
       </LogoLink>
-      <LogoIcon display={{ lg: "none" }} color="green.500" />
+      <LogoIcon display={{ lg: "none" }} color="black" />
     </Title>
   );
 };

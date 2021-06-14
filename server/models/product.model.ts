@@ -5,12 +5,14 @@ import {
     DataType,
     Default,
     ForeignKey,
+    HasMany,
     Model,
     PrimaryKey,
     Table,
 } from 'sequelize-typescript';
 import Cart from './cart.model';
 import Category from './category.model';
+import Comments from './comment.model';
 import Favorite from './favorite.model';
 import History from './history.model';
 import ProductCart from './productCart.model';
@@ -64,4 +66,7 @@ export default class Product extends Model {
 
     @BelongsToMany(() => History, () => ProductHistory)
     checkout: History[];
+
+    @HasMany(() => Comments, 'productId')
+    comments: Comments[];
 }

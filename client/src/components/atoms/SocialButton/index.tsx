@@ -2,9 +2,7 @@ import { SimpleGrid, Button } from "@chakra-ui/react";
 import React from "react";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
 
-interface SocialButtonProps {}
-
-const SocialButton: React.FC<SocialButtonProps> = ({}) => {
+const SocialButton = () => {
   return (
     <SimpleGrid
       columns={{ base: 1, lg: 2 }}

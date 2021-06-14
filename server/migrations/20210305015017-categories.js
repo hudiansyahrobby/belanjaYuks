@@ -13,8 +13,8 @@ module.exports = {
                 type: Sequelize.STRING(70),
                 allowNull: false,
             },
-            image: {
-                type: Sequelize.STRING(),
+            images: {
+                type: Sequelize.ARRAY(Sequelize.STRING),
                 allowNull: false,
             },
             createdAt: {

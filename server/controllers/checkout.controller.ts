@@ -7,6 +7,7 @@ import {
     getAllProvinces,
     getCityByProvince,
     getCost,
+    getHistoryByShop,
     getMyHistory,
     getTransactionToken,
 } from '../services/checkout.services';
@@ -61,6 +62,18 @@ export const payProduct = async (req: any, res: Response) => {
 export const getHistories = async (req: any, res: Response) => {
     try {
         const histories = await getAllHistories();
+        return res.status(200).json({ message: 'OK', histories });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
+
+export const getShopHistory = async (req: any, res: Response) => {
+    const user = req.user;
+    const shopId = user.toJSON().myShop.id;
+    console.log(shopId);
+    try {
+        const histories = await getHistoryByShop(shopId);
         return res.status(200).json({ message: 'OK', histories });
     } catch (error) {
         return res.status(500).json({ message: error.message });

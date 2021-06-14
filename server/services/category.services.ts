@@ -2,7 +2,7 @@ import Category from '../models/category.model';
 import CategoryType from '../interfaces/Category';
 import { Op } from 'sequelize';
 
-export const createCategory = (name: string) => {
+export const createCategory = ({ name, images }: CategoryType) => {
     return Category.findOrCreate({
         where: {
             name: {
@@ -11,6 +11,7 @@ export const createCategory = (name: string) => {
         },
         defaults: {
             name,
+            images,
         },
     });
 };

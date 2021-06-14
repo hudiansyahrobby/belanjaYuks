@@ -1,21 +1,85 @@
+import { Button } from "@chakra-ui/button";
+import { useDisclosure } from "@chakra-ui/hooks";
 import { VStack } from "@chakra-ui/layout";
+import {
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+} from "@chakra-ui/modal";
 import React from "react";
+import { useParams } from "react-router";
+import useComments from "../../../hooks/Comment/useComments";
+import { GetCommentType } from "../../../types/CommentType";
+import AlertMessage from "../../atoms/AlertMessage";
+import Loading from "../../atoms/Loading";
 import CommentCard from "../../molecules/CommentCard";
+import CommentForm from "../../molecules/CommentForm";
 
-interface CommentCardsProps {}
+const CommentCards = () => {
+  const { id }: any = useParams();
 
-const CommentCards: React.FC<CommentCardsProps> = ({}) => {
+  const { data, isLoading, error, isError } = useComments(id);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const commentError = (error as any)?.response.data?.message;
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  console.log(data);
   return (
-    <VStack align="left" spacing="30px">
-      {[1, 2, 3, 4, 5].map(() => (
-        <CommentCard
-          name="Dan Abramov"
-          content="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eligendi, impedit expedita! Ut fugit sit minus quaerat perspiciatis tempore eum consequatur, vitae accusantium sint quidem sequi nesciunt nobis, quas magnam asperiores praesentium maxime dolorem ipsum saepe. Ad earum, asperiores placeat officiis voluptatum totam odit? Aperiam facere magnam, dicta voluptatibus eos sit."
-          image="https://bit.ly/dan-abramov"
-          time="5 Days Ago"
-        />
-      ))}
-    </VStack>
+    <>
+      <Button
+        onClick={onOpen}
+        mb="20px"
+        display="block"
+        marginLeft="auto"
+        marginRight="0"
+      >
+        Add Comment
+      </Button>
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Add Comment</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <CommentForm commentId="" onClose={onClose} />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+
+      {isError ? (
+        <AlertMessage title="Error" description={commentError} status="error" />
+      ) : (
+        <VStack align="left" spacing="30px">
+          {data?.comments?.map(
+            ({
+              id,
+              content,
+              updatedAt,
+              rating,
+              commentedBy: { firstName, lastName, id: userId },
+            }: GetCommentType) => (
+              <CommentCard
+                key={id}
+                id={id}
+                rating={rating}
+                name={`${firstName} ${lastName}`}
+                content={content}
+                time={updatedAt}
+                userId={userId}
+              />
+            )
+          )}
+        </VStack>
+      )}
+    </>
   );
 };
 

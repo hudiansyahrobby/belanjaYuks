@@ -63,7 +63,8 @@ const AdminHistory = () => {
                     rounded="full"
                   />
                   <LinkNavigation to={`/products/${product.id}`}>
-                    {capitalizeEachWord(product.name)}
+                    {capitalizeEachWord(product.name)} - {product.checkout.qty}{" "}
+                    pcs
                   </LinkNavigation>
                 </Flex>
               );
@@ -89,7 +90,7 @@ const AdminHistory = () => {
         <Box mt="20px">
           <Flex alignItems="center" my="30px">
             <Text fontSize="28px" fontWeight="bold">
-              My Checkout History
+              All Checkout Histories
             </Text>
           </Flex>
 

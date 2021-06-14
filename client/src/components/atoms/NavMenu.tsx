@@ -17,6 +17,7 @@ const NavMenu: React.FC<NavMenuProps> = ({ link, title }) => {
         textDecoration: "none",
         color: "blue.600",
       }}
+      fontWeight="bold"
       px={3}
     >
       {title}

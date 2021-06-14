@@ -2,7 +2,6 @@ import { Box, Button } from "@chakra-ui/react";
 import React from "react";
 import { useForm } from "react-hook-form";
 import InputPassword from "../../atoms/InputPassword";
-import InputText from "../../atoms/InputText";
 import Title from "../../atoms/typography/Title";
 
 const ChangePasswordForm = () => {

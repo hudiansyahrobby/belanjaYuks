@@ -1,13 +1,13 @@
 import { Image } from "@chakra-ui/image";
-import { Box, Flex, SimpleGrid, Text, VStack } from "@chakra-ui/layout";
+import { Flex, SimpleGrid, Text, VStack } from "@chakra-ui/layout";
+import { useToast } from "@chakra-ui/toast";
 import React from "react";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import useCarts from "../../../hooks/Cart/useCarts";
+import useDeleteFromCart from "../../../hooks/Cart/useDeleteFromCart";
 import CircleButton from "../../atoms/CircleButton";
 import LinkNavigation from "../../atoms/LinkNavigation";
 import ChangeQuantityButton from "../ChangeQuantityButton";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import useDeleteFromCart from "../../../hooks/Cart/useDeleteFromCart";
-import { useToast } from "@chakra-ui/toast";
-import useCarts from "../../../hooks/Cart/useCarts";
 
 interface CartCardProps {
   id: string;

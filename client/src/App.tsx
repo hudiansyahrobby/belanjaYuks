@@ -26,6 +26,7 @@ const MyHistory = React.lazy(() => import("./pages/MyHistory"));
 const AdminHistory = React.lazy(() => import("./pages/AdminHistory"));
 const Unauthorized = React.lazy(() => import("./pages/Unauthorized"));
 const NotFound = React.lazy(() => import("./pages/NotFound"));
+const SellerDashboard = React.lazy(() => import("./pages/SellerDashboard"));
 
 const App: React.FC = () => {
   const queryClient = new QueryClient();
@@ -53,7 +54,7 @@ const App: React.FC = () => {
             <AdminRoute path="/admin/shops" exact component={AdminShopList} />
             <AdminRoute path="/admin" exact component={AdminDashboard} />
             <Route path="/me" exact component={MyProfile} />
-            <Route path="/seller" exact component={AdminDashboard} />
+            <Route path="/seller" exact component={SellerDashboard} />
             <Route path="/seller/products" exact component={AdminProductList} />
             <Route
               path="/seller/products/create"

@@ -9,10 +9,11 @@ import {
 import CategoryType from '../interfaces/Category';
 
 export const create = async (req: Request, res: Response) => {
-    const { name }: CategoryType = req.body;
+    const { name, images }: CategoryType = req.body;
 
     try {
-        const [category, created] = await createCategory(name);
+        const newCategory = { name, images };
+        const [category, created] = await createCategory(newCategory);
 
         if (!created) {
             return res.status(400).json({ message: 'Category has already exist' });
@@ -36,7 +37,7 @@ export const get = async (req: Request, res: Response) => {
 
 export const update = async (req: Request, res: Response) => {
     const { categoryId } = req.params;
-    const { name }: CategoryType = req.body;
+    const { name, images }: CategoryType = req.body;
     try {
         const category = await findCategoryById(categoryId);
 
@@ -46,6 +47,7 @@ export const update = async (req: Request, res: Response) => {
 
         const updatedCategory: CategoryType = {
             name,
+            images,
         };
 
         const [_, _updatedCategory] = await updateCategoryById(updatedCategory, categoryId);

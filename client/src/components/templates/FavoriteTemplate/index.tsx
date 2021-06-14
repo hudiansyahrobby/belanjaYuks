@@ -2,6 +2,7 @@ import { Box, Flex, SimpleGrid, Text, VStack } from "@chakra-ui/react";
 import React from "react";
 import { AiOutlineShop } from "react-icons/ai";
 import StarRatings from "react-star-ratings";
+import useAuthenticated from "../../../hooks/Auth/useAuthenticated";
 import useFavorites from "../../../hooks/Favorite/useFavorites";
 import { ProductData } from "../../../types/ProductType";
 import AlertMessage from "../../atoms/AlertMessage";
@@ -12,13 +13,15 @@ import Loading from "../../atoms/Loading";
 import Title from "../../atoms/typography/Title";
 
 const FavoriteTemplate = () => {
+  const { isAuthenticated } = useAuthenticated();
+
   const {
     isLoading,
     data: favorites,
     isError,
     error,
     isFetching,
-  } = useFavorites();
+  } = useFavorites(!!isAuthenticated);
   const customError: any = error;
   const appError = customError?.response?.data?.message;
 
@@ -36,7 +39,7 @@ const FavoriteTemplate = () => {
             description={appError}
             status="error"
           />
-        ) : (
+        ) : favorites?.products?.length > 0 ? (
           <SimpleGrid
             columns={{ sm: 2, md: 4, xl: 5 }}
             spacing="20px"
@@ -78,6 +81,10 @@ const FavoriteTemplate = () => {
               );
             })}
           </SimpleGrid>
+        ) : (
+          <Text my="50px" textAlign="center">
+            Favorite Item is Empty
+          </Text>
         )}
       </Box>
     </Layout>

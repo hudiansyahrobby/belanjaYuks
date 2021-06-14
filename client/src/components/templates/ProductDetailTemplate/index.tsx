@@ -28,8 +28,7 @@ const ProductsDetailTemplate = () => {
   const { isLoading, data, isError, error } = useProduct(productId);
   const product: ProductData = data;
 
-  const customError: any = error;
-  const appError = customError?.response?.data?.message;
+  const appError = (error as any)?.response?.data?.message;
 
   if (isLoading) {
     return <Loading />;
@@ -54,7 +53,9 @@ const ProductsDetailTemplate = () => {
               <Image
                 borderRadius="3xl"
                 width="full"
+                height="300px"
                 src={product.images[0]}
+                fit="cover"
                 alt="Hero"
                 fallbackSrc="https://via.placeholder.com/150"
               />

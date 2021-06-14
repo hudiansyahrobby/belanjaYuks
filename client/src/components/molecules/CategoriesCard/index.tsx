@@ -54,12 +54,12 @@ const CategoriesCard = () => {
             },
           }}
         >
-          {data?.map(({ id, name, image }: CategoryData) => (
-            <SwiperSlide>
+          {data?.map(({ id, name, images }: CategoryData) => (
+            <SwiperSlide key={id}>
               <Card
                 to={`/products?categoryId=${id}`}
                 title={name}
-                image={image}
+                image={images[0]}
                 isLoading={isLoading}
               />
             </SwiperSlide>

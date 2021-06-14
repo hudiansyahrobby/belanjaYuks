@@ -3,6 +3,7 @@ import React from "react";
 import "swiper/components/scrollbar/scrollbar.scss";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper.scss";
+import useAuthenticated from "../../../hooks/Auth/useAuthenticated";
 import useFavorites from "../../../hooks/Favorite/useFavorites";
 import { CartData } from "../../../types/CartType";
 import AlertMessage from "../../atoms/AlertMessage";
@@ -11,11 +12,12 @@ import Title from "../../atoms/typography/Title";
 import CardItem from "../../molecules/CardItem";
 
 const FavoriteProductList = () => {
+  const { isAuthenticated } = useAuthenticated();
   const {
     isLoading,
     data: favorites,
     isError: isFavoritesError,
-  } = useFavorites();
+  } = useFavorites(!!isAuthenticated);
 
   if (isFavoritesError) {
     return (

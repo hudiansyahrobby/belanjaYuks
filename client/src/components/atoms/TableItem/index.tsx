@@ -1,11 +1,10 @@
 import { Button } from "@chakra-ui/button";
 import { Input } from "@chakra-ui/input";
-import { Box, Flex, Text } from "@chakra-ui/layout";
-import { Select } from "@chakra-ui/select";
+import { Box, Text } from "@chakra-ui/layout";
 import { Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/table";
 import React from "react";
 import { useHistory } from "react-router";
-import { useTable, usePagination } from "react-table";
+import { usePagination, useTable } from "react-table";
 
 type TableItemProps = {
   columns: any[];
@@ -62,7 +61,13 @@ const TableItem: React.FC<TableItemProps> = ({
         <Text>Data is empty</Text>
       ) : (
         <>
-          <Table {...getTableProps()}>
+          <Table
+            {...getTableProps()}
+            display={{ base: "block", lg: "table" }}
+            wdith="full"
+            overflowX="auto"
+            whiteSpace="nowrap"
+          >
             <Thead>
               {headerGroups.map((headerGroup) => (
                 <Tr {...headerGroup.getHeaderGroupProps()}>
@@ -129,7 +134,11 @@ const TableItem: React.FC<TableItemProps> = ({
                 {pageNumber + 1} of {totalPage}
               </strong>{" "}
             </Box>
-            <Box as="span">
+            <Box
+              as="span"
+              display={{ base: "block", sm: "inline-block" }}
+              mt={{ base: "10px" }}
+            >
               | Go to page:{" "}
               <Input
                 type="number"

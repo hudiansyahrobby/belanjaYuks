@@ -19,6 +19,7 @@ import categoryRoute from './routes/category.route';
 import favoriteRoute from './routes/favorite.route';
 import cartRoute from './routes/cart.route';
 import checkoutRoute from './routes/checkout.route';
+import commentRoute from './routes/comment.route';
 
 config();
 const app = express();
@@ -60,6 +61,7 @@ app.use('/api/v1', categoryRoute);
 app.use('/api/v1', favoriteRoute);
 app.use('/api/v1', cartRoute);
 app.use('/api/v1', checkoutRoute);
+app.use('/api/v1', commentRoute);
 
 // Swagger Documentatios
 

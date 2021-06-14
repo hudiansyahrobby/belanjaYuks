@@ -17,6 +17,7 @@ import { GoHeart } from "react-icons/go";
 import { useHistory } from "react-router";
 import StarRatings from "react-star-ratings";
 import { capitalizeEachWord } from "../../../helpers/capitalizeEachWord";
+import useAuthenticated from "../../../hooks/Auth/useAuthenticated";
 import useAddToCart from "../../../hooks/Cart/useAddToCart";
 import useFavorites from "../../../hooks/Favorite/useFavorites";
 import useToggleFavorite from "../../../hooks/Favorite/useToggleFavorite";
@@ -33,7 +34,10 @@ const ProductDetailHeader: React.FC<ProductDetailHeaderProps> = ({
   product,
 }) => {
   const { mutateAsync } = useToggleFavorite();
-  const { data: favorites, isLoading, refetch } = useFavorites();
+  const { isAuthenticated } = useAuthenticated();
+  const { data: favorites, isLoading, refetch } = useFavorites(
+    !!isAuthenticated
+  );
   const { mutateAsync: addToCart } = useAddToCart();
 
   const toast = useToast();
@@ -103,11 +107,10 @@ const ProductDetailHeader: React.FC<ProductDetailHeaderProps> = ({
     return <Loading />;
   }
 
-  console.log("favorites", favorites);
   const isFavorited = favorites?.products?.some((favorite: ProductData) => {
     return favorite.id === product.id;
   });
-  console.log(isFavorited);
+
   return (
     <VStack spacing="8px" align="flex-start">
       <Flex justifyContent="space-between" alignItems="center" w="full">

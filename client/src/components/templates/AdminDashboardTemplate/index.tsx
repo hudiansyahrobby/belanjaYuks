@@ -8,6 +8,7 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
+import { ChartData, ChartOptions } from "chart.js";
 import { format } from "date-fns";
 import React from "react";
 import { AiOutlineShop } from "react-icons/ai";
@@ -27,6 +28,7 @@ import Loading from "../../atoms/Loading";
 import StackedBar from "../../atoms/StackedBar";
 import StatCard from "../../atoms/StatCard";
 import TableItem from "../../atoms/TableItem";
+import AdminButtonMenu from "../../molecules/AdminButtonMenu";
 
 const AdminDashboardTemplate = () => {
   const {
@@ -126,7 +128,7 @@ const AdminDashboardTemplate = () => {
     });
   }, [histories]);
 
-  const chartData = {
+  const chartData: ChartData = {
     labels: [
       "Sunday",
       "Monday",
@@ -150,58 +152,12 @@ const AdminDashboardTemplate = () => {
     ],
   };
 
-  const chartOptions = {
-    scales: {
-      yAxes: [
-        {
-          stacked: true,
-          ticks: {
-            beginAtZero: true,
-          },
-        },
-      ],
-      xAxes: [
-        {
-          stacked: true,
-        },
-      ],
-    },
-  };
-
   if (isHistoriesLoading || isShopsLoading || isProductsLoading) {
     return <Loading />;
   }
   return (
-    <Flex>
-      <Box mr="20px" mt="-20px">
-        <Button
-          mt="20px"
-          as={Link}
-          to="/admin"
-          display="flex"
-          leftIcon={<GiConverseShoe />}
-        >
-          Dashboard
-        </Button>
-        <Button
-          mt="20px"
-          as={Link}
-          to="/admin/shops"
-          display="flex"
-          leftIcon={<Icon as={AiOutlineShop} color="white" />}
-        >
-          Shop Lists
-        </Button>
-        <Button
-          mt="20px"
-          as={Link}
-          to="/admin/histories"
-          display="flex"
-          leftIcon={<Icon as={TiDocumentAdd} color="white" />}
-        >
-          History
-        </Button>
-      </Box>
+    <Flex flexDirection={{ base: "column", lg: "row" }} mx={{ base: "20px" }}>
+      <AdminButtonMenu />
       <Box flexGrow={1}>
         <SimpleGrid columns={{ base: 2, lg: 4 }} spacing="10px">
           <StatCard
@@ -235,7 +191,7 @@ const AdminDashboardTemplate = () => {
         </SimpleGrid>
 
         <Box mt="20px">
-          <StackedBar data={chartData} options={chartOptions} />
+          <StackedBar data={chartData} />
         </Box>
 
         <Box mt="20px">
@@ -243,7 +199,7 @@ const AdminDashboardTemplate = () => {
             <Text fontSize="28px" fontWeight="bold">
               History
             </Text>
-            <LinkNavigation to="/" ml="20px">
+            <LinkNavigation to="/admin/histories" ml="20px">
               See Others
             </LinkNavigation>
           </Flex>

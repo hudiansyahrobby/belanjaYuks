@@ -27,16 +27,16 @@ export const buyerLink = [
     link: "/shops",
   },
   {
+    title: "My Profile",
+    link: "/me",
+  },
+  {
     title: "Cart",
     link: "/carts",
   },
   {
     title: "Favorites",
     link: "/favorites",
-  },
-  {
-    title: "My Profile",
-    link: "/me",
   },
 ];
 
@@ -58,16 +58,16 @@ export const sellerLink = [
     link: "/shops",
   },
   {
+    title: "My Profile",
+    link: "/me",
+  },
+  {
     title: "Cart",
     link: "/carts",
   },
   {
     title: "Favorites",
     link: "/favorites",
-  },
-  {
-    title: "My Profile",
-    link: "/me",
   },
 ];
 
@@ -89,15 +89,15 @@ export const adminLink = [
     link: "/shops",
   },
   {
+    title: "My Profile",
+    link: "/me",
+  },
+  {
     title: "Cart",
     link: "/carts",
   },
   {
     title: "Favorites",
     link: "/favorites",
-  },
-  {
-    title: "My Profile",
-    link: "/me",
   },
 ];

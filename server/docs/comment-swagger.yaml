@@ -1,0 +1,149 @@
+openapi: 3.0.0
+
+info:
+  title: "Ecommerce APP API"
+  description: "API for ecommerce app"
+  version: "1.0.0"
+servers:
+  - url: http://localhost:8000/api/v1
+paths: 
+  /products/{productId}/comments:
+    post:
+      description: "Create new comment"
+      tags:
+        - "Comments"
+      parameters:
+      - in: path
+        required: true
+        name: productId
+        schema:
+          type: string
+        description: Product ID 
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf: 
+                - $ref: '#/components/schemas/Comment'
+      responses:
+        201:
+          description: "Created"
+        401:
+          description: "Access Denied"
+        422:
+          description: "Validation Error"
+        500:
+          description: "Server Error"
+    get:
+      description: "Get Comments of a Product"
+      tags:
+        - "Comments"
+      parameters:
+      - in: path
+        required: true
+        name: productId
+        schema:
+          type: string
+        description: Product ID 
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "Success"
+        401:
+          description: "Access Denied"
+        500:
+          description: "Server Error"
+  /products/{productId}/comments/{commentId}:
+    put:
+      description: "update comment"
+      tags:
+        - "Comments"
+      parameters:
+      - in: path
+        required: true
+        name: productId
+        schema:
+          type: string
+        description: Product ID  
+      - in: path
+        required: true
+        name: commentId
+        schema:
+          type: string
+        description: Comment ID  
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf: 
+                - $ref: '#/components/schemas/Comment'
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "Bad Request"
+        401:
+          description: "Access Denied"
+        404:
+          description: "Category not found"
+        422:
+          description: "Validation Error"
+        500:
+          description: "Server Error"
+    delete:
+      description: "Delete Comment By ID"
+      parameters:
+      - in: path
+        required: true
+        name: productId
+        schema:
+          type: string
+        description: Product ID  
+      - in: path
+        required: true
+        name: commentId
+        schema:
+          type: string
+        description: Comment ID  
+      security:
+        - bearerAuth: []
+      tags:
+        - "Comments"
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: 'Bad Request'
+        404:
+          description: "Category not found"
+        500:
+          description: "Server Error"
+components:
+  schemas:
+    Comment:
+      type: object
+      properties:
+        content:
+          type: string
+          example: "Nice Shoe"
+        rating:
+          type: number
+          example: 5
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  
+
+    
+
+  

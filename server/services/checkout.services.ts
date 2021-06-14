@@ -7,6 +7,7 @@ import { Cart } from '../interfaces/Cart';
 import HistoryType from '../interfaces/History';
 import History from '../models/history.model';
 import Product from '../models/product.model';
+import Shop from '../models/shop.model';
 import User from '../models/user.model';
 
 config();
@@ -118,6 +119,40 @@ export const getAllHistories = () => {
                 model: Product,
                 through: { as: 'checkout', attributes: ['qty'] },
                 attributes: ['id', 'name', 'images', [Sequelize.literal('products.price * qty'), 'totalPrice']],
+            },
+            {
+                model: User,
+                attributes: ['id', 'firstName', 'lastName'],
+            },
+        ],
+        // group: [
+        //     'History.id',
+        //     'products.id',
+        //     'products->checkout.qty',
+        //     'products->checkout.productId',
+        //     'products->checkout.historyId',
+        //     'user.id',
+        // ],
+    });
+};
+
+export const getHistoryByShop = (shopId: string) => {
+    return History.findAll({
+        // attributes: [[Sequelize.literal('COUNT(products.price * qty)'), 'result']],
+        include: [
+            {
+                model: Product,
+                through: { as: 'checkout', attributes: ['qty'] },
+                attributes: ['id', 'name', 'images', [Sequelize.literal('products.price * qty'), 'totalPrice']],
+                include: [
+                    {
+                        model: Shop,
+                        attributes: [],
+                        where: {
+                            id: shopId,
+                        },
+                    },
+                ],
             },
             {
                 model: User,

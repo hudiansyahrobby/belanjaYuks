@@ -1,12 +1,10 @@
-import { Box, Flex, useDisclosure } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import React from "react";
 import Logo from "../../atoms/Logo";
 import NavMenus from "../NavMenus";
+import SidebarMenu from "../SidebarMenu";
 
 const Navbar: React.FC = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = React.useRef();
-
   return (
     <Flex
       py="4"
@@ -21,7 +19,8 @@ const Navbar: React.FC = () => {
       justifyContent="space-between"
     >
       <Logo title="BelanjaYuks" />
-      <Box>
+      <SidebarMenu />
+      <Box display={{ base: "none", lg: "block" }}>
         <NavMenus />
       </Box>
     </Flex>
