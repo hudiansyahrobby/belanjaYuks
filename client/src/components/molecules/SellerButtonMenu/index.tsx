@@ -35,6 +35,15 @@ const SellerButtonMenu = () => {
       >
         Create Product
       </Button>
+      <Button
+        mt="20px"
+        as={Link}
+        to="/seller/histories"
+        display="flex"
+        leftIcon={<Icon as={TiDocumentAdd} color="white" />}
+      >
+        Histories
+      </Button>
     </Box>
   );
 };

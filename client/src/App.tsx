@@ -4,6 +4,8 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import Loading from "./components/atoms/Loading";
 import AdminRoute from "./hooks/Auth/AdminRoute";
+import SellerRoute from "./hooks/Auth/SellerRoute";
+import PrivateRoute from "./hooks/Auth/PrivateRoute";
 
 const Home = React.lazy(() => import("./pages/Home"));
 const Login = React.lazy(() => import("./pages/Login"));
@@ -24,6 +26,7 @@ const Shops = React.lazy(() => import("./pages/Shops"));
 const ShopDetail = React.lazy(() => import("./pages/ShopDetail"));
 const MyHistory = React.lazy(() => import("./pages/MyHistory"));
 const AdminHistory = React.lazy(() => import("./pages/AdminHistory"));
+const SellerHistory = React.lazy(() => import("./pages/SellerHistory"));
 const Unauthorized = React.lazy(() => import("./pages/Unauthorized"));
 const NotFound = React.lazy(() => import("./pages/NotFound"));
 const SellerDashboard = React.lazy(() => import("./pages/SellerDashboard"));
@@ -43,9 +46,10 @@ const App: React.FC = () => {
             <Route path="/change-password" exact component={ChangePassword} />
             <Route path="/products" exact component={Products} />
             <Route path="/products/:id" component={ProductDetail} />
-            <Route path="/favorites" exact component={Favorite} />
-            <Route path="/carts" exact component={MyCart} />
-            <Route path="/histories" exact component={MyHistory} />
+            <PrivateRoute path="/favorites" exact component={Favorite} />
+            <PrivateRoute path="/carts" exact component={MyCart} />
+            <PrivateRoute path="/histories" exact component={MyHistory} />
+            <PrivateRoute path="/me" exact component={MyProfile} />
             <AdminRoute
               path="/admin/histories"
               exact
@@ -53,16 +57,24 @@ const App: React.FC = () => {
             />
             <AdminRoute path="/admin/shops" exact component={AdminShopList} />
             <AdminRoute path="/admin" exact component={AdminDashboard} />
-            <Route path="/me" exact component={MyProfile} />
-            <Route path="/seller" exact component={SellerDashboard} />
-            <Route path="/seller/products" exact component={AdminProductList} />
-            <Route
+            <SellerRoute path="/seller" exact component={SellerDashboard} />
+            <SellerRoute
+              path="/seller/histories"
+              exact
+              component={SellerHistory}
+            />
+            <SellerRoute
+              path="/seller/products"
+              exact
+              component={AdminProductList}
+            />
+            <SellerRoute
               path="/seller/products/create"
               exact
               component={CreateProduct}
             />
+            <SellerRoute path="/shops/create" component={CreateShop} />
             <Route path="/shops" exact component={Shops} />
-            <Route path="/shops/create" component={CreateShop} />
             <Route path="/shops/:shopId" component={ShopDetail} />
             <Route path="/unauthorized" exact component={Unauthorized} />
             <Route path="*" component={NotFound} />

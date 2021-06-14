@@ -139,6 +139,9 @@ export const getAllHistories = () => {
 export const getHistoryByShop = (shopId: string) => {
     return History.findAll({
         // attributes: [[Sequelize.literal('COUNT(products.price * qty)'), 'result']],
+        where: {
+            '$products.shopId$': shopId,
+        },
         include: [
             {
                 model: Product,

@@ -43,6 +43,11 @@ export const getAllHistories = async () => {
   return data.histories;
 };
 
+export const getShopHistories = async () => {
+  const { data } = await axios.get("/checkout/history/shop");
+  return data.histories;
+};
+
 export const getUserHistory = async () => {
   const { data } = await axios.get("/checkout/history");
   return data.histories;
