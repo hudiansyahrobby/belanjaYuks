@@ -1,16 +1,29 @@
 const { config } = require('dotenv');
+const { parse } = require('pg-connection-string');
+
 config();
 
 const env = process.env;
+const DB_URI = process.env.DATABASE_URL + '?ssl=no-verify';
+const { database, host, password, ssl, port, user, options } = parse(DB_URI);
 
 module.exports = {
     development: {
-        username: env.POSTGRES_USERNAME_DEV,
-        password: env.POSTGRES_PASSWORD_DEV,
-        database: env.POSTGRES_DATABASE_DEV,
-        host: 'db',
-        port: 5432,
+        use_env_variable: DB_URI,
+        url: DB_URI,
+        database,
+        host,
+        password,
+        ssl,
+        port,
+        username: user,
         dialect: 'postgres',
+        dialectOptions: {
+            ssl: {
+                require: false,
+                rejectUnauthorized: false,
+            },
+        },
     },
     test: {
         username: env.POSTGRES_USERNAME_TEST,
@@ -21,11 +34,20 @@ module.exports = {
         logging: false,
     },
     production: {
-        username: env.POSTGRES_USERNAME_PROD,
-        password: env.POSTGRES_PASSWORD_PROD,
-        database: env.POSTGRES_DATABASE_PROD,
-        host: 'db',
+        use_env_variable: DB_URI,
+        url: DB_URI,
+        database,
+        host,
+        password,
+        ssl,
+        port,
+        username: user,
         dialect: 'postgres',
-        logging: false,
+        dialectOptions: {
+            ssl: {
+                require: false,
+                rejectUnauthorized: false,
+            },
+        },
     },
 };

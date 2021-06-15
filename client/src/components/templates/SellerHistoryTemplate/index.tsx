@@ -4,7 +4,6 @@ import React from "react";
 import { capitalizeEachWord } from "../../../helpers/capitalizeEachWord";
 import { numberWithCommas } from "../../../helpers/numberWithCommas";
 import { sumTotalPrice } from "../../../helpers/sumTotalPrice";
-import useAllHistories from "../../../hooks/Checkout/useAllHistories";
 import useShopHistory from "../../../hooks/Checkout/useShopHistory";
 import { HistoryData } from "../../../types/HistoryType";
 import AlertMessage from "../../atoms/AlertMessage";

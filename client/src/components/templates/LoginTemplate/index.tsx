@@ -1,4 +1,4 @@
-import { Box, chakra, Flex, SimpleGrid } from "@chakra-ui/react";
+import { chakra, Flex, SimpleGrid } from "@chakra-ui/react";
 import React from "react";
 import { ReactComponent as Image } from "../../../assets/images/login.svg";
 import Layout from "../../atoms/Layout";

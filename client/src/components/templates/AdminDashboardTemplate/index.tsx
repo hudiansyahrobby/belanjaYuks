@@ -1,20 +1,7 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Icon,
-  Image,
-  SimpleGrid,
-  Text,
-  useToast,
-} from "@chakra-ui/react";
-import { ChartData, ChartOptions } from "chart.js";
+import { Box, Flex, Image, SimpleGrid, Text } from "@chakra-ui/react";
+import { ChartData } from "chart.js";
 import { format } from "date-fns";
 import React from "react";
-import { AiOutlineShop } from "react-icons/ai";
-import { GiConverseShoe } from "react-icons/gi";
-import { TiDocumentAdd } from "react-icons/ti";
-import { Link } from "react-router-dom";
 import { capitalizeEachWord } from "../../../helpers/capitalizeEachWord";
 import { numberWithCommas } from "../../../helpers/numberWithCommas";
 import { sumTotalPrice } from "../../../helpers/sumTotalPrice";

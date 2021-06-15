@@ -1,38 +1,27 @@
 import { Sequelize } from 'sequelize-typescript';
 import path from 'path';
 import { config } from 'dotenv';
+import { parse } from 'pg-connection-string';
 
 config();
 
-let sequelizeConfig;
+const DB_URI = process.env.DATABASE_URL + '?ssl=no-verify';
+const { database, host, password, ssl, port, user, options }: any = parse(DB_URI);
 
-if (process.env.NODE_ENV === 'development') {
-    sequelizeConfig = {
-        database: process.env.POSTGRES_DATABASE_DEV,
-        username: process.env.POSTGRES_USERNAME_DEV,
-        password: process.env.POSTGRES_PASSWORD_DEV,
-    };
-} else if (process.env.NODE_ENV === 'test') {
-    sequelizeConfig = {
-        database: process.env.POSTGRES_DATABASE_TEST,
-        username: process.env.POSTGRES_USERNAME_TEST,
-        password: process.env.POSTGRES_PASSWORD_TEST,
-        logging: false,
-    };
-} else if (process.env.NODE_ENV === 'production') {
-    sequelizeConfig = {
-        database: process.env.POSTGRES_DATABASE_PROD,
-        username: process.env.POSTGRES_USERNAME_PROD,
-        password: process.env.POSTGRES_PASSWORD_PROD,
-        logging: false,
-    };
-}
-
-const sequelize = new Sequelize({
-    ...sequelizeConfig,
+const sequelize: any = new Sequelize(DB_URI, {
+    database,
+    host,
+    password,
+    ssl,
+    port,
+    username: user,
     dialect: 'postgres',
-    port: 5432,
-    host: 'db',
+    dialectOptions: {
+        require: true,
+        ssl: true,
+        rejectUnauthorized: false,
+    },
+    // host: 'ec2-23-23-164-251.compute-1.amazonaws.com',
     models: [path.join(__dirname, '..', 'models', '**')],
     // query: {
     //     raw: true,

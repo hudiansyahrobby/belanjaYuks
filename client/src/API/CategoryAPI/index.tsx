@@ -8,6 +8,7 @@ export const getCategories = async () => {
 
 export const addCategory = async (categoryData: Pick<CategoryData, "name">) => {
   const { data } = await axios.post("/categories", categoryData);
+
   return data.category;
 };
 

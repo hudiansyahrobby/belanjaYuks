@@ -65,11 +65,7 @@ const ProductForm = () => {
     mutateAsync: updateProduct,
   } = useUpdateProduct();
 
-  const {
-    isLoading: isCategoriesLoading,
-    data: categories,
-    isError: isCategoriesError,
-  } = useCategories();
+  const { isLoading: isCategoriesLoading, data: categories } = useCategories();
 
   const onCreateProduct = async (data: FormData) => {
     await mutateAsync(data, {
