@@ -7,7 +7,13 @@ type CircleButtonProps = ButtonProps & {
 
 const CircleButton: React.FC<CircleButtonProps> = ({ icon, ...props }) => {
   return (
-    <Button borderRadius="full" width="45px" height="45px" {...props}>
+    <Button
+      data-testid="circle-button"
+      borderRadius="full"
+      width="45px"
+      height="45px"
+      {...props}
+    >
       {icon}
     </Button>
   );

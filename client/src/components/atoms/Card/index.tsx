@@ -48,6 +48,7 @@ const Card: React.FC<CardProps> = ({
         to={to}
         fontSize="18px"
         mt="15px"
+        data-testid="link"
         fontWeight="semibold"
         textAlign={!buttonText ? "center" : "left"}
       >
@@ -56,7 +57,12 @@ const Card: React.FC<CardProps> = ({
 
       {subtitle && (
         <>
-          <Subtitle fontSize="sm" fontWeight="thin" mt="10px">
+          <Subtitle
+            fontSize="sm"
+            fontWeight="thin"
+            mt="10px"
+            data-testid="subtitle"
+          >
             {ReactHtmlParser(subtitle?.substring(0, 200))}
           </Subtitle>
         </>
@@ -65,7 +71,7 @@ const Card: React.FC<CardProps> = ({
       {children}
 
       {buttonText && (
-        <Button mt="10px" as={Link} to={to}>
+        <Button mt="10px" as={Link} to={to} data-testid="button">
           {buttonText}
         </Button>
       )}

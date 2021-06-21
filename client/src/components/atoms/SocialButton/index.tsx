@@ -9,11 +9,13 @@ const SocialButton = () => {
       spacing={5}
       alignItems="center"
       my="30px"
+      role="social-button"
     >
       <Button
         leftIcon={<FaFacebook />}
         backgroundColor="blue.600"
         _hover={{ backgroundColor: "blue.700" }}
+        role="facebook-button"
       >
         Signup With Facebook
       </Button>
@@ -21,6 +23,7 @@ const SocialButton = () => {
         leftIcon={<FaGoogle />}
         backgroundColor="red.500"
         _hover={{ backgroundColor: "red.700" }}
+        role="google-button"
       >
         Signup With Google
       </Button>

@@ -7,7 +7,7 @@ interface PriceProps {
 
 const Price: React.FC<PriceProps> = ({ price }) => {
   return (
-    <Flex>
+    <Flex role="price">
       <Text fontWeight="extrabold" color="gray.600" fontSize="xl">
         $
       </Text>

@@ -19,7 +19,7 @@ const AlertMessage: React.FC<AlertMessageProps> = ({
   description,
 }) => {
   return (
-    <Alert status={status} my={4}>
+    <Alert status={status} my={4} role="alert">
       <AlertIcon />
       <AlertTitle mr={2}>{title}</AlertTitle>
       <AlertDescription>{description}</AlertDescription>

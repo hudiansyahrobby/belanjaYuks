@@ -45,10 +45,11 @@ const TextEditor: React.FC<TextEditorProps> = (props) => {
   const { name, label, placeholder, error, value } = props;
 
   return (
-    <FormControl isInvalid={!!error} my="10px">
-      <FormLabel htmlFor={name}>{label}</FormLabel>
+    <FormControl role="form-control" isInvalid={!!error} my="10px">
+      <FormLabel role="form-label" htmlFor={name}>
+        {label}
+      </FormLabel>
       <ReactQuill
-        theme="snow"
         onChange={props.onChange}
         modules={modules}
         value={value || ""}
@@ -57,7 +58,7 @@ const TextEditor: React.FC<TextEditorProps> = (props) => {
         style={{ height: "150px" }}
       />
 
-      <FormErrorMessage>{error}</FormErrorMessage>
+      <FormErrorMessage role="form-error-message">{error}</FormErrorMessage>
     </FormControl>
   );
 };

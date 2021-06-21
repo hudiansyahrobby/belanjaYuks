@@ -9,6 +9,7 @@ const Loading: React.FC = () => {
       justifyContent="center"
       alignItems="center"
       inset="0"
+      role="loading"
     >
       <LoadingSpinner
         thickness="10px"

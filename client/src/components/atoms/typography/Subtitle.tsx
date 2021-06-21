@@ -7,7 +7,13 @@ type SubtitleProps = TextProps & {
 
 const Subtitle: React.FC<SubtitleProps> = ({ children, ...props }) => {
   return (
-    <Text fontWeight="semibold" color="gray.600" lineHeight="tall" {...props}>
+    <Text
+      fontWeight="semibold"
+      color="gray.600"
+      lineHeight="tall"
+      {...props}
+      role="subtitle"
+    >
       {children}
     </Text>
   );

@@ -1,17 +1,5 @@
+import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 import React from "react";
-import {
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuIcon,
-  MenuCommand,
-  MenuDivider,
-  Button,
-} from "@chakra-ui/react";
 import { FaChevronDown } from "react-icons/fa";
 
 interface MenuSelectProps {}

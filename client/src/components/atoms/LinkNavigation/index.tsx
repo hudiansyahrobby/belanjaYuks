@@ -16,7 +16,12 @@ const LinkNavigation: React.FC<LinkNavigationProps> = ({
   const LinkNavigation = chakra(Link);
 
   return (
-    <LinkNavigation to={to} _hover={{ color: "blue.500" }} {...props}>
+    <LinkNavigation
+      to={to}
+      _hover={{ color: "blue.500" }}
+      {...props}
+      role="navigation"
+    >
       {children}
     </LinkNavigation>
   );

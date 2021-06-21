@@ -7,7 +7,12 @@ interface TextSmallProps {
 
 const TextSmall: React.FC<TextSmallProps> = ({ children }) => {
   return (
-    <Text fontSize="11px" color="gray.500" fontWeight="semibold">
+    <Text
+      fontSize="11px"
+      color="gray.500"
+      fontWeight="semibold"
+      role="text-small"
+    >
       {children}
     </Text>
   );

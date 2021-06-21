@@ -58,7 +58,7 @@ const TableItem: React.FC<TableItemProps> = ({
   return (
     <>
       {totalPage === 0 ? (
-        <Text>Data is empty</Text>
+        <Text role="empty-data">Data is empty</Text>
       ) : (
         <>
           <Table
@@ -67,6 +67,7 @@ const TableItem: React.FC<TableItemProps> = ({
             wdith="full"
             overflowX="auto"
             whiteSpace="nowrap"
+            role="table"
           >
             <Thead>
               {headerGroups.map((headerGroup) => (

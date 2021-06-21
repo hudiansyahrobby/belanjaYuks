@@ -27,10 +27,18 @@ const StatCard: React.FC<StatCardProps> = ({
     );
   }
   return (
-    <Stat borderColor="gray.200" borderWidth="1px" p="15px" borderRadius="15px">
-      <StatLabel>{label}</StatLabel>
-      <StatNumber>{total}</StatNumber>
-      {information && <StatHelpText>{information}</StatHelpText>}
+    <Stat
+      borderColor="gray.200"
+      borderWidth="1px"
+      p="15px"
+      borderRadius="15px"
+      role="stat-card"
+    >
+      <StatLabel role="stat-label">{label}</StatLabel>
+      <StatNumber role="stat-total">{total}</StatNumber>
+      {information && (
+        <StatHelpText role="stat-helper">{information}</StatHelpText>
+      )}
     </Stat>
   );
 };
